@@ -1,0 +1,230 @@
+body {
+    font: 400 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    color: #e6edf3;
+    background-color: #0d1117;
+    -webkit-text-size-adjust: 100%;
+    padding: 30px;
+    max-width: 800px; /* 최대 너비 제한 */
+    margin: 0 auto 50px; /* 중앙 정렬 및 하단 여백 추가 */
+    text-align: left; /* 글자 왼쪽 정렬 */
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+}
+
+body>#content {
+    margin: 0 auto;
+    max-width: 800px;
+    border: 1px solid #30363d;
+    padding: 20px;
+    border-radius: 6px;
+    background-color: #161b22;
+}
+
+summary {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #30363d;
+    margin: 24px 0;
+}
+
+.hljs-operator {
+    color: #d73a49;
+}
+
+a {
+    color: #58a6ff;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #58a6ff;
+}
+
+a:hover {
+    color: #1f6feb;
+    text-decoration: underline;
+}
+
+pre {
+    background-color: #0d1117;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+    border: 1px solid #21262d;
+    color: #e6edf3;
+    white-space: pre-wrap; /* 줄 바꿈 유지 */
+    word-wrap: break-word; /* 긴 단어 줄 바꿈 */
+    margin: 16px auto; /* 중앙 정렬 */
+    max-width: 100%; /* 가로 길이 조정 */
+}
+
+code {
+    display: block; /* 줄 바꿈을 적용 */
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    font-size: 90%;
+    padding: 0.8em 1em; /* 여백 최소화 */
+    color: #d4d4d4;
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    white-space: pre-wrap; /* 줄 바꿈 유지 */
+    word-wrap: break-word; /* 긴 단어 줄 바꿈 */
+    margin: 16px auto; /* 중앙 정렬 */
+    max-width: 100%; /* 배경이 전체를 덮도록 */
+    overflow: auto; /* 스크롤 추가 */
+    line-height: 1.5;
+}
+
+/* Syntax highlighting for PowerShell */
+code[data-language="powershell"] {
+    background-color: #1e1e1e;
+    color: #ce9178;
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+code[data-language="powershell"] .keyword {
+    color: #569cd6;
+    font-weight: bold;
+}
+
+code[data-language="powershell"] .string {
+    color: #ce9178;
+}
+
+code[data-language="powershell"] .comment {
+    color: #6a9955;
+    font-style: italic;
+}
+
+code[data-language="powershell"] .variable {
+    color: #9cdcfe;
+}
+
+code[data-language="powershell"] .com_val {
+    color: #00a6ff;
+}
+
+code[data-language="powershell"] .function {
+    color: #dcdcaa;
+    font-weight: bold;
+}
+
+code[data-language="powershell"] .number {
+    color: #b5cea8;
+}
+
+code[data-language="powershell"] .operator {
+    color: #c586c0;
+}
+
+code[data-language="powershell"] .parameter {
+    color: #4ec9b0;
+}
+
+blockquote {
+    margin: 0 0 16px;
+    padding: 0 1em;
+    color: #8b949e;
+    border-left: 4px solid #30363d;
+    font-style: italic;
+    background-color: #161b22;
+    border-radius: 6px;
+    text-align: left;
+}
+
+/* 테이블 스타일 */
+table {
+    margin: 20px auto; /* 상단 및 하단 여백, 중앙 정렬 */
+    width: auto; /* 글자 수에 따라 크기 조정 */
+    min-width: 600px; /* 최소 너비 설정 */
+    border-collapse: collapse;
+    background-color: #0d1117; /* 테이블 배경색 */
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    text-align: left;
+}
+
+/* 테이블 헤더 스타일 */
+th {
+    background-color: #1f2937; /* 헤더 배경색 */
+    font-weight: bold;
+    font-size: 15px;
+    color: #ffffff;
+    text-transform: none;
+    padding: 12px 15px;
+    border: 1px solid #30363d;
+}
+
+/* 테이블 셀 스타일 */
+td {
+    padding: 10px 12px;
+    border: 1px solid #30363d;
+    color: #d1d5db;
+    font-size: 14px;
+    word-break: break-word; /* 긴 단어 줄바꿈 */
+}
+
+/* 행 배경색 교차 표시 */
+tr:nth-child(even) {
+    background-color: #161b22;
+}
+
+tr:nth-child(odd) {
+    background-color: #0f151c;
+}
+
+p {
+    margin: 0 0 16px;
+    line-height: 1.5;
+    font-size: 16px;
+    color: #e6edf3;
+}
+
+ul {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+li {
+    line-height: 1.5;
+    font-size: 16px;
+    color: #e6edf3;
+}
+
+h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #e2e2e2; /* 눈에 띄는 파란색 */
+    margin-bottom: 16px;
+    border-bottom: 2px solid #30363d;
+}
+
+h2 {
+    font-size: 1.75em;
+    font-weight: bold;
+    color: #79c0ff; /* 연한 파란색 */
+    margin-bottom: 12px;
+    border-bottom: 1px solid #3b3b3b;
+}
+
+h3 {
+    font-size: 1.5em;
+    font-weight: normal;
+    color: #a5d6ff; /* 더 연한 파란색 */
+    margin-bottom: 8px;
+    border-bottom: none;
+}
