@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1087.003.01</title>
+    <link rel="stylesheet" type="text/css" href="..\KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1087.003.01 Account Discovery Email Account</h1>
+
+<h2>Definition</h2>
+
+<p>Account Discovery Email Account</p>
+
+<h2>Security Threat</h2>
+
+<p>XXXX</p>
+
+<h2>Support Platform</h2>
+
+<p>windows </p>
+
+<h2>Input Argument</h2>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">name</th>
+  <th style="text-align:center;">type</th>
+  <th style="text-align:center;">description</th>
+  <th style="text-align:center;">default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">local_path</td>
+  <td style="text-align:center;">Path</td>
+  <td style="text-align:center;">windows files path</td>
+  <td style="text-align:center;">C:\Users\Public\</td>
+</tr>
+<tr>
+  <td style="text-align:center;">email_file</td>
+  <td style="text-align:center;">Path</td>
+  <td style="text-align:center;">email</td>
+  <td style="text-align:center;">extract_emails.txt</td>
+</tr>
+<tr>
+  <td style="text-align:center;">result<em>email</em>file</td>
+  <td style="text-align:center;">Path</td>
+  <td style="text-align:center;">email</td>
+  <td style="text-align:center;">result_emails.txt</td>
+</tr>
+<tr>
+  <td style="text-align:center;">search_folder</td>
+  <td style="text-align:center;">Path</td>
+  <td style="text-align:center;">search root folder</td>
+  <td style="text-align:center;">C:\</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Dependencies</h2>
+
+<h3>prereq(관리자 권한)</h3>
+
+<p><code data-language="powershell">powershell
+<span class="keyword">echo</span> T1087.003.01_prereq_command_Start
+<span class="keyword">echo</span> T1087.003.01 prereq no items to check
+<span class="keyword">echo</span> T1087.003.01_prereq_command_Success
+<span class="keyword">echo</span> T1087.003.01_prereq_command_End</code></p>
+
+<h3>get prereq(관리자 권한)</h3>
+
+<p><code data-language="powershell">powershell
+<span class="keyword">echo</span> T1087.003.01_get_prereq_command_Start
+<span class="keyword">echo</span> T1087.003.01 no actions to take
+<span class="keyword">echo</span> T1087.003.01_get_prereq_command_Fail
+<span class="keyword">echo</span> T1087.003.01_get_prereq_command_End
+<span class="operator">Exit </span>1</code></p>
+
+<h2>Executor</h2>
+
+<h3>command(관리자 권한)</h3>
+
+<p><code data-language="powershell">powershell
+<span class="keyword">echo</span> T1087.003.01_command_Start
+<span class="operator">Try</span><span class="comment">{</span>
+  cmd.exe /c 'cmd.exe /c powershell -Command "Add-Type -AssemblyName \"Microsoft.Office.Interop.Outlook\" | <span class="keyword">Out-Null</span>; $olFolders = \"Microsoft.Office.Interop.Outlook.olDefaultFolders\" -as [type]; $outlook = <span class="keyword">New-Object</span> -ComObject Outlook.Application; $namespace = $outlook.GetNamespace<span class="operator">(</span>\"MAPI\"<span class="operator">)</span>; $folder = $namespace.GetDefaultFolder<span class="operator">(</span>$olFolders::olFolderInbox<span class="operator">)</span>; $folder.Items | ForEach-Object <span class="comment">{</span> $_.SenderEmailAddress <span class="comment">}</span>" &gt; <span class="parameter">"#<span class="comment">{</span>local_path<span class="comment">}</span>#<span class="comment">{</span>email_file<span class="comment">}</span>"</span>'
+  $filePath = <span class="parameter">"#<span class="comment">{</span>local_path<span class="comment">}</span>"</span>+<span class="parameter">"#<span class="comment">{</span>email_file<span class="comment">}</span>"</span>
+  $resultfilePath = <span class="parameter">"#<span class="comment">{</span>local_path<span class="comment">}</span>"</span>+<span class="parameter">"#<span class="comment">{</span>result_email_file<span class="comment">}</span>"</span>
+  $emailPattern = '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]<span class="comment">{</span>2,<span class="comment">}</span>'
+  $fileContent = <span class="keyword">Get-Content</span><span class="operator"> -Path</span> $filePath -Raw
+  $matches = [regex]::Matches<span class="operator">(</span>$fileContent, $emailPattern<span class="operator">)</span>
+  $matches | ForEach-Object <span class="comment">{</span> $_.Value <span class="comment">}</span> | <span class="keyword">Out-File</span> -FilePath $resultfilePath
+<span class="comment">}</span>
+<span class="operator">Catch</span><span class="comment">{</span>
+  <span class="keyword">echo</span> T1087.003.01_command_Fail
+  <span class="keyword">echo</span> T1087.003.01_command_End
+  <span class="operator">Exit </span>1
+<span class="comment">}</span>
+<span class="keyword">echo</span> T1087.003.01_command_Success
+<span class="keyword">echo</span> T1087.003.01_command_End
+<span class="operator">Exit </span>0</code></p>
+
+<h3>cleanup(관리자 권한)</h3>
+
+<p><code data-language="powershell">powershell
+<span class="keyword">echo</span> T1087.003.01_cleanup_command_Start
+$filePath = <span class="parameter">"#<span class="comment">{</span>local_path<span class="comment">}</span>"</span>+<span class="parameter">"#<span class="comment">{</span>email_file<span class="comment">}</span>"</span>
+$resultfilePath = <span class="parameter">"#<span class="comment">{</span>local_path<span class="comment">}</span>"</span>+<span class="parameter">"#<span class="comment">{</span>result_email_file<span class="comment">}</span>"</span>
+<span class="operator">Try</span> <span class="comment">{</span>
+  RD $filePath <span class="keyword">-force</span>
+  RD $resultfilePath <span class="keyword">-force</span>
+<span class="comment">}</span>
+<span class="operator">Catch</span> <span class="comment">{</span>
+  <span class="keyword">echo</span> T1087.003.01_cleanup_command_Fail
+  <span class="keyword">echo</span> T1087.003.01_cleanup_command_End
+  <span class="operator">Exit </span>1
+<span class="comment">}</span>
+<span class="keyword">echo</span> T1087.003.01_cleanup_command_Success
+<span class="keyword">echo</span> T1087.003.01_cleanup_command_End
+<span class="operator">Exit </span>0</code></p>
+
+<h2>Information</h2>
+
+<p>Action 실행 전 필요한 정보 목록과 실행 후 얻게되는 정보 목록</p>
+
+<h3>Requried Information</h3>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">Information</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">reserved</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Result Information</h3>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">Information</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">reserved</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Version</h3>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">Version</th>
+  <th style="text-align:center;">GUID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">1.0.1</td>
+  <td style="text-align:center;">644A0C18-12DA-455E-BD1B-92C739F1AC5B</td>
+</tr>
+</tbody>
+</table>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<ul>
+<li>행동 유형 : AMSI_SCAN</li>
+<li>오퍼레이션 : contains</li>
+<li>값1 : Microsoft.Office.Interop.Outlook</li>
+<li>값2 : Microsoft.Office.Interop.Outlook.olDefaultFolders</li>
+<li>값3 : SenderEmailAddress</li>
+<li>값4 : Outlook.Application</li>
+</ul>
+
+<h3>Detection(EDR)</h3>
+
+<p><img width="800px" alt="T1087 003 01" src=".\T1087.003.01.png" /></p>
+
+<h3>Response</h3>
+
+<ul>
+<li>의심스러운 계정 즉시 차단 및 비밀번호 초기화</li>
+<li>이메일 보안 솔루션에서 피싱 공격 또는 내부 정보 유출 시도 분석</li>
+<li>공격자가 수집한 정보로 추가 공격을 수행했는지 포렌식 조사</li>
+</ul>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li>Active Directory 및 이메일 서버 보호</li>
+</ol>
+
+<ul>
+<li><p>일반 사용자가 AD에서 이메일 계정 목록을 조회하지 못하도록 권한 제한</p></li>
+<li><p>Exchange Server, LDAP, Office 365 등에서 "Address Book Policy (ABP)" 적용하여 사용자 간 무분별한 이메일 주소 조회 차단</p></li>
+<li><p>Get-Recipient, Get-Mailbox, ldapsearch 등의 명령어 사용 권한 제한</p></li>
+</ul>
+
+<ol start="2">
+<li>네트워크 및 이메일 서버 보안 강화</li>
+</ol>
+
+<ul>
+<li><p>SMTP, IMAP, POP3 등의 프로토콜에 대해 접근 통제 (예: VPN을 통해서만 접속 허용)</p></li>
+<li><p>SMTP 릴레이 제한 및 이메일 서버의 비정상적인 트래픽 탐지 활성화</p></li>
+<li><p>DKIM, SPF, DMARC 정책 적용하여 스푸핑 공격 방지</p></li>
+</ul>
+
+<ol start="3">
+<li>피싱 및 소셜 엔지니어링 방어</li>
+</ol>
+
+<ul>
+<li><p>사용자들에게 피싱 및 소셜 엔지니어링 공격에 대한 교육 실시</p></li>
+<li><p>이메일 보안 솔루션(예: Microsoft Defender for Office 365, Proofpoint) 적용하여 피싱 및 악성 이메일 차단</p></li>
+<li><p>이메일 내 링크 및 첨부 파일 실행 전 URL 분석 및 샌드박스 검증 수행</p></li>
+</ul>
+
+<ol start="4">
+<li>크리덴셜 스터핑 및 계정 탈취 방지</li>
+</ol>
+
+<ul>
+<li><p>MFA (Multi-Factor Authentication) 필수 적용</p></li>
+<li><p>비밀번호 정책 강화 (최소 12자 이상, 주기적 변경 요구)</p></li>
+<li><p>기업 도메인 이메일 계정이 유출되었는지 "Have I Been Pwned" 등에서 정기적으로 확인</p></li>
+</ul>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">Techniques</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1087.003</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
