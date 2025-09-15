@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1588.002.02_d3fend</title>
+    <title>T1588.002.02</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,19 +13,44 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>CmdLine = "/stext" OR CmdLine = "/scomma " </p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1588.002.02.png" alt="T1588 002 02" /></p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>노출된 계정의 권한을 변경합니다.
+노출된 계정의 비밀번호를 변경합니다.
+공격자가 생성한 파일을 삭제합니다.
+공격자에 의해 PC가 제어되었을 가능성이 있으므로 호스트 네트워크를 격리합니다.
+공격자 C&amp;C 서버로 추정되는 주소를 차단합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>Blocklisting (차단 목록화)</strong></p>
+
+<ul>
+<li>악의적인 활동과 연관된 것으로 알려진 도메인과 IP 주소를 차단 목록에 추가하여 접근을 제한합니다.</li>
+</ul></li>
+<li><p><strong>Domain Registration Monitoring (도메인 등록 모니터링)</strong></p>
+
+<ul>
+<li>조직과 연관된 도메인 등록을 모니터링하고, 피싱이나 스푸핑에 사용될 수 있는 유사 도메인을 감시합니다.</li>
+</ul></li>
+<li><p><strong>Threat Intelligence (위협 인텔리전스)</strong></p>
+
+<ul>
+<li>위협 인텔리전스를 활용하여 알려진 악성 도메인에 대한 정보를 수집하고 방어 체계를 강화합니다.</li>
+</ul></li>
+<li><p><strong>Web Content Filtering (웹 콘텐츠 필터링)</strong></p>
+
+<ul>
+<li>보안 웹 게이트웨이 및 웹 필터링 도구를 사용하여 알려진 악성 도메인으로의 접근을 차단합니다</li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
@@ -49,4 +74,3 @@
 
 </body>
 </html>
-

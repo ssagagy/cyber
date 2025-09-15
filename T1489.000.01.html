@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1489.000.01_d3fend</title>
+    <title>T1489.000.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,19 +13,56 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>모니터링을 통해 VSS 서비스 중지 행위를 확인합니다.</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1489.000.01.png" alt="" />
+https://172.18.10.125:8903/#/analysis/incident/675a842e002dc7960000416c</p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>공격자가 수정한 서비스를 원복합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>서비스 권한 제한 (M1026 - Privileged Account Management)</strong>  </p>
+
+<ul>
+<li><strong>서비스 중지 권한 최소화</strong>: <strong>일반 사용자</strong>에게 시스템 서비스나 보안 서비스 중지 권한을 제한  </li>
+<li><strong>서비스 계정에 대한 강력한 인증</strong> 및 <strong>최소 권한 원칙</strong> 적용  </li>
+<li><strong>관리자 계정에 대한 다단계 인증(MFA)</strong>을 사용하여, 관리자 권한을 악용한 서비스 중지 시도 차단  </li>
+</ul></li>
+<li><p><strong>서비스 중지 모니터링 및 알림 설정 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>Event ID 7036 (서비스 상태 변경)</strong> 및 <strong>Event ID 4688 (새로운 프로세스 생성)</strong>을 사용하여 서비스 상태 변경을 실시간으로 모니터링  </li>
+<li><strong>서비스 중지 시 알림 설정</strong>: 보안 관리자가 <strong>서비스가 중지될 때 자동 알림</strong>을 받을 수 있도록 시스템 설정  </li>
+<li><strong>EDR/XDR 솔루션을 사용</strong>하여 의심스러운 서비스 중지 활동을 탐지하고 즉각적인 대응 가능  </li>
+</ul></li>
+<li><p><strong>서비스 복원 및 자동화 (M1022 - Automated Response)</strong>  </p>
+
+<ul>
+<li><strong>서비스 복원 자동화</strong>: 중요한 보안 서비스(예: 방화벽, AV)의 자동 재시작을 설정하여 서비스 중지 시 자동으로 복구되도록 구성  </li>
+<li><strong>서비스 복구 스크립트</strong>를 만들어 서비스 중지 후 자동으로 재시작되도록 설정  </li>
+<li><strong>보안 시스템</strong>에서 서비스가 중지될 경우 <strong>자동으로 해당 서비스 재시작</strong> 기능을 활성화  </li>
+</ul></li>
+<li><p><strong>시스템 보안 소프트웨어 강화 (M1027 - Password Policies)</strong>  </p>
+
+<ul>
+<li><strong>보안 소프트웨어에 대한 액세스 제한</strong>: 보안 시스템(방화벽, AV 등)에 대한 액세스를 관리자만 수행할 수 있도록 제한  </li>
+<li><strong>보안 소프트웨어 설정을 강력히 보호</strong>하고, 필요 시 <strong>서비스를 잠금</strong>하거나 <strong>비밀번호 변경 주기 설정</strong>  </li>
+<li><strong>보안 소프트웨어 서비스에 대한 권한 제어</strong>를 강화하여 악용 가능성 최소화  </li>
+</ul></li>
+<li><p><strong>네트워크 세분화 및 방화벽 정책 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>중요 시스템에 대한 네트워크 세분화</strong>를 통해 공격자가 시스템 서비스 중지 및 방해 시도에 대한 접근을 차단  </li>
+<li><strong>방화벽을 통해 서비스 중지 시도 차단</strong>: 중요 서비스가 외부로부터 영향을 받지 않도록 방화벽 및 액세스 제어 설정  </li>
+<li><strong>서버 및 서비스에 대한 별도 네트워크 세분화</strong>를 통해 공격자가 하나의 네트워크에서 서비스를 중지하더라도 다른 네트워크에는 영향을 미치지 않도록 설계  </li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
@@ -47,9 +84,24 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-PT Process Termination</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PS Process Suspension</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>
-

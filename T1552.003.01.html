@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1552.003.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1552.003.01 bash 히스토리에서 계정 정보 수집</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>모니터링을 통해 'bash_history'에 접근하는 프로세스를 확인합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1552.003.01.png" alt="" />
+https://172.18.10.125:8903/#/analysis/incident/675bc488002dc79500000d60</p>
+
+<h3>Response</h3>
+
+<p>노출된 계정의 비밀번호를 변경합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>자격 증명 암호화 및 안전한 저장 (M1030 - Credential Dumping Prevention)</strong>  </p>
+
+<ul>
+<li><strong>파일 내 자격 증명</strong>을 <strong>암호화</strong>하여 저장하고, 복호화에 필요한 <strong>비밀 키</strong>를 <strong>보안 저장소</strong>(예: <strong>하드웨어 보안 모듈(HSM)</strong>, <strong>암호화된 비밀 관리 시스템</strong>)에 보관  </li>
+<li><strong>자격 증명 관리 시스템</strong>을 사용하여 자격 증명이 <strong>파일 내에 직접적으로 저장되지 않도록</strong> 하고, 자격 증명은 <strong>동적으로 로드</strong>하여 사용  </li>
+<li><strong>파일 내 자격 증명</strong>이 암호화된 채로 저장되도록 보장하며, 암호화된 자격 증명만 <strong>허가된 애플리케이션</strong>에서 접근하도록 제한  </li>
+</ul></li>
+<li><p><strong>파일 접근 권한 제한 및 모니터링 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>파일에 대한 접근 권한</strong>을 최소화하여 <strong>자격 증명이 포함된 파일</strong>에 <strong>불필요한 사용자</strong>가 접근할 수 없도록 제한  </li>
+<li><strong>파일 시스템 모니터링</strong>을 활성화하여 자격 증명이 저장된 <strong>파일에 대한 비정상적인 접근</strong>이나 <strong>변경</strong>을 추적하고 탐지  </li>
+<li><strong>보안 소프트웨어</strong>와 <strong>파일 시스템 로그</strong>를 사용하여 <strong>자격 증명 파일</strong>에 대한 <strong>비정상적인 접근 시도</strong>를 모니터링  </li>
+</ul></li>
+<li><p><strong>자격 증명 관리 및 비밀 관리 시스템 도입 (M1040 - Security Configurations)</strong>  </p>
+
+<ul>
+<li><strong>AWS Secrets Manager</strong>, <strong>HashiCorp Vault</strong>, <strong>Azure Key Vault</strong>와 같은 <strong>비밀 관리 시스템</strong>을 사용하여 자격 증명과 같은 민감한 정보를 <strong>파일이 아닌 중앙화된 안전한 위치</strong>에서 관리  </li>
+<li><strong>비밀번호 및 API 키</strong>와 같은 자격 증명은 <strong>비밀 관리 시스템</strong>을 통해 <strong>애플리케이션이나 서비스</strong>에서 <strong>자동으로 로드</strong>하도록 구성  </li>
+<li>자격 증명이 <strong>파일 내에 하드코딩</strong>되거나 저장되지 않도록 <strong>최소 권한 원칙</strong>을 준수하여 <strong>중앙화된 자격 증명 관리</strong> 체계를 운영  </li>
+</ul></li>
+<li><p><strong>정기적인 보안 검사 및 코드 리뷰 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>정기적인 코드 리뷰</strong> 및 <strong>보안 감사</strong>를 수행하여 자격 증명이 <strong>파일 내에 하드코딩</strong>되거나 <strong>보호되지 않은 형태로 저장</strong>되지 않도록 점검  </li>
+<li><strong>정적 분석 도구(SAST)</strong>와 <strong>동적 분석 도구(DAST)</strong>를 사용하여 <strong>자격 증명 포함</strong> 여부를 자동으로 검토하고 <strong>취약점</strong>을 사전에 식별  </li>
+<li><strong>보안 점검</strong> 프로세스를 통해 <strong>파일 내 자격 증명</strong>을 저장하는 <strong>취약한 코드</strong>를 찾아내고 이를 수정  </li>
+</ul></li>
+<li><p><strong>파일 시스템 보안 및 액세스 제어 강화 (M1032 - Application Layer Filtering)</strong>  </p>
+
+<ul>
+<li><strong>파일 시스템 암호화</strong>(예: <strong>BitLocker</strong>, <strong>EFS</strong>)를 사용하여 <strong>파일 내 자격 증명</strong>이 <strong>노출되지 않도록</strong> 보호  </li>
+<li><strong>애플리케이션 실행 환경</strong>에서 자격 증명이 포함된 파일에 대한 접근을 <strong>최소화</strong>하고, <strong>액세스 제어 목록(ACL)</strong>을 활용하여 자격 증명 파일에 대한 <strong>불필요한 접근을 차단</strong>  </li>
+<li><strong>클라우드 환경</strong>에서는 <strong>IAM 정책</strong>을 통해 <strong>자격 증명 파일</strong>에 대한 <strong>접근을 최소화</strong>하고, 필요한 서비스나 인스턴스만 자격 증명에 접근하도록 제한  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1552.003</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-DQSA Database Query String Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

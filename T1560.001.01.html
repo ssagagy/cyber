@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1560.001.01_d3fend</title>
+    <title>T1560.001.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,23 +13,59 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>압축 형식의 파일 생성 행위를 탐지합니다.</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1560.001.01.png" alt="T1560 001 01" /></p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>아카이브 파일이 외부로 전송되지 않도록 차단 조치를 취하고, 네트워크 트래픽 및 로그를 분석하여 추가적인 악성 활동을 추적합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>압축 파일 검사 및 필터링 (M1035 - Application Layer Filtering)</strong>  </p>
+
+<ul>
+<li><strong>압축 파일</strong>을 <strong>실시간으로 검사</strong>하여 <strong>악성코드</strong>나 <strong>민감한 정보</strong>가 포함되지 않도록 필터링  </li>
+<li><strong>보안 소프트웨어</strong>와 <strong>파일 검사 도구</strong>를 사용하여 압축 파일 내의 <strong>암호화된 자격 증명</strong>이나 <strong>불법적인 콘텐츠</strong>를 탐지  </li>
+<li><strong>압축 파일 열기 전에 검사</strong>를 강화하여 <strong>자동화된 분석 시스템</strong>을 활용, 압축된 파일 내 악성 코드나 스크립트를 사전에 제거  </li>
+</ul></li>
+<li><p><strong>압축 파일 암호화 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>압축 파일에 민감한 정보</strong>를 저장할 때는 <strong>강력한 암호화</strong>를 적용하여 데이터가 유출되더라도 <strong>암호화된 파일을</strong> 통해 접근할 수 없도록 설정  </li>
+<li><strong>압축 파일의 암호화</strong> 및 <strong>파일 시스템에 대한 액세스 제어</strong>를 강화하여 암호화되지 않은 상태에서 파일을 열지 않도록 관리  </li>
+<li><strong>비밀번호</strong>나 <strong>암호화 키</strong>는 별도로 <strong>보안된 시스템</strong>에서 관리하고, 압축 파일에 암호를 포함시키지 않도록 한다.  </li>
+</ul></li>
+<li><p><strong>압축 파일 저장 위치 제어 및 액세스 제어 (M1045 - Restrict Access to Tools)</strong>  </p>
+
+<ul>
+<li><strong>압축 파일을 저장하는 위치</strong>에 대한 <strong>엄격한 액세스 제어</strong>를 설정하여 <strong>불필요한 접근</strong>을 방지  </li>
+<li>민감한 데이터가 포함된 압축 파일은 <strong>암호화된 디스크</strong>나 <strong>보안 네트워크 공유</strong>에만 저장하여 접근을 제한  </li>
+<li><strong>파일 권한</strong>을 최소화하고 <strong>최소 권한 원칙</strong>을 준수하여 <strong>불필요한 사용자가 파일에 접근</strong>할 수 없도록 설정  </li>
+</ul></li>
+<li><p><strong>압축 파일 전송 시 보안 프로토콜 사용 (M1055 - Secure Data Transmission)</strong>  </p>
+
+<ul>
+<li><strong>압축 파일 전송 시 안전한 프로토콜</strong>(예: <strong>SFTP</strong>, <strong>HTTPS</strong>)을 사용하여 파일 전송 중에 <strong>데이터 유출</strong>이나 <strong>변조</strong>를 방지  </li>
+<li><strong>파일 전송 암호화</strong>와 <strong>전송 경로 보호</strong>를 통해 압축 파일이 <strong>인터넷을 통한 전송</strong> 시에도 <strong>무단 접근</strong>을 방지  </li>
+<li><strong>전송된 압축 파일</strong>이 <strong>암호화되어 있지 않다면</strong> 자동으로 <strong>보안 알림</strong>을 발생시키는 <strong>알림 시스템</strong>을 설정  </li>
+</ul></li>
+<li><p><strong>압축 파일 접근 로그 및 모니터링 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>압축 파일에 대한 접근 로그</strong>를 설정하여 <strong>누가</strong>, <strong>언제</strong>, <strong>어디서</strong> 압축 파일에 접근했는지 추적할 수 있도록  </li>
+<li><strong>파일 접근 및 수정</strong>에 대한 <strong>모니터링</strong>을 통해 <strong>압축 파일에 대한 비정상적인 활동</strong>을 탐지하고 경고  </li>
+<li><strong>파일 시스템 감사</strong> 및 <strong>로그 분석</strong>을 통해 압축 파일의 <strong>이상 징후</strong>나 <strong>변경된 시간</strong> 등을 확인하여 보안 위협을 사전에 차단  </li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
-<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
 
 <table>
 <thead>
@@ -44,9 +80,18 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>
-

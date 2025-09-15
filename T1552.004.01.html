@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1552.004.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1552.004.01 안전하지 않은 개인키</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>findstr, dir 등의 명령을 통해 .key 파일을 찾는 행위를 탐지</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1552.004.01.png" alt="" />
+https://172.18.10.125:8903/#/event/edr/66f6652c002dc79600000782</p>
+
+<h3>Response</h3>
+
+<ol>
+<li>즉각적인 침해 탐지:</li>
+</ol>
+
+<p>IDS/IPS를 사용하여 네트워크 트래픽에서 비정상적인 패턴이나 의심스러운 자격 증명 수집 활동을 탐지합니다.</p>
+
+<ol start="2">
+<li>로그 분석:</li>
+</ol>
+
+<p>시스템 및 네트워크 로그를 정기적으로 분석하여 자격 증명 관련 비정상적인 접근 시도를 식별합니다.</p>
+
+<ol start="3">
+<li>사고 대응 계획 실행:</li>
+</ol>
+
+<p>자격 증명이 의심스럽게 수집되었다고 판단되면 즉시 사고 대응 절차를 실행하여 피해를 최소화합니다.</p>
+
+<ol start="4">
+<li>시스템 격리:</li>
+</ol>
+
+<p>자격 증명 스니핑이 감지된 시스템을 즉시 격리하여 추가적인 공격을 방지합니다.</p>
+
+<ol start="5">
+<li>정기적인 보안 감사:</li>
+</ol>
+
+<p>네트워크 및 시스템 구성, 사용자 접근 권한을 정기적으로 감사하여 취약점을 발견하고 수정합니다.</p>
+
+<ol start="6">
+<li>인증 프로토콜 강화:</li>
+</ol>
+
+<p>인증 과정에서 SSL/TLS와 같은 보안 프로토콜을 사용하여 데이터 전송 시 자격 증명이 암호화되도록 합니다.</p>
+
+<ol start="7">
+<li>다단계 인증(MFA):</li>
+</ol>
+
+<p>사용자의 인증 절차에 다단계 인증을 추가하여 자격 증명이 도난당해도 계정을 보호할 수 있도록 합니다.</p>
+
+<ol start="8">
+<li>보안 교육 및 인식 제고:</li>
+</ol>
+
+<p>직원들에게 자격 증명 보호의 중요성 및 사회 공학 공격에 대한 교육을 실시하여 인식을 높입니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>네트워크 암호화</strong></p>
+
+<ul>
+<li>SSL/TLS를 사용하여 모든 네트워크 트래픽을 암호화하여 자격 증명 수집을 방지합니다.</li>
+</ul></li>
+<li><p><strong>VPN 사용</strong></p>
+
+<ul>
+<li>원격 사용자에게 VPN을 사용하도록 하여 안전하게 내부 네트워크에 접근하게 합니다.</li>
+</ul></li>
+<li><p><strong>다단계 인증(MFA)</strong></p>
+
+<ul>
+<li>자격 증명 도용 시에도 계정 접근을 보호하기 위해 다단계 인증을 적용합니다.</li>
+</ul></li>
+<li><p><strong>정기적인 패스워드 변경</strong></p>
+
+<ul>
+<li>사용자에게 정기적으로 비밀번호를 변경하도록 요구하고, 복잡한 비밀번호 정책을 적용합니다.</li>
+</ul></li>
+<li><p><strong>불필요한 서비스 비활성화</strong></p>
+
+<ul>
+<li>네트워크에서 불필요한 서비스나 포트를 비활성화하여 공격 표면을 줄입니다.</li>
+</ul></li>
+<li><p><strong>모니터링 및 경고 시스템</strong></p>
+
+<ul>
+<li>의심스러운 활동을 탐지하기 위해 네트워크 및 시스템 모니터링 도구를 사용하고, 비정상적인 접근 시도를 경고합니다.</li>
+</ul></li>
+<li><p><strong>로그 분석</strong></p>
+
+<ul>
+<li>자격 증명 관련 로그를 정기적으로 분석하여 의심스러운 접근 패턴을 식별합니다.</li>
+</ul></li>
+<li><p><strong>보안 교육</strong></p>
+
+<ul>
+<li>직원들에게 자격 증명 관리의 중요성과 보안 위험에 대한 교육을 제공하여 인식을 높입니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1552.004</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FCA File Content Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FH File Hashing</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

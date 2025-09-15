@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1548.002.01_d3fend</title>
+    <title>T1548.002.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,23 +13,83 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>(Action = Registry-SetValue) AND 
+(RegKeyName = "HKCR" OR "HKCU" OR "HKU") AND
+(RegKeyName = "mscfile\shell\open\command" OR "ms-settings\shell\open\command") AND
+(RegValueData !=(contains not) "mmc.exe")</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1548_002_01.PNG" alt="T1548_002_01" /></p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>해당 행위를 수행한 프로세스를 종료합니다.
+공격자가 수정한 레지스트리 키를 원복합니다.
+공격자에 의해 PC가 제어되었을 가능성이 있으므로 호스트 네트워크를 격리합니다.
+공격자 C&amp;C 서버로 추정되는 주소를 차단합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><strong>UAC 설정 강화</strong>
+<ul>
+<li>UAC를 가장 높은 수준으로 설정합니다.</li>
+<li>기본값보다 높은 경고 수준으로 설정하면, 관리자 권한을 요구하는 작업이 발생할 때마다 강제적으로 경고가 표시되고, 관리자 자격 증명을 요구하도록 할 수 있습니다.</li>
+<li>UAC 설정을 "항상 알림"으로 변경하여 모든 권한 상승 시 사용자에게 경고가 표시되도록 설정합니다.
+<ul>
+<li>설정 방법:</li>
+</ul></li>
+</ul></li>
+</ol>
+
+<p>제어판 → 사용자 계정 → 사용자 계정 컨트롤 설정 변경에서 슬라이더를 가장 높은 수준으로 설정합니다.</p>
+
+<ol start="2">
+<li><p><strong>응용 프로그램 호환성 맵퍼(Application Compatibility Shims) 차단</strong></p>
+
+<ul>
+<li>공격자는 응용 프로그램 호환성 기능을 악용하여 UAC를 우회할 수 있습니다.</li>
+<li>이를 방지하기 위해 시스템에서 응용 프로그램 호환성 맵퍼(Shim Database, SDB)에 대한 무단 접근을 제한하거나 이를 비활성화할 수 있습니다.</li>
+</ul></li>
+<li><p><strong>AppLocker 또는 WDAC(Windows Defender Application Control) 사용</strong></p>
+
+<ul>
+<li>Microsoft의 AppLocker 또는 <strong>Windows Defender Application Control(WDAC)</strong>를 사용하여, 신뢰할 수 없는 애플리케이션이나 UAC 우회에 사용될 수 있는 파일 실행을 제한합니다.</li>
+<li>이러한 도구들은 관리자가 신뢰하는 애플리케이션만 실행되도록 정책을 설정할 수 있어, 악성 스크립트나 응용 프로그램이 UAC를 우회하는 것을 차단할 수 있습니다.</li>
+</ul></li>
+<li><p><strong>관리자 권한 최소화</strong></p>
+
+<ul>
+<li>모든 사용자에게 관리자 권한을 부여하지 않고, 최소 권한 원칙(Least Privilege)을 적용합니다.</li>
+<li>특히 일반 사용자에게는 표준 사용자 계정을 사용하게 하여, 권한 상승 공격의 표적이 되지 않도록 합니다.</li>
+<li>관리자 계정에 대해서는 중요한 작업을 할 때만 권한을 사용하도록 정책을 마련하고, 일상적인 작업은 표준 사용자 계정으로 수행하게 합니다.</li>
+</ul></li>
+<li><p><strong>레지스트리 및 파일 시스템 모니터링</strong></p>
+
+<ul>
+<li>UAC 우회 공격은 종종 레지스트리 설정이나 시스템 파일을 조작하여 실행됩니다.</li>
+<li>중요한 레지스트리 키와 시스템 파일에 대한 모니터링을 통해 UAC 우회 시도가 있는지 감지하고 대응합니다.</li>
+<li>예를 들어, HKEY<em>LOCAL</em>MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System에서 UAC 설정을 조작하려는 시도를 감지할 수 있습니다.</li>
+</ul></li>
+<li><p><strong>안티멀웨어 솔루션 사용</strong></p>
+
+<ul>
+<li>최신 안티멀웨어 및 엔드포인트 보호 솔루션을 사용하여, 알려진 UAC 우회 기법과 악성코드를 탐지하고 차단합니다.</li>
+<li>특히, 알려진 UAC 우회 도구나 기술에 대한 시그니처 기반 탐지 기능을 활용할 수 있습니다.</li>
+</ul></li>
+<li><p><strong>UAC 우회 시도에 대한 로깅 활성화</strong></p>
+
+<ul>
+<li>Windows에서 UAC 우회 시도를 감지하기 위한 로깅 기능을 활성화합니다.</li>
+<li>이벤트 뷰어(Event Viewer)를 통해 권한 상승 시도와 관련된 이벤트를 기록하고, 비정상적인 활동을 탐지합니다.</li>
+<li>예를 들어, Microsoft-Windows-Security-Auditing 로그를 통해 관리자 권한 획득 시도를 추적할 수 있습니다.</li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
-<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
 
 <table>
 <thead>
@@ -44,8 +104,27 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-ISL Executable Allowlisting</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ISL Executable Denylisting</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM Service Binary Verification</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>

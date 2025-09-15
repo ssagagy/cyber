@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1553.002.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1553.002.01 인증서 서명</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>악성 파일이 서명되어 있는 경우 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<h3>Response</h3>
+
+<p>공격자가 생성한 파일을 삭제합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>인증 및 권한 부여 프로세스 강화 (M1028 - Application Layer Filtering)</strong>  </p>
+
+<ul>
+<li><strong>강력한 인증 방식</strong>(예: <strong>Multi-Factor Authentication</strong>, <strong>MFA</strong>)을 적용하여 인증 절차를 <strong>두 단계 이상</strong>으로 강화  </li>
+<li><strong>애플리케이션 계층에서 인증 우회 공격</strong>을 방지하기 위해 <strong>세션 관리 및 토큰 기반 인증</strong>을 활용하여 인증된 세션이 아닌 경우 접근을 차단  </li>
+<li>애플리케이션에서 <strong>기존 인증 절차</strong>를 강화하고, <strong>인증 우회</strong>가 불가능하도록 <strong>암호화된 통신</strong>을 요구  </li>
+</ul></li>
+<li><p><strong>애플리케이션 계층 프로토콜 모니터링 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>애플리케이션 계층 프로토콜</strong>(HTTP, FTP 등)을 <strong>모니터링</strong>하여 <strong>비정상적인 요청</strong>이나 <strong>우회 시도</strong>를 탐지  </li>
+<li><strong>정기적인 로그 분석</strong>과 <strong>패턴 분석</strong>을 통해 애플리케이션에서 <strong>비정상적인 인증 요청</strong>이나 <strong>악의적인 요청</strong>을 실시간으로 탐지  </li>
+<li><strong>로그 분석 도구</strong>를 사용하여 의심스러운 트래픽 패턴을 확인하고, 이를 통해 인증 우회 시도에 대응  </li>
+</ul></li>
+<li><p><strong>입력 검증 및 취약점 분석 (M1040 - Security Configurations)</strong>  </p>
+
+<ul>
+<li>애플리케이션에서 <strong>입력 검증을 강화</strong>하여 <strong>악의적인 요청</strong>이나 <strong>패턴</strong>이 시스템에 전달되지 않도록 방지  </li>
+<li><strong>웹 애플리케이션 방화벽(WAF)</strong>을 사용하여 <strong>HTTP 프로토콜</strong>을 통한 악성 요청이나 <strong>인증 우회 시도</strong>를 차단  </li>
+<li><strong>애플리케이션 보안 취약점 분석</strong>을 통해 <strong>인증 우회</strong>와 관련된 취약점을 사전에 발견하고 해결  </li>
+<li><strong>취약점 스캐너</strong>와 <strong>정적 분석 도구(SAST)</strong>를 사용하여 <strong>인증 우회</strong>에 영향을 미칠 수 있는 보안 취약점을 사전 점검  </li>
+</ul></li>
+<li><p><strong>TLS/SSL 암호화 및 통신 보안 강화 (M1032 - Application Layer Filtering)</strong>  </p>
+
+<ul>
+<li><strong>애플리케이션 통신에 대한 암호화</strong>(TLS/SSL)를 적용하여 <strong>중간자 공격</strong>을 방지하고, 인증 정보를 안전하게 보호  </li>
+<li><strong>HTTPS</strong>를 통해 <strong>암호화된 채널</strong>을 사용하여 <strong>애플리케이션 계층</strong>에서 전송되는 인증 정보를 보호하고, 인증 우회를 방지  </li>
+<li><strong>SSL/TLS 인증서 검증</strong> 및 <strong>강력한 암호화 알고리즘</strong>을 적용하여 보안 강화를 위한 기준을 준수  </li>
+</ul></li>
+<li><p><strong>애플리케이션 및 네트워크 보안 감사 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>애플리케이션 보안 감사</strong> 및 <strong>네트워크 보안 감사</strong>를 수행하여 인증 관련 <strong>보안 로그</strong>를 주기적으로 점검  </li>
+<li><strong>세션 및 인증 로그</strong>를 통해 비정상적인 로그인 시도나 인증 우회 시도를 탐지하고 이를 실시간으로 차단  </li>
+<li><strong>네트워크 트래픽 분석</strong>을 통해 <strong>애플리케이션 계층</strong>에서 발생하는 악성 요청을 차단하고, 공격자 IP 차단 및 <strong>접근 제어</strong>를 강화
+<h2>Affected Techniques</h2></li>
+</ul></li>
+</ol>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1553.002</td>
+</tr>
+<tr>
+  <td style="text-align:center;">T1509.001</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-MA Message Authentication</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3CP -Certificate Pinning</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ME Message Encryption</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

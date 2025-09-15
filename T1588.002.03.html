@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1588.002.03</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1588.002.03 상용 도구(mimikatz) 사용</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>ParentProcess Action = WriteProcessMemory AND
+CurrentProcess Action = OpenProcess AND
+TargetProcess Name = lsass.exe</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1588.002.03.png" alt="T1588 002 03" /></p>
+
+<h3>Response</h3>
+
+<p>해당 행위를 수행한 프로세스를 종료합니다.
+공격자에 의해 PC가 제어되었을 가능성이 있으므로 호스트 네트워크를 격리합니다.
+공격자 C&amp;C 서버로 추정되는 주소를 차단합니다.
+노출된 계정의 권한을 변경합니다.
+노출된 계정의 비밀번호를 변경합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>Blocklisting (차단 목록화)</strong></p>
+
+<ul>
+<li>악의적인 활동과 연관된 것으로 알려진 도메인과 IP 주소를 차단 목록에 추가하여 접근을 제한합니다.</li>
+</ul></li>
+<li><p><strong>Domain Registration Monitoring (도메인 등록 모니터링)</strong></p>
+
+<ul>
+<li>조직과 연관된 도메인 등록을 모니터링하고, 피싱이나 스푸핑에 사용될 수 있는 유사 도메인을 감시합니다.</li>
+</ul></li>
+<li><p><strong>Threat Intelligence (위협 인텔리전스)</strong></p>
+
+<ul>
+<li>위협 인텔리전스를 활용하여 알려진 악성 도메인에 대한 정보를 수집하고 방어 체계를 강화합니다.</li>
+</ul></li>
+<li><p><strong>Web Content Filtering (웹 콘텐츠 필터링)</strong></p>
+
+<ul>
+<li>보안 웹 게이트웨이 및 웹 필터링 도구를 사용하여 알려진 악성 도메인으로의 접근을 차단합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1078</td>
+</tr>
+</tbody>
+</table>
+
+<p>|D3FEND|
+|:-----------:|</p>
+
+</body>
+</html>

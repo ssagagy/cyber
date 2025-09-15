@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1562.004.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1562.004.02 시스템 방화벽 비활성화</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>모니터링을 통해 "EnableFirewall" 레지스트리 값을 수정하는 행위를 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1562.004.02.png" alt="" />
+https://172.18.10.125:8903/#/analysis/alert/66f389c5002dc79600000234</p>
+
+<h3>Response</h3>
+
+<p>공격자가 생성한 레지스트리 키를 삭제합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>보안 기능의 무결성 보호 (M1040 - Security Configurations)</strong>  </p>
+
+<ul>
+<li><strong>보안 기능</strong>(예: <strong>실시간 보호</strong>, <strong>로그 기록</strong>, <strong>방화벽 설정</strong>)을 <strong>자동으로 복구</strong>할 수 있도록 설정하여 <strong>비활성화</strong> 시도가 발생하면 <strong>자동으로 재활성화</strong>되도록 구성  </li>
+<li><strong>보안 설정 보호</strong>를 통해 <strong>기본 보안 기능</strong>(예: <strong>방화벽</strong>, <strong>침입 탐지 시스템</strong>)이 <strong>해제되거나 비활성화</strong>되지 않도록 방지  </li>
+<li><strong>보안 기능</strong>의 <strong>변경</strong>이나 <strong>비활성화</strong>가 발생했을 경우, <strong>즉시 알림</strong>을 받을 수 있도록 설정하여 빠르게 대응  </li>
+</ul></li>
+<li><p><strong>서비스 및 기능에 대한 강력한 액세스 제어 (M1045 - Restrict Access to Tools)</strong>  </p>
+
+<ul>
+<li><strong>보안 기능을 비활성화</strong>할 수 있는 <strong>관리자 권한</strong>을 <strong>최소화</strong>하고, <strong>불필요한 사용자가 보안 설정</strong>에 접근하지 못하도록 제한  </li>
+<li><strong>다단계 인증(MFA)</strong>을 적용하여 <strong>보안 기능</strong>을 변경하거나 비활성화하는 <strong>권한을 제한</strong>하고, <strong>승인된 사용자</strong>만 기능을 수정할 수 있도록 설정  </li>
+<li><strong>보안 기능에 대한 수정 권한</strong>을 <strong>권한을 가진 사용자</strong>로 제한하고, <strong>기능 변경</strong>에 대한 <strong>로그를 기록</strong>하여 <strong>모니터링</strong>  </li>
+</ul></li>
+<li><p><strong>보안 로그 및 경고 시스템 강화 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>보안 기능</strong>(예: <strong>로그 기록 기능</strong>)이 <strong>비활성화</strong>되었거나 <strong>중지</strong>되었을 때 이를 실시간으로 <strong>모니터링</strong>하고, <strong>경고 시스템</strong>을 통해 <strong>즉시 알림</strong>을 받도록 설정  </li>
+<li><strong>시스템 로그</strong>와 <strong>보안 이벤트</strong>를 <strong>실시간으로 분석</strong>하여 보안 기능이 <strong>변경되거나 비활성화된 경우</strong> 이를 추적하고 기록  </li>
+<li><strong>비정상적인 변경</strong>을 <strong>모니터링</strong>하는 도구를 사용하여 <strong>보안 기능의 비활성화</strong>를 탐지하고 신속하게 대응할 수 있도록 설정  </li>
+</ul></li>
+<li><p><strong>보안 패치 및 업데이트 관리 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>보안 기능의 패치</strong>가 최신 상태로 유지되도록 <strong>자동 패치 관리 시스템</strong>을 설정하여 보안 취약점이 <strong>빠르게 해결</strong>되도록 관리  </li>
+<li><strong>보안 기능</strong>에 대한 <strong>패치 이력</strong>을 기록하고, <strong>패치</strong>와 <strong>업데이트</strong>가 제대로 적용되었는지 <strong>점검</strong>  </li>
+<li><strong>보안 업데이트</strong>를 <strong>정기적으로 확인</strong>하여 <strong>보안 기능</strong>의 최신 상태를 유지하고, <strong>패치가 제대로 적용되지 않은 경우</strong> 이를 경고  </li>
+</ul></li>
+<li><p><strong>파일 무결성 검사 및 디지털 서명 검증 (M1055 - Secure Data Transmission)</strong>  </p>
+
+<ul>
+<li><strong>보안 기능에 사용되는 파일</strong>과 <strong>구성 요소</strong>에 대한 <strong>무결성 검사를</strong> 진행하여 <strong>변경된 파일</strong>을 탐지하고, 이를 <strong>복구</strong>할 수 있도록 설정  </li>
+<li><strong>디지털 서명</strong> 및 <strong>파일 무결성 검증</strong>을 통해 <strong>보안 기능</strong>이 <strong>변조</strong>되었는지 확인하고, 무단으로 <strong>수정된 파일</strong>을 <strong>자동으로 복원</strong>  </li>
+<li><strong>보안 기능의 코드</strong>와 <strong>구성 파일</strong>이 <strong>변경되지 않도록</strong> 보호하고, <strong>보안 기능이 변조된 경우</strong> 이를 즉시 알림  </li>
+</ul></li>
+<li><p><strong>침해 사고 대응 계획 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>보안 기능의 비활성화</strong>가 탐지되었을 때 <strong>즉시 대응</strong>할 수 있도록 <strong>침해 사고 대응 계획</strong>을 사전에 정의  </li>
+<li><strong>비정상적인 보안 기능 변경</strong>에 대응하기 위한 <strong>복구 절차</strong>를 마련하고, <strong>모의 훈련</strong>을 통해 <strong>침해 사고</strong>에 대한 <strong>대응 능력</strong>을 향상  </li>
+<li><strong>침입 탐지 시스템(IDS)</strong>과 <strong>침입 방지 시스템(IPS)</strong>을 설정하여 <strong>네트워크에서 비정상적인 트래픽</strong>을 탐지하고, <strong>보안 기능의 비활성화</strong> 시도를 실시간으로 차단 
+<h2>Affected Techniques</h2></li>
+</ul></li>
+</ol>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1562.004</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FRM Firewall Rule Modification</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FD Firewall Disable</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

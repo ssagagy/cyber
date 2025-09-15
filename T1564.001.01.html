@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1564.001.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1564.001.01 Create hidden folder - windows</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>Action : System-AmsiScan AND
+amsiscanbuffer : "Set-ItemProperty" AND
+amsiscanbuffer : "-Path" AND
+amsiscanbuffer : "-Name Attributes" AND
+amsiscanbuffer : "[System.IO.FileAttributes]::Hidden"</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1564.001.001.png" alt="T1564 001 001" /></p>
+
+<h3>Response</h3>
+
+<ol>
+<li>숨긴 폴더 검색: 파일 탐색기에서 숨긴 항목을 표시하도록 설정하고, 시스템 내의 숨겨진 폴더를 검색합니다.</li>
+<li>시스템 로그 확인: 이벤트 뷰어를 통해 시스템 로그를 분석하여 숨긴 폴더 생성 시점에 어떤 작업이 있었는지 조사합니다.</li>
+<li>보안 로그 분석: 사용자가 생성한 파일 및 폴더와 관련된 보안 로그를 분석하여 어떤 계정이 폴더를 생성했는지 확인합니다.</li>
+<li>의심스러운 IP 차단: 로그를 통해 발견된 악성 활동과 관련된 IP 주소를 차단합니다.</li>
+<li>의심스러운 폴더 격리: 숨긴 폴더가 악성으로 확인되면 즉시 해당 폴더를 격리하고, 추가적인 악성 파일이 있는지 검토합니다.</li>
+<li>파일 삭제: 숨긴 폴더의 내용이 악성으로 판별되면, 해당 폴더를 삭제하거나 클린 상태의 백업에서 복원합니다.</li>
+</ol>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>타임스탬프 무결성 모니터링 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>파일 시스템</strong>에서 <strong>타임스탬프 변경</strong>을 <strong>모니터링</strong>하고, 의심스러운 타임스탬프 변경이 발생했을 경우 <strong>알림</strong>을 발생하도록 설정  </li>
+<li><strong>파일 및 디렉토리의 타임스탬프</strong>를 정기적으로 <strong>검사</strong>하여 변경된 내용을 기록하고, <strong>비정상적인 타임스탬프 조작</strong>을 감지할 수 있도록 설정  </li>
+<li><strong>파일 무결성 검사 도구</strong>를 사용하여 <strong>타임스탬프 변경</strong>을 포함한 <strong>파일 변경 사항</strong>을 추적하고, 이를 <strong>실시간으로 모니터링</strong>  </li>
+</ul></li>
+<li><p><strong>파일 및 폴더의 무결성 검증 (M1055 - Secure Data Transmission)</strong>  </p>
+
+<ul>
+<li><strong>파일 무결성</strong>을 확인하고, <strong>타임스탬프</strong>를 포함한 <strong>변경 이력</strong>을 지속적으로 기록  </li>
+<li><strong>디지털 서명</strong> 및 <strong>해시 값을 사용</strong>하여 <strong>파일의 원본 상태</strong>를 보장하고, <strong>타임스탬프 변경</strong> 시 이를 <strong>탐지</strong>  </li>
+<li><strong>보안 도구</strong>를 통해 <strong>파일의 타임스탬프 및 수정 기록</strong>을 <strong>자동화된 방식으로 검토</strong>하여 의심스러운 파일 활동을 신속히 식별  </li>
+</ul></li>
+<li><p><strong>파일 시스템 로그 및 감사 시스템 강화 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>파일 시스템의 로그 기록</strong>을 활성화하고, <strong>타임스탬프 변경</strong>이 이루어진 파일에 대해 <strong>자동 감사</strong> 기능을 설정  </li>
+<li><strong>시스템 로그</strong>에서 <strong>타임스탬프 변경</strong>을 추적하고, <strong>자동화된 경고</strong>를 통해 <strong>의심스러운 활동</strong>을 탐지  </li>
+<li><strong>침해 탐지 시스템(IDS)</strong> 및 <strong>침해 방지 시스템(IPS)</strong>을 통해 <strong>파일 시스템의 비정상적인 활동</strong>을 실시간으로 모니터링하고, <strong>타임스탬프 조작</strong> 시도를 차단  </li>
+</ul></li>
+<li><p><strong>디지털 포렌식 및 수사 도구 활용 (M1026 - Indicator Removal on Host)</strong>  </p>
+
+<ul>
+<li><strong>디지털 포렌식 도구</strong>를 사용하여 <strong>타임스탬프 조작</strong>을 탐지하고, <strong>파일 메타데이터</strong>를 상세히 분석하여 <strong>타임스탬프의 변경 여부</strong>를 확인  </li>
+<li><strong>시스템 로그</strong> 및 <strong>파일 속성 분석</strong>을 통해 <strong>타임스탬프 조작 시도</strong>를 빠르게 감지하고, 이를 기록하여 조사할 수 있도록 설정  </li>
+<li><strong>백업 및 아카이빙</strong>을 통해 변경되지 않은 <strong>파일 상태</strong>를 기록하고, 타임스탬프 변경 시 이를 비교하여 <strong>조작 여부</strong>를 확인  </li>
+</ul></li>
+<li><p><strong>시스템 및 네트워크 활동 로그 기록 (M1019 - Application Layer Protocol)</strong>  </p>
+
+<ul>
+<li><strong>모든 시스템 및 네트워크 활동</strong>을 <strong>상세히 기록</strong>하여 <strong>타임스탬프 변경</strong>이 발생했을 때 이를 <strong>추적</strong>할 수 있도록 설정  </li>
+<li><strong>시스템 활동</strong>을 <strong>다양한 로그 파일</strong>에 기록하고, <strong>타임스탬프 변경</strong> 및 <strong>파일 생성/수정/삭제 활동</strong>에 대한 <strong>알림 시스템</strong>을 설정  </li>
+<li><strong>로그 기록의 중앙화</strong>를 통해 <strong>여러 시스템에서의 타임스탬프 변경</strong>을 일괄적으로 추적하고, <strong>의심스러운 활동</strong>을 쉽게 식별  </li>
+</ul></li>
+<li><p><strong>침해 사고 대응 및 대응 절차 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>타임스탬프 변경</strong>이 의심되는 경우, <strong>즉시 대응할 수 있는 절차</strong>를 마련하고, <strong>침해 사고 대응 팀</strong>과 협력하여 변경 사항을 <strong>복구</strong>  </li>
+<li><strong>타임스탬프 변경에 대한 대응 방안</strong>을 사전에 정의하고, <strong>모의 훈련</strong>을 통해 <strong>신속한 대응</strong>을 가능하게 함  </li>
+<li><strong>이상 징후 탐지</strong> 및 <strong>리포트 시스템</strong>을 통해 <strong>보안 팀</strong>이 <strong>타임스탬프 조작</strong>을 실시간으로 추적하고 대응할 수 있도록 시스템 구성</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1564.001</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FCA File Creation Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1569.002.01_d3fend</title>
+    <title>T1569.002.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,23 +13,69 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>파워쉘을 통한 서비스 등록</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1569.002.01.png" alt="T1569 002 01" /></p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<ul>
+<li>레지스트리 변경 모니터링: 레지스트리 키 및 값 수정 감시</li>
+<li>시스템 로그 분석: 특정 이벤트 ID (예: 4657, 4688) 검색</li>
+<li>EDR 솔루션 활용: 서비스 레지스트리 변경 탐지</li>
+</ul>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>서비스 권한 관리 (M1049 - Restrict Application Execution)</strong>  </p>
 
-<h2>Affected Techniques</h2>
+<ul>
+<li><strong>시스템 서비스의 실행 권한</strong>을 <strong>최소화</strong>하여 <strong>서비스 계정</strong>에만 필요한 권한을 부여하고, 불필요한 권한 상승을 방지  </li>
+<li><strong>비관리자 계정</strong>에는 <strong>관리자 권한이 필요한 서비스</strong>의 실행을 <strong>금지</strong>하고, <strong>서비스 계정</strong>의 권한을 명확히 분리하여 관리  </li>
+<li><strong>서비스 계정</strong>에 대한 <strong>액세스 제한</strong>을 설정하고, <strong>비정상적인 서비스</strong> 실행을 탐지할 수 있도록 시스템을 구성  </li>
+</ul></li>
+<li><p><strong>서비스 구성 모니터링 (M1033 - Process Monitoring)</strong>  </p>
 
-<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+<ul>
+<li><strong>시스템 서비스</strong> 및 <strong>프로세스</strong>의 실행을 <strong>모니터링</strong>하여 의심스러운 서비스가 실행될 경우 경고 및 알림을 설정  </li>
+<li><strong>서비스 상태</strong> 및 <strong>구성 변경</strong>을 모니터링하고, <strong>서비스 파일 및 레지스트리</strong>에 대한 <strong>변경 사항</strong>을 기록하여 <strong>악성 서비스</strong>가 시스템에 침투할 수 없도록 방지  </li>
+<li><strong>실시간 프로세스 모니터링 도구</strong>를 활용하여 시스템에서 실행 중인 <strong>서비스</strong>와 <strong>프로세스</strong>를 추적하고, 의심스러운 서비스가 시작될 경우 <strong>즉시 차단</strong>  </li>
+</ul></li>
+<li><p><strong>서비스 관리 및 제한 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>서비스 로그</strong>를 사용하여 <strong>서비스 시작</strong>, <strong>중지</strong>, <strong>구성 변경</strong>에 대한 기록을 <strong>실시간으로 모니터링</strong>  </li>
+<li><strong>서비스 관련 로그</strong>를 중앙화하여 모든 서비스의 <strong>활동 내역</strong>을 추적하고, 비정상적인 활동을 <strong>자동으로 감지</strong>  </li>
+<li><strong>서비스 계정에 대한 감사 및 모니터링</strong>을 통해 악성 코드나 비정상적인 서비스 계정이 실행되는 것을 <strong>즉시 탐지</strong>하고 차단  </li>
+</ul></li>
+<li><p><strong>서비스 변경 및 구성에 대한 무결성 검증 (M1055 - Secure Data Transmission)</strong>  </p>
+
+<ul>
+<li><strong>서비스 구성</strong>과 관련된 <strong>파일 및 레지스트리</strong> 항목의 <strong>무결성 검증</strong>을 활성화하여 서비스에 대한 <strong>불법적인 변경</strong>을 탐지  </li>
+<li><strong>디지털 서명</strong> 및 <strong>해시 값 검증</strong>을 사용하여 서비스 파일과 관련된 <strong>변경 사항</strong>을 추적하고, <strong>비정상적인 파일 변경</strong>을 탐지  </li>
+<li><strong>서비스 파일의 무결성 검사</strong>를 주기적으로 수행하여 <strong>타임스탬프 변경</strong>이나 <strong>파일 변조</strong>가 의심되는 경우 이를 <strong>즉시 경고</strong>  </li>
+</ul></li>
+<li><p><strong>보안 패치 및 업데이트 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>시스템 서비스</strong> 및 <strong>관련 소프트웨어</strong>의 <strong>정기적인 보안 패치</strong> 및 <strong>업데이트</strong>를 통해 보안 취약점을 해결하고, 악용 가능성을 줄임  </li>
+<li><strong>서비스와 관련된 취약점</strong>을 지속적으로 점검하고, <strong>패치 관리</strong> 및 <strong>업데이트 자동화</strong> 시스템을 통해 <strong>최신 보안 상태</strong>를 유지  </li>
+<li><strong>서비스 관련 소프트웨어</strong>의 <strong>버전 관리</strong>를 통해 <strong>보안 취약점</strong>을 조기에 식별하고, 시스템을 <strong>최신 상태로 유지</strong>  </li>
+</ul></li>
+<li><p><strong>서비스 계정 관리 (M1053 - Secure Network Communications)</strong>  </p>
+
+<ul>
+<li><strong>서비스 계정</strong>에 대한 <strong>비밀번호 정책</strong>을 강화하고, <strong>다단계 인증(MFA)</strong>을 적용하여 <strong>서비스 계정에 대한 무단 접근</strong>을 차단  </li>
+<li><strong>서비스 계정의 비밀번호</strong>를 정기적으로 변경하고, 불필요한 <strong>서비스 계정</strong>을 <strong>비활성화</strong>하거나 <strong>삭제</strong>  </li>
+<li><strong>서비스 계정에 대한 액세스 제어</strong>를 통해 <strong>최소 권한 원칙</strong>을 적용하고, <strong>권한 상승</strong>을 제한<br />
+<h2>Affected Techniques</h2></li>
+</ul></li>
+</ol>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
 
 <table>
 <thead>
@@ -44,8 +90,39 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-ISL Execution Isolation</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ISL Kernel-based Process Isolation</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ISL Application-based Process Isolation</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ELM System Daemon Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM Service Binary Verification</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ISL Executable Allowlisting</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ISL Executable Denylisting</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>

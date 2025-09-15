@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1547.001.01_d3fend</title>
+    <title>T1547.001.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,23 +13,60 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx
+HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\RunOnceEx 레지스트리에 등록되는 행위를 탐지한다.</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1547.001.01.png" alt="T1547 001 01" /></p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>공격자가 생성한 레지스트리 키를 삭제합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>레지스트리 모니터링 및 변경 알림 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>레지스트리 Run 키</strong>와 <strong>스타트업 폴더</strong>의 변경 사항을 <strong>실시간으로 모니터링</strong>하고 <strong>알림 시스템</strong>을 설정하여 악성 코드의 등록을 탐지  </li>
+<li><strong>레지스트리 변경 감지 도구</strong>를 사용하여 의심스러운 <strong>레지스트리 키</strong>(예: <code data-language="powershell">HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</code>)의 변화를 모니터링  </li>
+<li><strong>레지스트리 변경 로그</strong>를 분석하여 <strong>불필요하거나 의심스러운 항목</strong>을 추적  </li>
+</ul></li>
+<li><p><strong>스타트업 폴더 및 레지스트리 항목 보호 (M1040 - Security Configurations)</strong>  </p>
+
+<ul>
+<li><strong>스타트업 폴더</strong> 및 <strong>레지스트리 키에 대한 권한</strong>을 제한하여 일반 사용자가 이를 수정할 수 없도록 설정  </li>
+<li><strong>레지스트리 권한 설정</strong>을 통해 <strong>악성 코드</strong>가 <strong>스타트업 항목</strong>에 삽입될 수 없도록 보호  </li>
+<li><strong>불필요한 자동 시작 항목</strong>을 제거하고, <strong>정상적인 프로그램</strong>만이 자동으로 실행되도록 관리  </li>
+</ul></li>
+<li><p><strong>보안 소프트웨어 및 EDR 솔루션 사용 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>EDR/XDR 솔루션</strong>을 사용하여 <strong>자동 시작 프로그램</strong>을 실시간으로 모니터링하고, <strong>이상 활동</strong>을 탐지  </li>
+<li><strong>실행 중인 프로세스</strong> 및 <strong>시작 항목</strong>을 검사하여 의심스러운 <strong>프로그램</strong>이 자동 실행되는 것을 차단  </li>
+<li><strong>Antivirus 및 Anti-malware</strong> 소프트웨어를 사용하여 <strong>스타트업 폴더</strong>와 <strong>레지스트리 항목</strong>을 주기적으로 검사  </li>
+</ul></li>
+<li><p><strong>로그인 스크립트 및 자동 실행 방지 (M1028 - Application Layer Filtering)</strong>  </p>
+
+<ul>
+<li><strong>로그인 스크립트</strong>나 <strong>자동 실행 기능</strong>을 제한하여 악성 코드가 <strong>로그온 시 자동으로 실행</strong>되는 것을 방지  </li>
+<li><strong>그룹 정책</strong>을 활용하여 <strong>자동 실행 기능</strong>을 비활성화하거나 <strong>특정 디렉토리</strong>에서만 실행될 수 있도록 제한  </li>
+<li><strong>USB 장치의 자동 실행</strong> 및 <strong>네트워크 드라이브의 자동 실행</strong>을 차단하여 외부 매체를 통한 악성 코드의 실행을 방지  </li>
+</ul></li>
+<li><p><strong>시스템 보안 패치 및 업데이트 적용 (M1042 - Disable or Remove Feature or Program)</strong>  </p>
+
+<ul>
+<li><strong>Windows 보안 패치</strong>를 정기적으로 적용하여 <strong>자동 실행 관련 취약점</strong>을 해결  </li>
+<li><strong>자동 실행</strong> 기능을 <strong>최소화</strong>하여 시스템에서 불필요한 자동 실행 프로세스를 비활성화  </li>
+<li><strong>보안 소프트웨어</strong>와 함께 <strong>시스템 보호 설정</strong>을 강화하여 악성 코드가 <strong>스타트업 항목</strong>을 통해 실행되지 않도록 방지  </li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
-<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
 
 <table>
 <thead>
@@ -44,9 +81,24 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SICA System Init Config Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FA File Analysis</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>
-

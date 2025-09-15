@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1562.002.01_d3fend</title>
+    <title>T1562.002.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -21,11 +21,54 @@
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>공격자에 의해 PC가 제어되었을 가능성이 있으므로 호스트 네트워크를 격리합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>보안 소프트웨어의 무결성 및 보호 설정 (M1040 - Security Configurations)</strong>  </p>
+
+<ul>
+<li><strong>보안 도구</strong>(예: <strong>안티바이러스</strong>, <strong>침입 탐지 시스템</strong>)의 <strong>무결성</strong>을 보장하고, <strong>비활성화</strong>나 <strong>중지</strong>를 <strong>차단</strong>하는 <strong>보호 기능</strong>을 활성화  </li>
+<li><strong>보안 소프트웨어</strong>가 <strong>자동으로 재시작되도록 설정</strong>하거나 <strong>핸즈프리로 복구</strong>할 수 있도록 <strong>구성</strong>하여, 도구가 비활성화되는 것을 방지  </li>
+<li><strong>파일 및 레지스트리 보호</strong>를 통해 <strong>보안 도구의 설정</strong>이 <strong>수정되거나 삭제</strong>되지 않도록 보호  </li>
+</ul></li>
+<li><p><strong>관리자 권한 및 접근 제어 (M1045 - Restrict Access to Tools)</strong>  </p>
+
+<ul>
+<li><strong>관리자 권한</strong>을 <strong>최소화</strong>하고, <strong>불필요한 사용자</strong>나 <strong>어플리케이션</strong>이 보안 도구에 접근할 수 없도록 <strong>액세스 제어</strong>를 강화  </li>
+<li><strong>보안 도구에 대한 변경 권한</strong>을 <strong>승인된 사용자</strong>로 제한하고, <strong>강력한 인증</strong> 및 <strong>다단계 인증</strong>(MFA)을 요구하여, <strong>무단 변경 시도</strong>를 차단  </li>
+<li><strong>권한 기반 접근 제어(PBAC)</strong>를 사용하여 <strong>보안 소프트웨어</strong>에 대한 <strong>불필요한 수정</strong>이나 <strong>비활성화</strong>를 방지  </li>
+</ul></li>
+<li><p><strong>보안 도구에 대한 모니터링 및 경고 시스템 강화 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>보안 도구의 상태</strong>를 실시간으로 모니터링하고, <strong>비정상적인 활동</strong>(예: 보안 소프트웨어 비활성화 시도)을 감지하는 <strong>모니터링 시스템</strong> 설정  </li>
+<li><strong>보안 도구가 비활성화되었을 경우</strong>, <strong>자동 경고 시스템</strong>을 활성화하여 빠르게 대응할 수 있도록 알림을 발생시키고, <strong>비정상적인 행동</strong>을 즉시 기록하여 추적할 수 있도록 설정  </li>
+<li><strong>시스템 로그</strong>와 <strong>보안 이벤트</strong>를 <strong>실시간으로 분석</strong>하여, <strong>보안 도구의 비활성화 시도</strong>를 탐지하고 대응  </li>
+</ul></li>
+<li><p><strong>소프트웨어 및 보안 도구 업데이트 자동화 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>보안 도구</strong>가 <strong>최신 상태로 유지</strong>되도록 <strong>자동 업데이트</strong>를 설정하고, <strong>패치 관리 시스템</strong>을 통해 최신 보안 패치가 적용되도록 한다  </li>
+<li><strong>업데이트 로그</strong>와 <strong>보안 패치 기록</strong>을 관리하여, <strong>보안 도구가 최신 상태</strong>로 유지되고, <strong>보안 취약점</strong>이 해결되도록 한다  </li>
+<li><strong>패치 관리 도구</strong>를 통해 <strong>정기적인 업데이트</strong>와 <strong>보안 패치 적용</strong>을 자동화하여 <strong>비활성화된 도구를 복구</strong>하고 <strong>취약점</strong>을 예방  </li>
+</ul></li>
+<li><p><strong>디지털 서명 및 파일 무결성 검증 (M1055 - Secure Data Transmission)</strong>  </p>
+
+<ul>
+<li><strong>디지털 서명</strong> 및 <strong>무결성 검증</strong>을 통해 <strong>보안 도구</strong>나 <strong>보안 시스템</strong>의 <strong>파일 및 구성 요소</strong>에 대한 <strong>변경 여부</strong>를 검토  </li>
+<li><strong>파일 무결성 모니터링</strong>을 통해 <strong>보안 도구의 설정</strong>이 <strong>변경되었는지</strong> 확인하고, 무단으로 <strong>변경된 파일</strong>을 <strong>자동으로 복구</strong>  </li>
+<li><strong>파일 무결성 검사</strong>와 <strong>디지털 서명 검증</strong>을 통해 <strong>보안 도구의 코드</strong>가 <strong>변조되었는지</strong> 점검  </li>
+</ul></li>
+<li><p><strong>보안 사고 대응 계획 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>보안 도구 비활성화 시도</strong>에 대한 <strong>대응 절차</strong>를 사전에 정의하여 <strong>침해 사고 대응 계획</strong>을 마련하고, 보안 도구 비활성화 시 <strong>즉시 대응</strong>할 수 있도록 준비  </li>
+<li><strong>침해 사고 발생 시</strong> 방어 기능이 손상된 상태에서의 <strong>복구 절차</strong>를 명확히 정의하고, <strong>모의 훈련</strong>을 통해 신속하게 대응할 수 있도록 한다  </li>
+<li><strong>침입 탐지 시스템(IDS)</strong>와 <strong>침입 방지 시스템(IPS)</strong>을 사용하여 <strong>네트워크 트래픽</strong>에서 비정상적인 패턴을 탐지하고 실시간으로 차단</li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
@@ -34,7 +77,7 @@
 <table>
 <thead>
 <tr>
-  <th style="text-align:center;">ATT&amp;CK</th>
+  <th style="text-align:center;">Techniques</th>
 </tr>
 </thead>
 <tbody>
@@ -43,9 +86,6 @@
 </tr>
 </tbody>
 </table>
-
-<p>|D3FEND|
-|:-----------:|</p>
 
 </body>
 </html>

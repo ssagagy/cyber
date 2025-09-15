@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1546.015.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1546.015.02 COM 객체로 프로세스 실행</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>COM 하이재킹을 탐지하기 위해서는 HKEY<em>LOCAL</em>MACHINE\SOFTWARE\Classes, HKEY<em>CURRENT</em>USER\SOFTWARE\Classes 하위 레지스트리 키 접근 행위를 모니터링해야 한다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="캡처.PNG" alt="" /></p>
+
+<h3>Response</h3>
+
+<ol>
+<li>레지스트리 분석 및 복구 : 탐지된 비정상적인 레지스트리 변경 사항을 분석하고 원래 상태로 복구한다. 특히 CLSID\InprocServer32 경로의 값이 정상적인 경로로 변경되었는지 확인한다.</li>
+<li>악성 DLL 분석 및 제거 : 하이재킹된 COM 개체가 로드한 DLL 파일을 분석하여 악성 여부를 판단하고, 악성 파일을 제거한다. 해당 파일이 로드된 경로 및 타겟 프로세스와의 연결을 추적한다.</li>
+<li>프로세스 및 네트워크 분석 : COM Hijacking을 통해 실행된 프로세스의 동작을 분석하고, 해당 프로세스가 네트워크 연결을 시도했는지 확인한다. 필요할 경우 네트워크를 차단하여 추가적인 악성 활동을 방지한다.</li>
+<li>포렌식 조사 : 악성 코드가 사용한 공격 경로를 파악하기 위해 포렌식 분석을 수행하고, 공격자가 남긴 지표나 흔적을 조사한다. 이를 통해 추가적인 공격을 예방하고 시스템의 취약점을 보완할 수 있다.</li>
+<li>시스템 패치 및 업데이트 : 공격자가 악용한 취약점이나 구성을 파악한 후, 해당 시스템 및 소프트웨어를 패치하고 업데이트를 진행한다. COM 관련 취약점이나 잘못된 구성이 재발하지 않도록 설정을 강화한다.</li>
+</ol>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>IFEO 주입 모니터링 및 제어 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>레지스트리 변경 모니터링</strong>을 활성화하여 <strong>Image File Execution Options</strong> 항목에서 의심스러운 프로세스 주입을 추적  </li>
+<li><strong>IFEO 레지스트리 키</strong>에 대한 <strong>변경 감지</strong> 및 알림 시스템을 설정하여 <strong>악성 코드 주입</strong>을 빠르게 탐지  </li>
+<li><strong>정기적으로 레지스트리 설정</strong>을 검토하여 <strong>IFEO 관련 의심스러운 항목</strong>이 추가되지 않았는지 확인  </li>
+</ul></li>
+<li><p><strong>시스템 및 프로세스 무결성 검증 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>시스템 프로세스의 무결성 검증</strong>을 주기적으로 수행하여 <strong>IFEO 주입</strong>을 통한 프로세스 변조 여부를 확인  </li>
+<li><strong>디지털 서명</strong> 및 <strong>파일 무결성 검사</strong>를 사용하여 <strong>IFEO에 의해 변조된 실행 파일</strong>을 탐지하고 차단  </li>
+<li><strong>EDR/XDR 솔루션</strong>을 통해 <strong>IFEO 관련 악성 프로세스</strong>를 실시간으로 모니터링하고 차단  </li>
+</ul></li>
+<li><p><strong>레지스트리 권한 제한 (M1040 - Security Configurations)</strong>  </p>
+
+<ul>
+<li><strong>레지스트리 권한 제한</strong>을 통해 <strong>IFEO 설정을 수정</strong>할 수 있는 사용자를 <strong>관리자</strong>로 제한  </li>
+<li><strong>IFEO 관련 레지스트리 키</strong>에 대한 <strong>읽기/쓰기 권한을 제한</strong>하여 악성 사용자가 시스템에 주입할 수 없도록 설정  </li>
+<li><strong>레지스트리 변경 로그</strong>를 활성화하여 <strong>IFEO 키의 변화를 추적</strong>하고 의심스러운 변경 사항을 탐지  </li>
+</ul></li>
+<li><p><strong>보안 소프트웨어 및 패치 적용 (M1042 - Disable or Remove Feature or Program)</strong>  </p>
+
+<ul>
+<li><strong>Windows 보안 패치 및 업데이트</strong>를 정기적으로 적용하여 <strong>IFEO 기능을 악용</strong>한 취약점에 대응  </li>
+<li><strong>악성 코드 탐지 및 차단</strong>을 위한 <strong>Antivirus, EDR</strong> 및 <strong>침해 탐지 시스템</strong>을 운영하여 <strong>IFEO 주입을 통한 공격</strong>을 실시간으로 차단  </li>
+<li><strong>자동화된 보안 툴</strong>을 사용하여 시스템에서 <strong>비정상적인 프로세스</strong> 또는 <strong>IFEO 주입</strong>을 자동으로 차단  </li>
+</ul></li>
+<li><p><strong>프로세스 및 애플리케이션 보안 강화 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>애플리케이션 보안</strong>을 강화하여 <strong>IFEO 주입 기법</strong>을 통한 악성 코드 실행을 방지  </li>
+<li><strong>애플리케이션 실행 파일에 대한 무결성 검사</strong> 및 <strong>암호화된 실행 환경</strong>을 통해 <strong>프로세스 변조</strong>를 방지  </li>
+<li><strong>시스템 네트워크</strong>의 분리와 <strong>방화벽 규칙</strong>을 통해 악성 코드가 네트워크를 통해 <strong>프로세스를 변조</strong>하는 것을 차단  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1546.015</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

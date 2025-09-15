@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1573.001.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1573.001.01 Encrypted Channel Using Symmetric Cryptography</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>대칭키로 데이터를 암호화하고 전송하는 행위를 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1573.001.01.PNG" alt="T1573 001 01" /></p>
+
+<p>https://172.18.10.125:8903/#/analysis/incident/67b3f443002dc6cc00000754</p>
+
+<h3>Response</h3>
+
+<p>공격자 C&amp;C 서버로 추정되는 주소를 차단합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>암호화된 트래픽 모니터링 (M1011 - Application Layer Protocol)</strong>  </p>
+
+<ul>
+<li><strong>SSL/TLS</strong>를 포함한 <strong>암호화된 트래픽</strong>을 실시간으로 <strong>모니터링</strong>하고, 정상적인 트래픽 외의 <strong>의심스러운 암호화 통신</strong>을 탐지  </li>
+<li><strong>암호화된 통신을 복호화</strong>하여 트래픽을 검사하는 <strong>중간자 공격</strong> 방지 장치를 설치하거나 <strong>웹 프록시</strong>를 사용하여 암호화된 데이터를 실시간으로 분석  </li>
+<li><strong>SSL/TLS</strong> 세션을 <strong>복호화</strong>하여 <strong>통신 패턴</strong> 및 <strong>데이터 흐름</strong>을 분석, 비정상적인 트래픽이나 <strong>악성 통신</strong>을 식별  </li>
+</ul></li>
+<li><p><strong>TLS/SSL 인증서 검증 (M1050 - Data Obfuscation)</strong>  </p>
+
+<ul>
+<li><strong>SSL/TLS 인증서</strong>를 사용하여 <strong>통신 암호화</strong>가 이루어질 때, <strong>인증서 검증</strong>을 강화하여 <strong>악성 서버</strong>와의 연결을 차단  </li>
+<li><strong>인증서 투명성</strong> 및 <strong>인증서 검증</strong> 절차를 강화하여 <strong>잘못된 인증서</strong>가 사용되는 경우 이를 탐지하고 연결을 차단  </li>
+<li><strong>유효하지 않은 SSL 인증서</strong> 또는 <strong>자체 서명된 인증서</strong>를 통해 <strong>암호화된 통신</strong>을 시도할 경우 <strong>즉시 차단</strong>  </li>
+</ul></li>
+<li><p><strong>안티 바이러스 및 엔드포인트 보안 (M1036 - Application Layer Protocol)</strong>  </p>
+
+<ul>
+<li><strong>엔드포인트 보안 소프트웨어</strong>를 사용하여 <strong>악성 프로세스</strong> 및 <strong>암호화된 트래픽</strong>을 분석하고, <strong>비정상적인 활동</strong>을 탐지  </li>
+<li><strong>동적 분석</strong> 및 <strong>행위 기반 탐지</strong> 기술을 활용하여 <strong>암호화된 통신</strong>을 사용하는 <strong>악성 코드</strong>를 식별하고, 이를 <strong>차단</strong>  </li>
+<li><strong>실시간 악성 코드 탐지</strong> 및 <strong>탐지된 암호화 트래픽 차단</strong> 기능을 통해 시스템에 감염된 악성 코드가 외부와 통신을 시도할 때 이를 탐지하고 차단  </li>
+</ul></li>
+<li><p><strong>포트 및 프로토콜 필터링 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>네트워크 방화벽</strong>과 <strong>포트 필터링</strong>을 사용하여 <strong>의심스러운 암호화된 트래픽</strong>이 특정 포트를 통해 통신하지 못하도록 차단  </li>
+<li><strong>암호화된 통신</strong>에 사용되는 <strong>비정상적인 포트</strong>나 <strong>프로토콜</strong>을 차단하여 공격자가 <strong>비정상적인 채널</strong>을 통해 데이터를 전송할 수 없도록 함  </li>
+<li><strong>서버 측 암호화 정책</strong>을 설정하여 외부와의 <strong>비인가된 암호화된 통신</strong>을 방지  </li>
+</ul></li>
+<li><p><strong>패킷 분석 및 트래픽 분석 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>네트워크 트래픽 분석</strong> 도구를 사용하여 <strong>암호화된 패킷</strong>을 <strong>비정상적인 패턴</strong>으로 분석하고, <strong>의심스러운 통신</strong>을 실시간으로 탐지  </li>
+<li><strong>패킷 검사 시스템</strong>을 사용하여 <strong>대칭 암호화</strong>가 사용된 트래픽을 <strong>분석</strong>하고, <strong>악성 통신</strong>이 있을 경우 이를 차단  </li>
+<li><strong>암호화된 트래픽</strong>이 정상적인 <strong>애플리케이션</strong>이나 <strong>서비스</strong>에서 발생하는지 여부를 확인하고, 비정상적인 암호화 통신을 탐지하여 차단  </li>
+</ul></li>
+<li><p><strong>침해 탐지 시스템 (M1060 - Exploitation for Privilege Escalation)</strong>  </p>
+
+<ul>
+<li><strong>침해 탐지 시스템(IDS)</strong>을 사용하여 <strong>암호화된 통신</strong>이 의심스러운 <strong>패턴</strong>을 나타낼 경우 이를 <strong>알림</strong>으로 제공하고, <strong>실시간 대응</strong>  </li>
+<li><strong>네트워크 트래픽</strong>을 모니터링하여 <strong>암호화된 연결</strong>을 통해 이루어지는 <strong>권한 상승 시도</strong>나 <strong>데이터 유출</strong>을 탐지  </li>
+<li><strong>다중 계층 보안</strong>을 적용하여 <strong>침해 탐지</strong>가 실패하지 않도록 하고, <strong>타겟 공격</strong>을 차단하는 데 효과적인 방어 시스템을 구축  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1573.001</td>
+</tr>
+</tbody>
+</table>
+
+<p>|D3FEND|
+|:-----------:|</p>
+
+</body>
+</html>

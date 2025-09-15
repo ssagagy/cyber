@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1588.002.01_d3fend</title>
+    <title>T1588.002.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,19 +13,70 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>알려진 C2 또는 다운로드 받은 악성코드의 페이로드로 탐지합니다.</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p>행동 유형 : 네트워크 접속</p>
+
+<p>오퍼레이션 : contains</p>
+
+<p>값 : &lt;알려진 C2 또는 다운로드 받는 악성코드의 페이로드&gt;</p>
+
+<p><img src="T1588.002.01.png" alt="" /></p>
+
+<p>https://172.18.10.125:8903/#/analysis/incident/67a9a5ce002dc6ce00000eae</p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<ul>
+<li>의심스러운 프로세스 격리 및 실행 차단</li>
+<li>침해된 시스템을 분석하여 추가적인 악성코드 감염 여부 확인</li>
+<li>공격자가 활용한 네트워크 및 계정 접근 권한 제거</li>
+<li>패치 및 보안 업데이트 적용하여 재발 방지</li>
+</ul>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li>EDR/XDR 솔루션을 통한 탐지 및 차단</li>
+</ol>
+
+<ul>
+<li><p>엔드포인트 보안 솔루션(EDR/XDR) 적용하여 악성코드 실행 탐지 및 차단</p></li>
+<li><p>Cobalt Strike, Mimikatz, Metasploit 등의 해킹 도구 실행 탐지 및 차단 규칙 설정</p></li>
+<li><p>파일 무결성 모니터링(FIM) 적용하여 의심스러운 실행 파일 탐지</p></li>
+</ul>
+
+<ol start="2">
+<li>네트워크 및 웹 필터링 적용</li>
+</ol>
+
+<ul>
+<li><p>SIEM(Security Information and Event Management) 솔루션을 사용하여 다크웹, 해킹 포럼 접속 탐지</p></li>
+<li><p>보안 프록시 또는 DNS 필터링을 활용하여 악성코드 배포 사이트 차단</p></li>
+<li><p>Firewall 및 IDS/IPS에서 악성코드 다운로드 시도 차단 (YARA, Snort 규칙 적용)</p></li>
+</ul>
+
+<ol start="3">
+<li>이메일 및 파일 보안 강화</li>
+</ol>
+
+<ul>
+<li><p>첨부 파일 스캔 및 실행 파일(.exe, .dll, .scr) 자동 차단</p></li>
+<li><p>이메일 피싱 방어를 위해 DMARC, DKIM, SPF 설정</p></li>
+<li><p>USB 및 외부 저장 장치 사용 제한 (DLP 솔루션 적용)</p></li>
+</ul>
+
+<ol start="4">
+<li>소프트웨어 무결성 검증 및 제한</li>
+</ol>
+
+<ul>
+<li><p>AppLocker, WDAC(Windows Defender Application Control)로 승인된 소프트웨어만 실행 가능하도록 설정</p></li>
+<li><p>PowerShell 실행 정책 제한 (Set-ExecutionPolicy Restricted)</p></li>
+<li><p>Windows Script Host (WSH) 및 매크로 실행 차단</p></li>
+</ul>
 
 <h2>Affected Techniques</h2>
 
@@ -34,7 +85,7 @@
 <table>
 <thead>
 <tr>
-  <th style="text-align:center;">ATT&amp;CK</th>
+  <th style="text-align:center;">Techniques</th>
 </tr>
 </thead>
 <tbody>
@@ -43,9 +94,6 @@
 </tr>
 </tbody>
 </table>
-
-<p>|D3FEND|
-|:-----------:|</p>
 
 </body>
 </html>

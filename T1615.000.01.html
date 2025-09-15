@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1615.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1615.000.01 Windows 내장 프로그램 gpresult를 이용하여 그룹 정책 정보 수집</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>powershell.exe가 gpresult.exe를 실행하여 그룹 정책 정보를 수집하는 행위를 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1615.000.01.png" alt="" /></p>
+
+<h3>Response</h3>
+
+<ol>
+<li>WMI 쿼리 및 명령 로그 분석:</li>
+</ol>
+
+<p>win32<em>Process, win32</em>OperatingSystem, win32_NetworkAdapter 등 WMI를 통해 쿼리된 명령을 추적합니다.</p>
+
+<ol start="2">
+<li>PowerShell 활동 추적:</li>
+</ol>
+
+<p>PowerShell 스크립트에서 Get-WmiObject 또는 Invoke-WmiMethod와 같은 WMI 명령어를 사용하는 활동을 추적합니다.</p>
+
+<ol start="3">
+<li>SIEM 도구 및 로그 분석:</li>
+</ol>
+
+<p>Splunk, Elastic Stack, Microsoft Sentinel 등에서 WMI와 관련된 트래픽 및 이벤트를 모니터링합니다.</p>
+
+<ol start="4">
+<li>Sysmon을 통한 탐지</li>
+</ol>
+
+<p>Sysmon의 Event ID 20 (WMI 활동)을 활용하여, 시스템에서 발생한 WMI 쿼리를 기록합니다. 이를 통해 의심스러운 쿼리 실행을 추적할 수 있습니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>WMI 접근 제어 강화</strong></p>
+
+<ul>
+<li>사용자와 그룹이 WMI 리소스에 접근할 수 있는 권한을 최소화합니다.</li>
+<li>특히 WMI 명령을 실행할 수 있는 권한은 관리자나 특정 권한을 가진 사용자에게만 부여합니다</li>
+<li>wmimgmt.msc(WMI 관리 도구)를 통해 WMI의 사용자 권한을 검토하고, 불필요한 권한을 제거합니다.</li>
+</ul></li>
+<li><p><strong>PowerShell 및 WMI 사용 제한</strong></p>
+
+<ul>
+<li>PowerShell 스크립트를 통한 WMI 접근을 제한하고 wmic.exe나 PowerShell을 통한 WMI 명령 실행을 제한합니다.</li>
+<li>그룹 정책이나 AppLocker를 통해 제한할 수 있습니다.</li>
+</ul></li>
+<li><p><strong>시스템 및 네트워크 탐지 강화</strong></p>
+
+<ul>
+<li>공격자가 WMI를 사용하여 원격으로 시스템 정보를 검색할 때 발생할 수 있는 네트워크 트래픽을 모니터링합니다.</li>
+<li>WMI는 기본적으로 포트 135 (RPC)와 445 (SMB)를 사용하므로, 이를 모니터링합니다.</li>
+<li>또한, 방화벽에서 포트를 차단하거나, IDS/IPS 시스템에서 WMI 관련 트래픽을 탐지할 수 있습니다.</li>
+</ul></li>
+<li><p><strong>Windows Defender 또는 EDR 도구 활용</strong></p>
+
+<ul>
+<li>Microsoft Defender for Endpoint 또는 EDR(Endpoint Detection and Response) 솔루션을 활용하여 의심스러운 WMI 호출을 탐지합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1615</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTF Network Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ITF Inbound Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-OTF Outbound Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-DA Dynamic Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

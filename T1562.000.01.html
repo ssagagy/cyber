@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1562.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1562.000.01 시스템 저널 로깅 중단</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>cmd line: systemctl AND stop AND systemd-journald</p>
+
+<h3>Detection(EDR)</h3>
+
+<h3>Response</h3>
+
+<p>공격자가 보안 툴을 비활성화하거나 수정하여 시스템의 방어를 약화시키는 것을 방지하는 데 중점을 둡니다. 이를 효과적으로 대응하려면 보안 툴의 무력화 또는 변경을 탐지하고 차단하는 기술적 조치가 필요합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>보안 소프트웨어 및 시스템의 지속적인 모니터링 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>보안 소프트웨어</strong>(예: <strong>안티바이러스</strong>, <strong>침입 탐지 시스템</strong>)의 <strong>실시간 모니터링</strong>을 강화하고, <strong>비정상적인 프로세스 활동</strong>이나 <strong>방어 메커니즘 비활성화 시도</strong>를 탐지  </li>
+<li><strong>시스템 로그</strong>를 모니터링하여 <strong>보안 관련 이벤트</strong>나 <strong>방어 시스템 비활성화</strong>가 발생할 경우 즉시 알림을 받도록 설정  </li>
+<li><strong>보안 소프트웨어의 자동 업데이트</strong>와 <strong>패치 관리</strong>를 통해 최신 위협에 대응하도록 한다  </li>
+</ul></li>
+<li><p><strong>방어 시스템에 대한 액세스 제한 (M1045 - Restrict Access to Tools)</strong>  </p>
+
+<ul>
+<li><strong>보안 소프트웨어</strong>나 <strong>방어 시스템</strong>에 대한 접근 권한을 <strong>최소화</strong>하고, <strong>불필요한 접근</strong>을 차단  </li>
+<li><strong>관리자 권한</strong>을 가진 사용자만 방어 시스템의 <strong>설정 변경</strong>이나 <strong>비활성화</strong>를 할 수 있도록 제한  </li>
+<li><strong>시스템 관리자</strong> 및 <strong>보안 팀</strong> 외에는 <strong>보안 소프트웨어</strong>나 <strong>보안 도구</strong>에 접근할 수 없도록 <strong>강력한 인증 및 권한 부여</strong> 절차를 적용  </li>
+</ul></li>
+<li><p><strong>보안 설정 및 정책 강화 (M1032 - Application Layer Filtering)</strong>  </p>
+
+<ul>
+<li><strong>운영 체제 및 애플리케이션 보안 설정</strong>을 강화하여 <strong>방어 시스템</strong>에 대한 우회 시도를 방지  </li>
+<li><strong>보안 정책</strong>을 명확히 정의하고, <strong>정기적인 보안 감사</strong>와 <strong>보안 설정 점검</strong>을 통해 <strong>방어 메커니즘</strong>이 적절히 작동하는지 확인  </li>
+<li><strong>애플리케이션 계층 보안</strong>을 강화하여 <strong>악성 코드</strong>나 <strong>방어 우회 시도</strong>를 차단  </li>
+</ul></li>
+<li><p><strong>디지털 서명 및 무결성 검증 (M1040 - Security Configurations)</strong>  </p>
+
+<ul>
+<li><strong>파일 무결성 모니터링</strong> 및 <strong>디지털 서명</strong>을 활용하여 <strong>방어 시스템</strong>에 대한 <strong>변경이나 삭제</strong>가 발생하지 않도록 방지  </li>
+<li><strong>무결성 검사 도구</strong>를 사용하여 시스템에 설치된 <strong>보안 소프트웨어</strong>나 <strong>방어 체계</strong>의 상태를 정기적으로 점검  </li>
+<li><strong>무단 변경</strong>이 발견되면 자동으로 <strong>경고 및 알림</strong>을 발생시켜 빠르게 대응할 수 있도록 설정  </li>
+</ul></li>
+<li><p><strong>보안 경고 및 이벤트 응답 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>보안 경고 시스템</strong>을 구축하여 <strong>방어 시스템 비활성화 시도</strong>나 <strong>비정상적인 활동</strong>에 대해 즉시 대응할 수 있도록 준비  </li>
+<li><strong>침입 탐지 시스템(IDS)</strong> 및 <strong>침입 방지 시스템(IPS)</strong>을 활성화하여 <strong>네트워크 트래픽</strong>에서 발생할 수 있는 <strong>공격 패턴</strong>을 모니터링하고 실시간으로 차단  </li>
+<li><strong>침해 사고 대응 계획</strong>을 수립하여 <strong>방어 메커니즘 손상</strong>을 포함한 <strong>보안 사고</strong> 발생 시 즉시 대응할 수 있도록 훈련  </li>
+</ul></li>
+<li><p><strong>애플리케이션 및 시스템 패치 관리 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>시스템과 애플리케이션에 대한 정기적인 패치 관리</strong>를 통해 <strong>보안 취약점</strong>을 해결하고 <strong>방어 시스템</strong>을 최신 상태로 유지  </li>
+<li><strong>패치 및 업데이트 자동화</strong> 시스템을 사용하여 <strong>보안 취약점</strong>이 발생하지 않도록 방지  </li>
+<li><strong>패치 로그</strong> 및 <strong>업데이트 기록</strong>을 보관하여 <strong>취약점 해결</strong> 여부를 추적하고, <strong>비활성화된 방어 시스템</strong>을 재설정  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1562</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

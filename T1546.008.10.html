@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1546.008.10</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1546.008.10 sethc.exe를 통한 cmd.exe 실행</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>모니터링을 통해 sethc.exe를 통한 cmd.exe 실행 행위를 확인합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1546.008.10.png" alt="" />
+https://172.18.10.125:8903/#/analysis/incident/675a7895002dc79600002d68</p>
+
+<h3>Response</h3>
+
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>AppInit DLLs 사용 제한 (M1026 - Privileged Account Management)</strong>  </p>
+
+<ul>
+<li><strong>AppInit DLLs</strong> 기능을 <strong>비활성화</strong>하거나 <strong>제한</strong>하여 악성 DLL이 시스템에 로드되지 않도록 설정  </li>
+<li><strong>레지스트리 설정</strong>을 통해 <strong>AppInit_DLLs 키</strong>를 수정하고, 불필요한 DLL 로딩을 차단  </li>
+<li><strong>관리자 권한</strong>을 최소화하여 일반 사용자 계정이 시스템 파일을 수정할 수 없도록 설정  </li>
+</ul></li>
+<li><p><strong>시스템 프로세스 모니터링 및 알림 설정 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>레지스트리 변경</strong> 및 <strong>AppInit DLLs 변경</strong> 이벤트를 실시간으로 모니터링하고 알림을 받을 수 있도록 설정 (예: Event ID 4657)  </li>
+<li><strong>프로세스 및 파일 시스템 모니터링</strong>을 통해 의심스러운 DLL 파일이 <strong>시스템 프로세스</strong>에 로드되는지 확인  </li>
+<li><strong>EDR/XDR</strong> 솔루션을 활용하여 <strong>AppInit DLLs 관련 활동</strong>을 모니터링하고 의심스러운 DLL 로드 이벤트를 탐지  </li>
+</ul></li>
+<li><p><strong>애플리케이션 무결성 검증 (M1033 - Process Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>시스템 프로세스와 애플리케이션에 대한 무결성 검증</strong>을 수행하여 <strong>AppInit DLLs</strong>를 통한 변조를 탐지  </li>
+<li><strong>디지털 서명</strong>을 사용하여 <strong>정상적인 DLL 파일</strong>만 시스템에서 실행되도록 설정  </li>
+<li><strong>파일 무결성 검사 도구</strong>를 사용하여 시스템 파일에 대한 변조를 예방  </li>
+</ul></li>
+<li><p><strong>레지스트리 보호 및 설정 변경 제한 (M1040 - Security Configurations)</strong>  </p>
+
+<ul>
+<li><strong>레지스트리 권한</strong>을 제한하여 악성 사용자가 <strong>AppInit_DLLs 레지스트리 키</strong>를 수정할 수 없도록 설정  </li>
+<li><strong>레지스트리 변경 모니터링</strong>을 통해 <strong>AppInit_DLLs</strong>와 같은 중요 레지스트리 키의 변화를 추적  </li>
+<li><strong>Windows 그룹 정책</strong>을 사용하여 <strong>AppInit DLLs 기능을 제한</strong>하고, 악성 코드의 공격 경로를 차단  </li>
+</ul></li>
+<li><p><strong>보안 패치 및 업데이트 적용 (M1042 - Disable or Remove Feature or Program)</strong>  </p>
+
+<ul>
+<li><strong>Windows 보안 패치</strong>를 정기적으로 적용하여 <strong>AppInit DLLs 관련 취약점</strong>을 해결  </li>
+<li><strong>AppInit DLLs 기능을 비활성화</strong>하거나 시스템에서 불필요한 기능을 제거하여 공격 표면을 줄임  </li>
+<li><strong>Antivirus 및 Anti-malware</strong> 소프트웨어를 사용하여 <strong>AppInit DLLs를 통한 악성 코드</strong>를 차단  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1546.008</td>
+</tr>
+<tr>
+  <td style="text-align:center;">T1222.001</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-PSA Process Spawn Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-DA Dynamic Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

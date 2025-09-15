@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1482.000.06</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1482.000.06 도메인 신뢰관계 조회</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>Process Create AND CMD Line: nltest AND domain_</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1482.000.06.png" alt="" /></p>
+
+<h3>Response</h3>
+
+<p>도메인 신뢰 관계의 최소화 및 관리, 네트워크 및 권한 관리 강화, 침해 탐지 시스템 및 모니터링 강화, MFA와 같은 인증 강화 등을 통해 도메인 간 이동을 차단하고, 공격자가 이를 악용하는 것을 방지하는 데 중점을 둡니다. 또한, 보안 교육을 통해 관리자가 도메인 간 신뢰 관계를 제대로 관리할 수 있도록 하고, 실시간 탐지 및 대응 시스템을 통해 의심스러운 활동을 신속하게 파악하고 차단하는 것이 중요합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>도메인 간 신뢰 관계 제한 (M1026 - Privileged Account Management)</strong>  </p>
+
+<ul>
+<li><strong>도메인 간 신뢰 관계를 최소화</strong>하고, 신뢰 관계가 필요한 경우 <strong>가장 적합한 범위로만 설정</strong>  </li>
+<li><strong>도메인 트러스트</strong>를 관리하고 신뢰할 수 없는 도메인 간 신뢰 관계를 설정하지 않도록 주의  </li>
+<li><strong>도메인 간 신뢰 관계의 단방향 설정</strong>을 사용하여 한쪽 도메인만 다른 도메인에 신뢰를 허용하도록 구성  </li>
+</ul></li>
+<li><p><strong>도메인 신뢰 관계 탐색 방지 (M1031 - Network Segmentation)</strong>  </p>
+
+<ul>
+<li><strong>네트워크 세분화</strong>를 통해 내부 네트워크에서 다른 도메인에 대한 접근을 제한  </li>
+<li><strong>세분화된 방화벽 및 라우터 규칙</strong>을 적용하여 도메인 간 불필요한 통신을 차단  </li>
+</ul></li>
+<li><p><strong>PowerShell 및 Netdom 사용 모니터링 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>PowerShell 스크립트 및 Netdom 명령어 실행 로그 감시</strong>  </li>
+<li><strong>Event ID 4688 (새로운 프로세스 생성)</strong> 및 <strong>Event ID 4648 (명시적 인증)</strong>을 사용하여 도메인 신뢰 관계를 확인하는 명령어를 탐지  </li>
+<li><strong>EDR/XDR 솔루션</strong>을 통해 의심스러운 도메인 신뢰 탐지 활동을 실시간으로 모니터링  </li>
+</ul></li>
+<li><p><strong>도메인 관리자 계정 보호 (M1026 - Privileged Account Management)</strong>  </p>
+
+<ul>
+<li><strong>도메인 관리자 계정에 대한 강력한 보호</strong> (최소 권한 원칙 적용)  </li>
+<li><strong>다중 인증(MFA)</strong> 적용하여 관리자 계정의 무단 접근을 방지  </li>
+<li><strong>도메인 관리자 계정의 사용을 최소화</strong>하고 관리자가 아닌 사용자에게 권한을 부여하지 않도록 설정  </li>
+</ul></li>
+<li><p><strong>비밀번호 정책 및 암호화 강화 (M1027 - Password Policies &amp; M1040 - Security Configurations)</strong>  </p>
+
+<ul>
+<li><strong>강력한 비밀번호 정책</strong>을 적용하고 <strong>비밀번호 복잡성</strong> 및 <strong>주기적인 변경 요구</strong>  </li>
+<li><strong>암호화된 연결</strong>을 통해 도메인 간 신뢰 관계를 보호하고, 민감한 정보가 평문으로 전송되지 않도록 설정<br />
+<h2>Affected Techniques</h2></li>
+</ul></li>
+</ol>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1482.000.06</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-DTP Domain Trust Policy</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
