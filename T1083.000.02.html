@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1083.000.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1083.000.02 파일 및 디렉터리 검색</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>모니터링을 통해 'find' 명령어로 민감한 파일 및 디렉터리를 검색을 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1083.000.02.png" alt="" />
+https://172.18.10.125:8903/#/analysis/incident/675bc2b1002dc79500000a39</p>
+
+<h3>Response</h3>
+
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>파일 및 디렉터리 권한 설정 강화 (M1035 - Access Control)</strong></p>
+
+<ul>
+<li><strong>파일</strong> 및 <strong>디렉터리에 대한 권한</strong>을 최소화하여 <strong>불필요한 접근</strong>을 차단하고, <strong>민감한 파일</strong>에 대한 <strong>읽기 및 쓰기 권한</strong>을 제한  </li>
+<li><strong>디렉터리 및 파일에 대한 접근</strong>을 필요 최소한의 사용자로 제한하여 <strong>파일 검색</strong>을 통한 정보 수집을 방지  </li>
+<li><strong>최소 권한 원칙</strong>을 준수하여, <strong>최소한의 권한</strong>만을 부여하고 불필요한 <strong>시스템 정보 접근</strong>을 제한</li>
+</ul></li>
+<li><p><strong>파일 무결성 모니터링 및 탐지 (M1049 - File Integrity Monitoring)</strong></p>
+
+<ul>
+<li><strong>파일 무결성 모니터링(FIM)</strong> 도구를 설정하여 <strong>파일 시스템</strong>에서 <strong>불법적인 파일 변경</strong>이나 <strong>디렉터리 추가</strong>를 실시간으로 탐지  </li>
+<li>중요한 <strong>시스템 파일</strong> 및 <strong>디렉터리</strong>에 대한 <strong>무결성 검사</strong>를 활성화하여 공격자가 <strong>파일 시스템</strong>을 스캔해도 <strong>변경된 사항</strong>을 실시간으로 감지  </li>
+<li><strong>파일 시스템</strong>의 <strong>불법적인 탐색</strong>을 방지하기 위한 <strong>무결성</strong> 검사를 주기적으로 수행</li>
+</ul></li>
+<li><p><strong>시스템 로그 모니터링 및 감사 (M1047 - System Logging &amp; Monitoring)</strong></p>
+
+<ul>
+<li><strong>시스템 로그</strong>를 모니터링하고, <strong>파일 탐색</strong>이나 <strong>디렉터리 열기</strong>와 관련된 <strong>이상 활동</strong>을 실시간으로 감지  </li>
+<li><strong>디렉터리 탐색</strong> 및 <strong>파일 열기</strong> 로그를 추적하여 <strong>파일 시스템</strong>에서 발생하는 <strong>비정상적인 행동</strong>을 탐지하고 경고  </li>
+<li><strong>로그 분석</strong> 및 <strong>보안 정보 및 이벤트 관리(SIEM)</strong> 도구를 활용하여 <strong>파일 시스템 활동</strong>을 실시간으로 감시</li>
+</ul></li>
+<li><p><strong>디렉터리 및 파일 구조 숨기기 (M1016 - Obfuscated Files or Information)</strong></p>
+
+<ul>
+<li><strong>파일 및 디렉터리</strong> 이름을 <strong>암호화</strong>하거나 <strong>숨겨서</strong> 공격자가 <strong>파일 시스템을 쉽게 탐색</strong>하지 못하도록 설정  </li>
+<li><strong>중요한 시스템 파일</strong> 및 <strong>디렉터리</strong>를 <strong>숨기거나 암호화</strong>하여 공격자가 시스템을 <strong>스캔</strong>할 때 파일을 <strong>탐지</strong>할 수 없게 함  </li>
+<li><strong>디렉터리 구조</strong>를 복잡하게 설정하여 <strong>디렉터리 나열</strong>을 통해 <strong>목표 파일 탐지</strong>를 어렵게 만듦</li>
+</ul></li>
+<li><p><strong>시스템 구성 검토 및 강화 (M1038 - Execution Prevention)</strong></p>
+
+<ul>
+<li><strong>불필요한 파일 시스템</strong>이나 <strong>디렉터리</strong>를 시스템에서 <strong>제거</strong>하고, <strong>중요한 시스템 구성</strong>에 대한 접근을 <strong>엄격히 제한</strong>  </li>
+<li><strong>시스템</strong>을 정기적으로 점검하여 <strong>불필요한 파일</strong> 및 <strong>디렉터리</strong>가 남아 있지 않도록 하고, <strong>최소한의 시스템 구성을 유지</strong>  </li>
+<li>시스템을 주기적으로 점검하여 <strong>불필요한 파일</strong>이나 <strong>디렉터리</strong>가 <strong>남아있지 않도록 관리</strong></li>
+</ul></li>
+<li><p><strong>파일 및 디렉터리 탐색 제한 (M1032 - Network Traffic Filtering)</strong></p>
+
+<ul>
+<li><strong>네트워크 트래픽 필터링</strong>을 설정하여 <strong>디렉터리 탐색</strong> 및 <strong>파일 검색</strong>을 위한 <strong>네트워크 통신</strong>을 제한  </li>
+<li><strong>파일 시스템</strong>에서의 <strong>불필요한 네트워크 요청</strong>을 차단하고 <strong>디렉터리 탐색</strong>이 외부와 연결된 네트워크에서 발생하지 않도록 제한  </li>
+<li><strong>네트워크 보안 시스템</strong>을 설정하여 <strong>파일 및 디렉터리 탐색</strong>에 관련된 <strong>비정상적인 외부 접근</strong>을 차단</li>
+</ul></li>
+<li><p><strong>사용자 교육 및 보안 인식 강화 (M1019 - Awareness and Training)</strong></p>
+
+<ul>
+<li><strong>직원 교육</strong>을 통해 <strong>파일 시스템</strong> 및 <strong>디렉터리</strong>에 대한 <strong>불필요한 접근</strong>을 방지하고 <strong>보안 규정</strong>을 철저히 준수하도록 교육  </li>
+<li><strong>파일 시스템</strong>의 보안을 강화하고, <strong>불필요한 파일 탐색</strong>에 대한 경각심을 높여 <strong>내부 공격</strong>을 예방  </li>
+<li><strong>파일 및 디렉터리 탐색</strong>을 통한 <strong>악성 코드 실행</strong>을 예방하기 위해 <strong>시스템 보안</strong>에 대한 직원 인식을 향상</li>
+</ul></li>
+<li><p><strong>침해 탐지 시스템(IDS/IPS) 사용 (M1030 - Malware Protection)</strong></p>
+
+<ul>
+<li><strong>침해 탐지 시스템(IDS/IPS)</strong>을 설정하여 <strong>디렉터리 탐색</strong>을 포함한 <strong>이상 행위</strong>를 실시간으로 탐지하고, <strong>비정상적인 탐색</strong>을 차단  </li>
+<li><strong>IDS/IPS</strong> 시스템을 사용하여 <strong>파일 시스템 탐색</strong> 시 나타날 수 있는 <strong>악성 행위</strong>를 탐지하고 경고  </li>
+<li><strong>파일 및 디렉터리 탐색</strong> 관련 공격을 실시간으로 <strong>탐지</strong>하고, <strong>비정상적인 접근</strong>을 차단</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1083.000</td>
+</tr>
+<tr>
+  <td style="text-align:center;">T1074.001</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FAPA File Access Pattern Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FCA File Creation Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

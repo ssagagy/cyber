@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1068.000.04</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1068.000.04 권한 상승; RoguePotato 사용</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>None</p>
+
+<h3>Detection(EDR)</h3>
+
+<h3>Response</h3>
+
+<ul>
+<li>공격자에 의해 PC가 제어되었을 가능성이 있으므로 호스트 네트워크를 격리합니다.</li>
+<li>공격자 C&amp;C 서버로 추정되는 주소를 차단합니다.
+<h3>Mitigations</h3></li>
+</ul>
+
+<ol>
+<li><p><strong>권한 최소화 (Privilege Management)</strong></p>
+
+<ul>
+<li>SeImpersonatePrivilege 및 SeAssignPrimaryTokenPrivilege가 불필요한 계정에서 제거.</li>
+<li>서비스 계정에 최소 권한 원칙 적용.</li>
+</ul></li>
+<li><p><strong>DCOM 및 RPC 보안 강화</strong></p>
+
+<ul>
+<li>DCOM 기본 인증 수준을 "높음"으로 설정.</li>
+<li>익명 RPC 호출 방지 설정 적용.</li>
+</ul></li>
+<li><p><strong>프로세스 및 네트워크 감시</strong></p>
+
+<ul>
+<li>RoguePotato 실행 프로세스 및 관련 명령어(예: wevtutil, roguepotato.exe) 탐지.</li>
+<li>DCOM/RPC 및 SMB 트래픽 모니터링.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1068.000</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FCA File Creation Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-OSM Operating System Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

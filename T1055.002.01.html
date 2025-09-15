@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1055.002.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1055.002.01 Process Injection: Portable Executable Injection</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>Injection에 사용되는 주요 API 들에 대한 호출을 모니터링하여 대상이 정상 프로세스일 경우 탐지한다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T10.002.01.PNG" alt="T10 002 01" /></p>
+
+<h3>Response</h3>
+
+<p>Windows API 호출을 모니터링하고, 비정상적인 메모리 수정 또는 스레드 생성 시 경고하도록 설정합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>스레드 관련 API 호출 제한 (M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li><code data-language="powershell">SuspendThread</code>, <code data-language="powershell">SetThreadContext</code>, <code data-language="powershell">WriteProcessMemory</code>, <code data-language="powershell">ResumeThread</code> 등의 <strong>API 호출을 제한</strong>  </li>
+<li>Windows Defender Application Control (WDAC) 또는 AppLocker를 활용하여 <strong>비인가된 프로세스 실행 차단</strong>  </li>
+<li>보안 솔루션에서 <strong>비정상적인 스레드 조작 활동을 탐지 및 차단하도록 설정</strong>  </li>
+</ul></li>
+<li><p><strong>EDR/XDR 기반 행위 탐지 및 차단 (M1040 - Behavior-Based Detection)</strong>  </p>
+
+<ul>
+<li>EDR(Endpoint Detection &amp; Response) 솔루션에서 <strong>스레드 컨텍스트 변경(SetThreadContext) 및 메모리 쓰기(WriteProcessMemory) 탐지</strong>  </li>
+<li>Sysmon 설정:  
+<ul>
+<li><strong>Event ID 8 (CreateRemoteThread) → 원격 스레드 생성 탐지</strong>  </li>
+<li><strong>Event ID 10 (ProcessAccess) → 다른 프로세스의 메모리 접근 탐지</strong>  </li>
+<li><strong>Event ID 13 (Process Tampering) → 코드 주입 탐지</strong>  </li>
+</ul></li>
+</ul></li>
+<li><p><strong>메모리 보호 기능 활성화 (M1050 - Exploit Protection)</strong>  </p>
+
+<ul>
+<li><strong>Data Execution Prevention (DEP), Control Flow Guard (CFG), ASLR 적용</strong>하여 메모리 보호 강화  </li>
+<li>AMSI(Anti-Malware Scan Interface) 활성화하여 <strong>메모리 내 코드 실행 감시</strong>  </li>
+<li><strong>Microsoft Defender Exploit Guard의 "Process Injection Protection" 기능 활성화</strong>  </li>
+</ul></li>
+<li><p><strong>프로세스 및 권한 관리 강화 (M1018 - User Account Management)</strong>  </p>
+
+<ul>
+<li>일반 사용자가 <strong>고권한 프로세스의 스레드에 접근하지 못하도록 제한</strong>  </li>
+<li><strong>LSASS, SYSTEM 프로세스 보호</strong>를 위해 Credential Guard 및 LSA 보호 활성화  </li>
+<li><strong>관리자 계정 사용을 최소화</strong>하고 필요 시 UAC(User Account Control) 강화 적용  </li>
+</ul></li>
+<li><p><strong>DLL 및 메모리 인젝션 방어 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><code data-language="powershell">ProcMon</code>, <code data-language="powershell">Process Explorer</code> 등을 사용하여 <strong>비정상적인 스레드 생성 및 메모리 수정 모니터링</strong>  </li>
+<li><code data-language="powershell">AppInit_DLLs</code>, <code data-language="powershell">IFEO <span class="operator">(</span>Image File Execution Options<span class="operator">)</span></code>, <code data-language="powershell">KnownDLLs</code> 등 <strong>DLL 인젝션이 가능한 레지스트리 키 보호</strong>  </li>
+<li><strong>비인가된 프로세스가 정상적인 시스템 프로세스의 스레드를 수정하는 경우 차단</strong>  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1055.002</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PCSV Process Code Segment Verification</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

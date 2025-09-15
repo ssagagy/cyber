@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1055.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1055.000.01 Process Injection</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+
+<h3>Detection(EDR)</h3>
+
+<p>EDR에 관련된 대응 방안을 작성</p>
+
+<h3>Response</h3>
+
+<p>최신 백업으로 시스템을 복원하고 영향을 받은 시스템에서 사용자 자격 증명을 재설정합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>메모리 보호 및 무결성 검증 강화 (M1043 - Code Signing)</strong>  </p>
+
+<ul>
+<li>실행 가능한 코드의 <strong>서명 검증 활성화</strong> (Windows에서는 Windows Defender Application Control (WDAC) 또는 AppLocker 활용)  </li>
+<li><strong>비서명된 실행 파일 및 라이브러리(DLL) 차단</strong>  </li>
+<li><strong>메모리 보호 기능(DEP, ASLR, Control Flow Guard, etc.) 활성화</strong>  </li>
+</ul></li>
+<li><p><strong>API 호출 제한 및 실행 차단 (M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li><code data-language="powershell">VirtualAllocEx</code>, <code data-language="powershell">WriteProcessMemory</code>, <code data-language="powershell">CreateRemoteThread</code> 등의 <strong>프로세스 인젝션 관련 API 호출을 제한</strong>  </li>
+<li><strong>AppLocker 또는 WDAC 정책을 활용하여 승인되지 않은 프로세스 실행 차단</strong>  </li>
+<li><code data-language="powershell">SetWindowsHookEx</code>, <code data-language="powershell">NtQueueApcThread</code> 등 악용 가능한 API 호출을 EDR/XDR에서 감시  </li>
+</ul></li>
+<li><p><strong>EDR/XDR 솔루션 활용한 행위 기반 탐지 (M1040 - Behavior-Based Detection)</strong>  </p>
+
+<ul>
+<li>EDR(Endpoint Detection &amp; Response) 솔루션을 통해 <strong>비정상적인 프로세스 인젝션 탐지</strong>  </li>
+<li>정상적인 프로세스가 <strong>비정상적인 DLL을 로드하거나 새로운 스레드를 생성하는 경우 경고</strong>  </li>
+<li>Sysmon(Event ID 8, 10, 13, 25) 활성화하여 <strong>악성 프로세스 인젝션 패턴 모니터링</strong>  </li>
+</ul></li>
+<li><p><strong>권한 상승 방지 및 사용자 계정 관리 강화 (M1018 - User Account Management)</strong>  </p>
+
+<ul>
+<li><strong>프로세스 인젝션이 필요한 고권한 계정의 사용을 최소화</strong>  </li>
+<li><strong>LSASS 및 SYSTEM 프로세스에 대한 접근 제한</strong> (Credential Dumping 방지)  </li>
+<li>관리자 권한이 필요한 프로세스는 <strong>UAC(User Account Control) 강화 적용</strong>  </li>
+</ul></li>
+<li><p><strong>메모리 내 실행 보호 및 탐지 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li>Windows Defender Exploit Guard 또는 AMSI(Anti-Malware Scan Interface) 활성화  </li>
+<li><strong>Process Hollowing, Reflective DLL Injection 등의 기법이 탐지될 경우 차단</strong>  </li>
+<li><strong>메모리 내에서 실행되는 스크립트 및 파일 없는 공격(Fileless Malware) 탐지</strong>  </li>
+</ul></li>
+<li><p><strong>DLL 및 코드 인젝션 방어 (M1050 - Exploit Protection)</strong>  </p>
+
+<ul>
+<li><code data-language="powershell">AppInit_DLLs</code>, <code data-language="powershell">IFEO <span class="operator">(</span>Image File Execution Options<span class="operator">)</span></code>, <code data-language="powershell">KnownDLLs</code> 등 <strong>DLL 인젝션이 가능한 레지스트리 키 보호</strong>  </li>
+<li><strong>LSASS, csrss.exe 등 주요 시스템 프로세스에 대한 코드 주입 방지</strong>  </li>
+<li><code data-language="powershell">ProcMon</code>, <code data-language="powershell">Process Explorer</code> 등을 사용하여 <strong>비정상적인 프로세스 실행 모니터링</strong>  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1055.000</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PCSV Process Code Segment Verification</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

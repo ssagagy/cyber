@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1070.002.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1070.002.02 Indicator Removal on Host: Clear FreeBSD, Linux or Mac System Logs</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>/var/log 디렉터리 파일을 삭제하는 행위를 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1070.002.02.png" alt="" /></p>
+
+<h3>Response</h3>
+
+<ol>
+<li>로그 삭제 시도 확인: </li>
+</ol>
+
+<p>로그가 삭제되거나 수정된 시점을 기준으로 /var/log/audit/audit.log 파일이나 journalctl 명령어로 시스템의 이벤트 로그를 분석하여 비정상적인 로그 삭제 시도를 감지합니다.</p>
+
+<ol start="2">
+<li>로그 파일 무결성 검사 결과 확인: </li>
+</ol>
+
+<p>무결성 검사 도구(AIDE, Tripwire 등)를 통해 로그 파일이 언제, 어떤 방식으로 삭제되었는지 확인하고, 삭제 전의 상태를 조사합니다.</p>
+
+<ol start="3">
+<li>비정상적인 사용자 및 프로세스 조사: </li>
+</ol>
+
+<p>로그 파일 삭제와 관련된 사용자 계정과 실행된 프로세스를 조사하여, 누가 어떤 권한으로 로그를 삭제했는지 파악합니다. /var/log/secure, /var/log/auth.log 등을 분석하여 비정상적인 루트 권한 사용을 추적합니다.</p>
+
+<ol start="4">
+<li>프로세스 실행 기록 분석: </li>
+</ol>
+
+<p>ps, pstree, top 등의 명령어로 실행 중인 프로세스를 확인하고, 공격자가 사용한 명령어(rm, shred, logrotate 등)를 확인하여 삭제 활동을 분석합니다.</p>
+
+<ol start="5">
+<li>중앙 로그 서버에서 로그 복구: </li>
+</ol>
+
+<p>중앙화된 로그 서버를 사용하는 경우, 해당 서버에서 삭제된 로그를 복구할 수 있습니다. 로그 백업이 활성화되어 있다면 삭제된 로그를 복구하여 공격자의 활동을 추적합니다.</p>
+
+<ol start="6">
+<li>포렌식 분석을 통한 로그 추적: </li>
+</ol>
+
+<p>디스크 및 메모리 포렌식 도구를 사용하여 삭제된 로그 파일의 흔적을 복구하거나, 메모리에 남아 있는 로그 데이터를 추적하여 공격자의 활동을 복원합니다.</p>
+
+<ol start="7">
+<li>네트워크 트래픽 분석: </li>
+</ol>
+
+<p>로그 삭제 시점 전후로 발생한 네트워크 활동을 조사하여 공격자가 외부 서버와 통신했는지 여부를 확인합니다. Wireshark나 TCPDump 같은 도구를 사용하여 로그 삭제 후의 네트워크 트래픽을 분석합니다.</p>
+
+<ol start="8">
+<li>추가적인 악성 활동 탐지: </li>
+</ol>
+
+<p>로그 삭제 후에도 시스템에 남아 있는 다른 지표(파일 생성, 권한 상승 등)를 조사하여 공격자가 로그 삭제 외에 어떤 활동을 했는지 파악합니다.</p>
+
+<ol start="9">
+<li>침해된 시스템 격리: </li>
+</ol>
+
+<p>로그 삭제가 감지된 시스템을 네트워크에서 격리하여 추가적인 악성 활동을 차단하고, 복구 절차를 진행합니다.</p>
+
+<ol start="10">
+<li>시스템 재설정 및 로그 복원: </li>
+</ol>
+
+<p>필요할 경우 시스템을 재설정하고, 삭제된 로그를 중앙 로그 서버 또는 백업을 통해 복원합니다.</p>
+
+<ol start="11">
+<li>로그 삭제 방지 정책 강화: </li>
+</ol>
+
+<p>로그 파일 삭제와 관련된 보안 정책을 재검토하고, 로그 보호 및 무결성 모니터링 절차를 강화합니다.</p>
+
+<ol start="12">
+<li>사용자 교육 및 인식 제고: </li>
+</ol>
+
+<p>로그 파일의 중요성과 로그 삭제 시 발생할 수 있는 보안 위협에 대해 사용자들에게 교육하여 로그 관리의 중요성을 인식시키고 비정상적인 로그 삭제 시 행동 요령을 숙지시킵니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>중앙 로그 서버 사용</strong> </p>
+
+<ul>
+<li>로그를 로컬에만 저장하지 않고, 중앙 로그 서버로 전송하여 관리합니다.</li>
+<li>rsyslog, syslog-ng 등의 도구를 사용하여 로그를 중앙화함으로써 로컬에서 로그가 삭제되어도 중앙 서버에 기록이 남아 증거 보존이 가능합니다.</li>
+</ul></li>
+<li><p><strong>로그 보존 기간 연장</strong></p>
+
+<ul>
+<li>중앙 서버에 로그가 오랫동안 저장되도록 보존 정책을 설정하여 장기적인 증거 확보가 가능합니다.</li>
+</ul></li>
+<li><p><strong>파일 무결성 검사 도구 사용</strong> </p>
+
+<ul>
+<li>AIDE(Advanced Intrusion Detection Environment), Tripwire 등의 파일 무결성 모니터링 도구를 사용하여 로그 파일이 수정되거나 삭제되었는지 실시간으로 감시합니다.</li>
+</ul></li>
+<li><p><strong>로그 파일 보호</strong> </p>
+
+<ul>
+<li>중요한 로그 파일에 대한 읽기 및 쓰기 권한을 엄격하게 제한하고, 비정상적인 수정 또는 삭제 시 경고가 발생하도록 설정합니다.</li>
+</ul></li>
+<li><p><strong>최소 권한 원칙 적용</strong> </p>
+
+<ul>
+<li>로그 파일을 수정하거나 삭제할 수 있는 권한을 가진 사용자를 제한합니다.</li>
+<li>특히, 일반 사용자 계정은 로그 파일에 접근할 수 없도록 하여 로그 삭제 위험을 최소화합니다.</li>
+</ul></li>
+<li><p><strong>특권 계정 관리</strong> </p>
+
+<ul>
+<li>sudo 명령어를 통해 루트 권한을 사용할 때 로그 기록이 남도록 설정하고, 특권 계정의 사용을 철저하게 모니터링합니다.</li>
+</ul></li>
+<li><p><strong>로그 삭제 탐지 규칙 설정</strong> </p>
+
+<ul>
+<li>SIEM 시스템 또는 auditd 등의 도구를 사용하여 로그 파일 삭제 시도를 감시하고, 비정상적인 로그 삭제 시 즉시 경고를 발생시킵니다.</li>
+<li>Linux에서 /var/log 디렉토리에 대한 변경을 감시하는 규칙을 설정할 수 있습니다.</li>
+</ul></li>
+<li><p><strong>auditd를 통한 파일 액세스 감시</strong> </p>
+
+<ul>
+<li>auditd 설정을 통해 로그 파일에 대한 액세스를 모니터링하고, 로그 파일 삭제 시 이벤트가 기록되도록 설정합니다.</li>
+</ul></li>
+<li><p><strong>로그 파일 암호화</strong></p>
+
+<ul>
+<li>로그 파일을 암호화하여 공격자가 로그를 삭제하거나 수정하더라도 이를 복구할 수 있도록 로그 파일에 대한 보호를 강화합니다.</li>
+</ul></li>
+<li><p><strong>로그 파일에 대한 무결성 보호</strong> </p>
+
+<ul>
+<li>Linux 커널의 immutable 속성을 사용하여 로그 파일을 변경할 수 없도록 설정하여, 루트 권한으로도 로그 파일을 삭제하지 못하도록 방지할 수 있습니다.</li>
+<li>chattr +i /var/log/auth.log 명령어를 사용하여 로그 파일에 immutable 속성을 부여할 수 있습니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1059.004</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FE File Eviction</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

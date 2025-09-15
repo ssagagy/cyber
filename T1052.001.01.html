@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1052.001.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1052.001.01 Exfiltration Over Physical Medium- Exfiltration over USB</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<ul>
+<li>Action = "AmsiScan" AND</li>
+<li>Amsi_Data = "DriveType -eq 2" AND "Copy-Item -Path" AND "-Destination"
+<h3>Detection(EDR)</h3></li>
+</ul>
+
+<p><img src="T1052.001.01.PNG" alt="T1052 001 01" /></p>
+
+<h3>Response</h3>
+
+<p>Windows에서는 Event ID 4663 (파일 접근 로그), Event ID 6416 (USB 장치 연결 로그) 확인하고 Linux/macOS에서는 dmesg 또는 udevadm monitor로 USB 연결 이벤트 추적합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>네트워크 트래픽 모니터링 및 이상 탐지</strong></p>
+
+<ul>
+<li>DLP(Data Loss Prevention) 솔루션을 사용하여 HTTP/HTTPS 트래픽에서 민감한 데이터 유출을 감지합니다.</li>
+<li>SIEM(Security Information and Event Management) 시스템을 활용하여 대량의 비정상적인 데이터 전송을 탐지합니다.</li>
+<li>TLS 검사(SSL Inspection) 를 적용하여 암호화된 트래픽 내의 데이터 유출을 식별합니다.</li>
+</ul></li>
+<li><p><strong>방화벽 및 웹 필터링 정책 강화</strong></p>
+
+<ul>
+<li>웹 프록시(Web Proxy) 및 URL 필터링을 설정하여 알려진 악성 도메인 및 의심스러운 클라우드 서비스 접속을 차단합니다.</li>
+<li>C2(Command &amp; Control) 서버와의 통신을 차단하기 위해 DNS 보안 및 방화벽 정책을 강화합니다.</li>
+<li>비인가된 웹 애플리케이션을 통한 데이터 업로드(예: 개인 클라우드, 파일 공유 사이트)를 차단합니다.</li>
+</ul></li>
+<li><p><strong>데이터 접근 및 권한 관리</strong></p>
+
+<ul>
+<li>최소 권한 원칙(Least Privilege) 을 적용하여 불필요한 파일 및 데이터 접근을 제한합니다.</li>
+<li>중요 데이터에 대해 사용자 행동 분석(UEBA, User and Entity Behavior Analytics) 을 적용하여 비정상적인 접근 패턴을 탐지합니다.</li>
+<li>민감한 데이터가 암호화되지 않은 상태로 외부 전송되지 않도록 전송 중 데이터 암호화(Encryption-in-Transit) 를 강제합니다.</li>
+</ul></li>
+<li><p><strong>사용자 교육 및 정책 적용</strong></p>
+
+<ul>
+<li>소셜 엔지니어링 방어 훈련을 통해 사용자가 악성 웹사이트나 링크를 클릭하지 않도록 교육합니다.</li>
+<li>외부 웹서비스를 통한 데이터 업로드 및 공유에 대한 보안 정책 및 규정 준수 요구사항을 강화합니다.</li>
+<li>BYOD(Bring Your Own Device) 정책을 적용하여 개인 장비를 통한 무단 데이터 전송을 제한합니다.
+<h2>Affected Techniques</h2></li>
+</ul></li>
+</ol>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1052.001</td>
+</tr>
+</tbody>
+</table>
+
+<p>|D3FEND|
+|:-----------:|</p>
+
+</body>
+</html>

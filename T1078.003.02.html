@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1078.003.02_d3fend</title>
-   <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+    <title>T1078.003.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
 <h1>T1078.003.02 관리자 계정 자격증명 사용</h1>
@@ -13,19 +13,133 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>Process Create AND CmdLine: net use </p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
-
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>클라우드 계정에 대한 보안 강화, 다단계 인증(MFA) 적용, 계정 활동 모니터링, 네트워크 접근 제어 등 다양한 전략을 통해 클라우드 계정의 탈취 및 악용을 방지하는 것입니다. 또한, 최소 권한 원칙과 정기적인 계정 감사를 통해 클라우드 환경의 보안을 지속적으로 유지하는 것이 중요합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>다단계 인증(MFA) 의무화</strong></p>
+
+<ul>
+<li>MFA 활성화:
+<ul>
+<li>모든 클라우드 계정에 대해 <strong>다단계 인증(MFA)</strong>을 의무화하여, 계정 탈취가 발생하더라도 추가 인증 없이 시스템에 접근할 수 없게 만듭니다.</li>
+<li>클라우드 플랫폼에서 제공하는 MFA 옵션을 사용하여 계정 보호를 강화합니다.</li>
+<li>예시: Google Cloud, AWS, Azure에서 MFA를 반드시 활성화합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>역할 기반 액세스 제어(RBAC) 강화</strong></p>
+
+<ul>
+<li>최소 권한 원칙 적용:
+<ul>
+<li>클라우드 계정에 대해 최소 권한 원칙을 적용하여 각 사용자에게 필요한 최소한의 권한만을 부여합니다.</li>
+<li>이를 통해 계정 탈취 후에도 공격자가 확장된 권한을 얻기 어려운 환경을 만듭니다.</li>
+<li><strong>역할 기반 접근 제어(RBAC)</strong>를 통해 각 역할에 맞는 세부적인 권한 설정을 진행하여 불필요한 권한 부여를 피하고, 사용자가 필요 이상의 자원에 접근할 수 없게 합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>계정 감사 및 모니터링</strong></p>
+
+<ul>
+<li>클라우드 계정 활동 모니터링:
+<ul>
+<li>클라우드 계정의 로그인 활동, 권한 변경, 비정상적인 API 호출 등을 실시간으로 모니터링하고, 이상 징후를 빠르게 탐지할 수 있도록 합니다.</li>
+<li>이를 통해 공격자가 클라우드 계정을 통해 시스템에 접근하거나 권한 상승을 시도하는 것을 미리 방지할 수 있습니다.</li>
+</ul></li>
+<li>로그 분석 및 경고 시스템:
+<ul>
+<li>계정 활동에 대한 로그를 지속적으로 분석하여, 의심스러운 로그인 패턴이나 비정상적인 계정 사용을 자동으로 경고하고 빠르게 대응할 수 있도록 합니다.</li>
+<li>예를 들어, 다수의 로그인 실패나 비정상적인 시간대에 로그인 시도를 실시간으로 추적합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>불필요한 계정 및 권한 관리</strong></p>
+
+<ul>
+<li>미사용 계정 비활성화:
+<ul>
+<li>미사용 계정이나 더 이상 필요하지 않은 클라우드 계정을 정기적으로 비활성화하거나 삭제하여 공격자가 불필요한 계정을 통해 시스템에 접근하는 것을 방지합니다.</li>
+</ul></li>
+<li>권한 검토 및 제한:
+<ul>
+<li>클라우드 계정의 권한을 정기적으로 검토하고, 불필요한 권한이나 과도한 액세스를 제한하여 불필요한 공격 표면을 줄입니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>피싱 방지 및 교육</strong></p>
+
+<ul>
+<li>피싱 교육:
+<ul>
+<li>클라우드 계정 관리자는 피싱 공격에 취약할 수 있으므로, 사용자에게 피싱 공격의 위험성에 대해 교육을 실시하고, 의심스러운 이메일이나 링크를 클릭하지 않도록 교육합니다.</li>
+</ul></li>
+<li>피싱 탐지 시스템:
+<ul>
+<li>메일 필터링 시스템을 설정하여 의심스러운 이메일이나 악성 링크를 차단하고, 피싱 공격이 계정 탈취로 이어지지 않도록 방지합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>계정 및 비밀번호 보안 강화</strong></p>
+
+<ul>
+<li>강력한 비밀번호 정책:
+<ul>
+<li>클라우드 계정에 대해 강력한 비밀번호를 설정하도록 하고, 정기적인 비밀번호 변경을 요구합니다.</li>
+<li>또한, 비밀번호 관리 툴을 사용하여 사용자들이 복잡한 비밀번호를 안전하게 관리할 수 있도록 유도합니다.</li>
+</ul></li>
+<li>비밀번호 복잡성 요구사항:
+<ul>
+<li>비밀번호에 대해 특수문자, 대문자, 숫자 등 복잡성을 요구하여, 계정 탈취 시 비밀번호 추측 공격을 어렵게 만듭니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>클라우드 환경에 대한 네트워크 보안</strong></p>
+
+<ul>
+<li>네트워크 세분화:
+<ul>
+<li>VPC(Virtual Private Cloud)와 같은 네트워크 세분화 기술을 사용하여 클라우드 리소스를 격리하고, 최소한의 외부 접근만 허용하여 공격자가 클라우드 네트워크에 침투하더라도 확산을 어렵게 만듭니다.
+<ul>
+<li>가상 방화벽 및 보안 그룹을 설정하여, 필요한 서비스에 대해서만 네트워크 접근을 허용하고, 외부에서의 불필요한 접근을 차단합니다.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><p><strong>클라우드 환경에 대한 데이터 암호화</strong></p>
+
+<ul>
+<li>데이터 암호화:
+<ul>
+<li>클라우드 저장소와 데이터베이스에 저장된 민감한 정보를 암호화하여, 공격자가 클라우드 환경에 접근하더라도 데이터를 유출해도 사용할 수 없도록 만듭니다.</li>
+</ul></li>
+<li>암호화 키 관리:
+<ul>
+<li>암호화 키 관리 시스템(예: AWS KMS, Azure Key Vault)을 사용하여 암호화 키를 안전하게 관리하고, 키가 유출되지 않도록 보호합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>클라우드 서비스 제공자의 보안 기능 활용</strong></p>
+
+<ul>
+<li>클라우드 보안 서비스 활용:
+<ul>
+<li>클라우드 제공업체의 보안 서비스(예: AWS GuardDuty, Azure Security Center, Google Cloud Security Command Center)를 활용하여, 클라우드 리소스에 대한 위협 탐지 및 자동화된 대응을 구현합니다.</li>
+<li>침입 탐지 및 방지 시스템(IDS/IPS)을 설정하여, 공격자의 비정상적인 행동을 탐지하고 차단할 수 있도록 합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>비상 대응 계획 수립</strong></p>
+
+<ul>
+<li>보안 사고 대응 계획
+<ul>
+<li>클라우드 계정 침해 사고에 대비한 사고 대응 절차를 마련하고, 침해 발생 시 빠르게 계정을 차단하고 로그인 기록을 분석하여 원인을 파악합니다.</li>
+</ul></li>
+<li>계정 복구 및 재설정 절차:
+<ul>
+<li>계정 탈취가 발생했을 경우, 해당 계정을 즉시 잠금하고, 비밀번호 재설정 절차를 통해 공격자의 접근을 차단합니다.</li>
+</ul></li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
@@ -50,8 +164,27 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SPP Strong Password Policy</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-MA Multi-factor Authentication</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-TA Token-based Authentication</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PA Password Authentication</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1053.003.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1053.003.01 스케쥴 작업:Cron</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<ul>
+<li>Action = "CreateFile" AND "ModifyFile" AND</li>
+<li>TargetPath (begins with) "/etc/cron" OR "/var/spool/cron" OR "/etc/profile.d" OR "/etc/init.d" OR "/etc/rc.d/init.d" AND</li>
+<li>TargetPath (begins not with) "/var/lib/rancher/" OR "/opt/ahnlab/" OR "/opt/rakeen/"
+<h3>Detection(EDR)</h3></li>
+</ul>
+
+<p><img src="캡처.PNG" alt="캡처" /></p>
+
+<h3>Response</h3>
+
+<ol>
+<li>의심스러운 크론 작업 삭제 : 침해된 시스템에서 의심스러운 크론 작업이 발견되면 즉시 해당 작업을 비활성화하거나 삭제한다. 크론 작업 파일을 수정하거나, 사용자별 crontab -e 명령을 사용해 악성 작업을 제거한다.</li>
+<li>악성 파일 및 프로세스 조사 : 크론 작업이 악성 코드를 실행하고 있다면 해당 악성 파일이나 스크립트를 조사한다. 크론 작업이 실행하는 명령어와 연결된 파일 경로를 확인하고, 파일의 내용과 동작을 분석한다.</li>
+<li>시스템 및 계정 격리 : 공격자가 시스템에 대한 지속적인 접근 권한을 가질 수 있으므로, 관련된 계정 또는 시스템을 네트워크에서 격리하고, 크론 작업을 통한 악성 활동을 방지한다.</li>
+<li>로그 분석을 통한 침해 범위 파악 : 크론 작업과 관련된 로그 파일을 분석하여 공격자가 시스템에서 수행한 작업과 접근한 데이터를 추적한다. 시스템 전반에 걸쳐 비정상적인 작업이 있는지 확인해야 한다.</li>
+</ol>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>Crontab 파일 접근 권한 제한</strong></p>
+
+<ul>
+<li>/etc/crontab 및 사용자별 크론 파일에 대한 접근 권한을 최소화하여 공격자가 크론 작업을 수정하거나 추가하지 못하도록 한다.</li>
+</ul></li>
+<li><p><strong>크론 작업 변경 시 경고 설정</strong></p>
+
+<ul>
+<li>크론 작업이 변경될 때 경고가 발생하도록 설정하여 새로운 크론 작업이나 기존 작업의 변경을 실시간으로 모니터링한다. 이를 통해 공격자의 악성 작업 추가 시 빠르게 대응할 수 있다.</li>
+</ul></li>
+<li><p><strong>정기적인 크론 작업 검토</strong> </p>
+
+<ul>
+<li>시스템에서 실행되는 크론 작업을 정기적으로 검토하고, 불필요한 작업이 추가되거나 비정상적인 스케줄이 설정되지 않도록 관리한다.</li>
+</ul></li>
+<li><p><strong>강력한 계정 관리 정책 적용</strong></p>
+
+<ul>
+<li>크론 작업을 추가하거나 수정할 수 있는 계정에 대해 강력한 암호 정책과 다중 인증(MFA)을 적용해, 계정이 탈취되어 악성 작업이 추가되는 것을 방지한다.</li>
+</ul></li>
+<li><p><strong>정기적인 시스템 및 소프트웨어 업데이트</strong></p>
+
+<ul>
+<li>시스템 및 크론과 관련된 소프트웨어를 최신 상태로 유지하여 취약점을 통해 공격자가 크론 작업을 악용하지 못하도록 한다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1053.003</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SJA Scheduled Job Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

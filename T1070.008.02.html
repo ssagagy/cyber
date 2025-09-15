@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1070.008.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1070.008.02 표시 제거: 메일함 데이터 지우기</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>모니터링을 통해 메일함을 지우는 "rm" 명령어가 있는지 확인합니다. </p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1070.008.02.png" alt="" />
+https://172.18.10.125:8903/#/event/edr/66f4c6ad002dc795000015fd</p>
+
+<h3>Response</h3>
+
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>백업 및 파일 복구 시스템 구축 (M1029 - Data Backup)</strong></p>
+
+<ul>
+<li><strong>주기적인 시스템 백업</strong>을 수행하여 <strong>중요한 시스템 파일 및 로그 파일</strong>을 안전하게 보관  </li>
+<li><strong>파일 백업 및 복구 시스템</strong>을 활성화하여, 공격자가 파일을 삭제해도 <strong>백업을 통해 빠르게 복구</strong>할 수 있도록 설정  </li>
+<li><strong>백업 데이터를 암호화</strong>하고 외부 네트워크로 백업을 관리하여 공격자가 백업 파일도 삭제하지 못하도록 보호</li>
+</ul></li>
+<li><p><strong>파일 무결성 모니터링 (M1047 - System Logging &amp; Monitoring)</strong></p>
+
+<ul>
+<li><strong>파일 무결성 모니터링(FIM)</strong> 도구를 사용하여 <strong>중요한 시스템 파일 및 로그 파일</strong>의 변경 사항을 모니터링  </li>
+<li><strong>파일 삭제 및 수정 로그</strong>를 기록하고 <strong>변경된 파일 목록</strong>을 추적하여 의심스러운 파일 삭제 활동을 탐지  </li>
+<li><strong>변경된 파일</strong>이나 <strong>삭제된 파일</strong>을 빠르게 감지하고 경고를 발생시켜 <strong>비정상적인 활동</strong>을 실시간으로 파악</li>
+</ul></li>
+<li><p><strong>시스템 로그 및 이벤트 기록 강화 (M1047 - System Logging &amp; Monitoring)</strong></p>
+
+<ul>
+<li><strong>시스템 및 보안 로그</strong>를 활성화하여 <strong>파일 삭제 이벤트</strong> 및 <strong>파일 시스템 변경 사항</strong>을 기록  </li>
+<li><strong>로그 보존 기간</strong>을 설정하여 <strong>삭제된 파일에 대한 로그</strong>를 충분히 보관하고, <strong>증거를 확보</strong>  </li>
+<li><strong>Sysmon(Event ID 23)</strong> 등을 활용하여 <strong>파일 시스템의 이벤트 및 삭제된 파일</strong>에 대한 상세 기록을 추적</li>
+</ul></li>
+<li><p><strong>파일 접근 및 삭제 권한 제한 (M1035 - Access Control)</strong></p>
+
+<ul>
+<li><strong>파일 삭제 권한을 제한</strong>하여 <strong>관리자 권한을 가진 사용자</strong>만 파일을 삭제할 수 있도록 설정  </li>
+<li><strong>파일 시스템 접근 제어</strong>를 강화하여 <strong>일반 사용자</strong>가 중요한 시스템 파일을 삭제하지 못하도록 방지  </li>
+<li><strong>폴더 및 파일에 대한 권한 관리</strong>를 통해 <strong>중요한 파일에 대한 접근을 최소화</strong>하고 <strong>불필요한 파일 삭제</strong>를 차단</li>
+</ul></li>
+<li><p><strong>보안 솔루션 및 EDR/XDR 탐지 (M1040 - Behavior-Based Detection)</strong></p>
+
+<ul>
+<li><strong>EDR(XDR)</strong> 솔루션을 활용하여 <strong>파일 삭제 활동</strong>을 실시간으로 감지하고 경고  </li>
+<li><strong>비정상적인 파일 삭제 패턴</strong>(예: 특정 디렉토리에서 대량 파일 삭제)을 탐지하고, <strong>행위 기반 탐지</strong>로 대응  </li>
+<li><strong>네트워크 및 디스크 활동을 모니터링</strong>하여 <strong>파일 삭제와 관련된 비정상적인 활동</strong>을 신속하게 추적</li>
+</ul></li>
+<li><p><strong>침해 탐지 시스템 및 경고 설정 (M1047 - System Logging &amp; Monitoring)</strong></p>
+
+<ul>
+<li><strong>침해 탐지 시스템(IDS/IPS)</strong>을 설정하여 <strong>파일 시스템에서 비정상적인 변경 사항</strong>을 감지하고 이를 경고  </li>
+<li><strong>파일 삭제가 이루어진 시점</strong>에서 <strong>침해 탐지 및 분석</strong> 시스템을 활성화하여 <strong>의심스러운 활동</strong>을 탐지  </li>
+<li><strong>로그 분석 시스템</strong>을 통해 <strong>파일 삭제와 관련된 이벤트</strong>를 추적하고 경고 시스템을 설정하여 신속한 대응을 가능하게 함</li>
+</ul></li>
+<li><p><strong>파일 삭제 및 기록 추적 솔루션 사용 (M1043 - Code Signing)</strong></p>
+
+<ul>
+<li><strong>파일 삭제 도구</strong> 및 <strong>악성 코드</strong>가 삭제할 수 있는 경로를 추적할 수 있는 <strong>추적 솔루션</strong>을 사용  </li>
+<li><strong>파일 복구 소프트웨어</strong>를 통해 <strong>삭제된 파일을 복구</strong>하고 <strong>삭제된 파일의 흔적</strong>을 확인할 수 있는 방법을 마련  </li>
+<li><strong>삭제된 파일에 대한 복구 도구</strong> 및 <strong>로그 파일 복원</strong>을 통해 <strong>공격 후 흔적을 복구</strong></li>
+</ul></li>
+<li><p><strong>시스템 무결성 검증 및 점검 (M1028 - Configuration Management)</strong></p>
+
+<ul>
+<li><strong>시스템 무결성</strong>을 주기적으로 점검하여 <strong>파일 손상</strong> 및 <strong>삭제된 파일</strong>을 발견하고 대응  </li>
+<li><strong>파일 삭제 및 변경 사항에 대한 무결성 검사를 강화</strong>하고, <strong>시스템에서 중요한 파일의 삭제를 방지</strong>  </li>
+<li><strong>정기적인 시스템 점검</strong>을 통해 <strong>파일 삭제</strong>가 <strong>시스템 보안</strong>에 미치는 영향을 평가하고 방지책을 설정</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1070.008</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

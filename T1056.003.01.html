@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1056.003.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1056.003.01 Input Capture - Web Portal Capture</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<h3>Detection(EDR)</h3>
+
+<h3>Response</h3>
+
+<ol>
+<li><p>계정 관련 대응:
+노출된 계정의 비밀번호를 변경합니다.</p></li>
+<li><p>네트워크 관련 대응: 
+공격자에 의해 PC가 제어되었을 가능성이 있으므로 호스트 네트워크를 격리합니다.
+공격자 C&amp;C 서버로 추정되는 주소를 차단합니다.</p></li>
+</ol>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>웹 애플리케이션 보안</strong></p>
+
+<ul>
+<li>입력 검증 강화:
+<ul>
+<li>웹 포털에서 사용자 입력(특히 URL, 양식 데이터)을 철저히 검증합니다.</li>
+</ul></li>
+<li>콘텐츠 보안 정책(CSP):
+<ul>
+<li>웹 애플리케이션에서 외부 리소스의 실행을 제한하기 위해 CSP를 설정합니다.</li>
+</ul></li>
+<li>크로스 사이트 스크립팅(XSS) 방지:
+<ul>
+<li>XSS 방지를 위해 HTML과 JavaScript 출력 시 적절한 이스케이프 처리를 수행합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>사용자 계정 보안</strong></p>
+
+<ul>
+<li>2단계 인증(2FA):
+<ul>
+<li>계정 탈취를 방지하기 위해 2FA를 활성화합니다.</li>
+</ul></li>
+<li>비밀번호 관리:
+<ul>
+<li>비밀번호가 강력하고 주기적으로 변경되도록 권장합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>브라우저 환경 보호</strong></p>
+
+<ul>
+<li>확장 프로그램 관리:
+<ul>
+<li>사용자가 브라우저 확장 프로그램을 설치하기 전에 신뢰할 수 있는 소스에서만 설치하도록 제한합니다.</li>
+</ul></li>
+<li>보안 설정 강화:
+<ul>
+<li>브라우저의 보안 설정(예: 팝업 차단, 스크립트 제한)을 강화합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>네트워크 보안</strong></p>
+
+<ul>
+<li>SSL/TLS 사용:
+<ul>
+<li>웹 포털에서 데이터 전송 시 SSL/TLS 암호화를 강제하여 중간자 공격을 방지합니다.</li>
+</ul></li>
+<li>웹 애플리케이션 방화벽(WAF):
+<ul>
+<li>악성 요청을 차단하기 위해 WAF를 설정합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>교육 및 훈련</strong></p>
+
+<ul>
+<li>사용자 교육:
+<ul>
+<li>악성 링크를 피하고 의심스러운 브라우저 확장 프로그램 설치를 자제하도록 교육합니다.</li>
+</ul></li>
+<li>보안 팀 훈련:
+<ul>
+<li>보안 팀이 최신 위협에 대응할 수 있도록 정기적인 훈련을 수행합니다.</li>
+</ul></li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1056.003</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTF Network Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ISL Local File Access Mediation</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ISL Execution Isolation</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

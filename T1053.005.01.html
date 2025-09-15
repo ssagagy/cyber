@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1053.005.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1053.005.01 작업 스케쥴러로 프로그램 실행</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>schtasks.exe의 "/creat" 커맨드를 탐지한다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1053.005.01.png" alt="T1053 005 01" /></p>
+
+<h3>Response</h3>
+
+<p>schtasks.exe 또는 예약 작업과 관련된 로그(Event ID: 4698, 4702)를 모니터링하여 비정상적인 작업 생성을 탐지합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>작업 스케줄러 사용 제한 (M1026 - Privileged Account Management)</strong>  </p>
+
+<ul>
+<li>일반 사용자에게 <strong>작업 스케줄러 생성 및 관리 권한을 제한</strong>  </li>
+<li><code data-language="powershell">schtasks.exe</code> 및 <code data-language="powershell">at.exe</code> 실행을 <strong>관리자 계정에서만 허용</strong>  </li>
+<li>그룹 정책(GPO)에서 <strong>예약 작업 생성 및 수정 권한을 특정 사용자로 제한</strong>  </li>
+</ul></li>
+<li><p><strong>AppLocker 또는 WDAC 정책 적용 (M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li><strong><code data-language="powershell">schtasks.exe</code> 및 <code data-language="powershell">at.exe</code>의 실행을 차단하거나, 신뢰된 경로에서만 실행되도록 정책 적용</strong>  </li>
+<li>WDAC(Windows Defender Application Control) 또는 AppLocker를 사용하여 <strong>비인가된 스크립트 및 실행 파일 실행 차단</strong>  </li>
+<li>작업 스케줄러를 이용한 <strong>의심스러운 실행 파일(.exe, .vbs, .bat, .ps1 등)의 실행 제한</strong>  </li>
+</ul></li>
+<li><p><strong>로그 및 이벤트 모니터링 활성화 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li>Windows 이벤트 로그에서 <strong>Event ID 106 (작업 생성), 140 (작업 삭제), 141 (작업 업데이트) 모니터링</strong>  </li>
+<li><strong>Sysmon(Event ID 1, 5, 7, 8)을 활성화하여 schtasks.exe 및 at.exe의 실행을 기록</strong>  </li>
+<li>예약 작업 실행 후 <strong>비정상적인 네트워크 연결 또는 프로세스 생성 모니터링</strong>  </li>
+</ul></li>
+<li><p><strong>EDR/XDR 솔루션을 활용한 작업 스케줄링 탐지 (M1040 - Behavior-Based Detection)</strong>  </p>
+
+<ul>
+<li>EDR(Endpoint Detection &amp; Response) 솔루션을 사용하여 <strong>비정상적인 Scheduled Task 생성 탐지</strong>  </li>
+<li><code data-language="powershell">schtasks.exe</code>나 <code data-language="powershell">at.exe</code>의 <strong>비정상적인 실행 시도를 차단하고 경고 알림 설정</strong>  </li>
+<li><strong>일반적인 작업 스케줄링 패턴과 다른 이상 행동 탐지</strong> (예: 시스템 파일처럼 보이는 예약 작업 이름)  </li>
+</ul></li>
+<li><p><strong>사용자 계정 및 권한 관리 강화 (M1018 - User Account Management)</strong>  </p>
+
+<ul>
+<li><strong>관리자 계정과 일반 사용자 계정을 분리하고, 불필요한 관리자 권한 제거</strong>  </li>
+<li><strong>로컬 관리자 계정을 제한하고, 원격에서 Scheduled Task를 설정할 수 없도록 제한</strong>  </li>
+<li>최소 권한 원칙(Least Privilege)을 적용하여 <strong>작업 스케줄러를 필요하지 않은 사용자에게서 제거</strong>  </li>
+</ul></li>
+<li><p><strong>PowerShell 및 스크립트 실행 제한 (M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li><strong>PowerShell Constrained Language Mode 활성화</strong>하여 악성 스크립트 실행 제한  </li>
+<li><strong>AppLocker 또는 WDAC를 사용하여 스크립트 실행을 신뢰된 위치에서만 가능하도록 제한</strong>  </li>
+<li>PowerShell ScriptBlock Logging을 활성화하여 <strong>작업 스케줄러를 통한 악성 스크립트 실행 추적</strong>  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">Techniques</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1007.000</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SJA Scheduled Job Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SICA System Init Config Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

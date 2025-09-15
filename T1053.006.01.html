@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1053.006.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1053.006.01 Scheduled Task/Job: Systemd Timers</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>systemctl 프로세스 실행을 탐지한다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1053.006.01.png" alt="T1053 006 01" />
+<img src="T1053.006.01_reload.png" alt="T1053 006 01_reload" />
+<img src="T1053.006.01_start.png" alt="T1053 006 01_start" /></p>
+
+<h3>Response</h3>
+
+<p>systemctl list-timers 명령어를 사용하여 타이머 목록을 검토하고, 의심스러운 타이머를 조사하여 제거합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>Systemd Timer 설정 및 접근 제한 (M1026 - Privileged Account Management)</strong>  </p>
+
+<ul>
+<li>일반 사용자가 <strong>타이머(<code data-language="powershell">*.timer</code> 파일) 및 서비스(<code data-language="powershell">*.service</code> 파일)를 생성·수정하지 못하도록 권한 설정</strong>  </li>
+<li><code data-language="powershell">/etc/systemd/system/</code> 및 <code data-language="powershell">~/.config/systemd/user/</code> 디렉터리에 대한 <strong>쓰기 권한을 루트 사용자 및 신뢰된 계정으로 제한</strong>  </li>
+<li><code data-language="powershell">systemctl</code> 명령어를 <strong>관리자(root)만 실행할 수 있도록 제한</strong>  </li>
+</ul></li>
+<li><p><strong>비인가된 타이머 및 서비스 차단 (M1042 - Disable or Remove Feature or Program)</strong>  </p>
+
+<ul>
+<li>시스템에서 불필요한 systemd timer를 비활성화 (<code data-language="powershell">systemctl disable &lt;timer_name&gt;</code>)  </li>
+<li><code data-language="powershell">systemctl list-timers --all</code> 명령을 주기적으로 실행하여 <strong>의심스러운 타이머 확인 및 삭제</strong>  </li>
+<li>타이머 파일(<code data-language="powershell">.timer</code>) 및 관련 서비스 파일(<code data-language="powershell">.service</code>)을 검토하여 <strong>정상적인 시스템 서비스와 비교</strong>  </li>
+</ul></li>
+<li><p><strong>파일 무결성 검사 및 변경 감지 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>파일 무결성 검사 도구(AIDE, Tripwire)</strong>를 활용하여 <code data-language="powershell">/etc/systemd/system/</code>, <code data-language="powershell">/lib/systemd/system/</code> 디렉터리 모니터링  </li>
+<li><strong>Auditd 및 Sysmon for Linux를 활용하여 systemd 관련 설정 변경 이벤트 로깅</strong>  </li>
+<li><code data-language="powershell">/var/log/syslog</code> 및 <code data-language="powershell">/var/log/audit/audit.log</code>에서 <strong>비정상적인 systemd 실행 및 변경 내역 모니터링</strong>  </li>
+</ul></li>
+<li><p><strong>비정상적인 systemd 타이머 실행 탐지 (M1040 - Behavior-Based Detection)</strong>  </p>
+
+<ul>
+<li>EDR/XDR 솔루션을 사용하여 <strong>systemd를 악용한 원격 접속 및 악성 코드 실행 탐지</strong>  </li>
+<li><code data-language="powershell">systemctl list-timers --all</code> 및 <code data-language="powershell">journalctl -u &lt;timer_name&gt;</code> 명령을 정기적으로 실행하여 <strong>의심스러운 타이머 확인</strong>  </li>
+<li>특정 사용자가 실행하는 systemd timer가 정상적인 시스템 타이머와 다를 경우 경고 설정  </li>
+</ul></li>
+<li><p><strong>관리자 계정 및 권한 최소화 (M1018 - User Account Management)</strong>  </p>
+
+<ul>
+<li><strong>일반 사용자 계정에서 systemd 서비스 및 타이머 설정 변경을 차단</strong>  </li>
+<li>sudoers 파일에서 <code data-language="powershell">systemctl</code> 사용을 제한하고, root 계정이 아닌 경우 실행 불가하도록 설정  </li>
+<li>보안 정책을 적용하여 <strong>비인가된 사용자가 systemd 관련 파일을 수정하지 못하도록 제한</strong>  </li>
+</ul></li>
+<li><p><strong>스크립트 실행 제한 및 화이트리스트 적용 (M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li>systemd 타이머가 실행하는 <strong>스크립트나 바이너리를 화이트리스트로 관리</strong>  </li>
+<li>AppArmor, SELinux, Auditd 등을 활용하여 <strong>비정상적인 systemd 실행 탐지 및 차단</strong>  </li>
+<li><code data-language="powershell">ExecStart</code>, <code data-language="powershell">ExecStartPre</code>, <code data-language="powershell">ExecStartPost</code> 항목에서 <strong>비정상적인 실행 파일 및 명령 탐지</strong>  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1053.006</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SJA Scheduled Job Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

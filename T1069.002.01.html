@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1069.002.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1069.002.01 그룹 권한 검색, 도메인 그룹</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>net 명령어를 통한 도메인 정보 확인하는 것을 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1069.002.01.PNG" alt="T1069 002 01" /></p>
+
+<h3>Response</h3>
+
+<p>비정상적인 net localgroup 명령어나 권한 그룹 조회 활동을 탐지하고, 실시간 로그 분석을 통해 의심스러운 명령 실행을 차단한다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>최소 권한 원칙 적용 (M1026 - Privileged Account Management)</strong></p>
+
+<ul>
+<li>도메인 그룹에 대한 접근 권한을 최소한의 사용자 및 계정에게만 부여하여, 불필요한 사용자가 권한 그룹을 탐색하거나 악용할 수 없도록 제한합니다.</li>
+</ul></li>
+<li><p><strong>Active Directory 감사 및 모니터링 (M1049 - Audit)</strong></p>
+
+<ul>
+<li>도메인 그룹 정보에 대한 조회 및 변경 활동을 실시간으로 모니터링하고, 의심스러운 도메인 그룹 조회 활동을 감사하여 공격을 탐지합니다.</li>
+</ul></li>
+<li><p><strong>강력한 인증 적용 (M1032 - Multi-factor Authentication)</strong></p>
+
+<ul>
+<li>도메인 그룹에 대한 접근 권한을 가진 관리자 및 중요한 사용자 계정에 다단계 인증(MFA)을 적용하여 계정 탈취를 통한 그룹 탐색 시도를 방지합니다.</li>
+</ul></li>
+<li><p><strong>권한 그룹 구조 보호 (M1027 - Limit Access to Resource Over Network)</strong></p>
+
+<ul>
+<li>도메인 그룹 정보를 네트워크 상에서 탐색할 수 없도록 권한을 제한하고, 민감한 그룹에 대한 조회 권한을 엄격히 통제합니다.</li>
+</ul></li>
+<li><p><strong>로그인 및 권한 상승 활동 분석 (M1018 - User Account Management)</strong></p>
+
+<ul>
+<li>관리자 또는 도메인 권한이 있는 계정의 비정상적인 로그인이나 권한 상승 활동을 분석하여, 의심스러운 도메인 그룹 탐색 시도를 사전에 차단합니다.</li>
+</ul></li>
+<li><p><strong>도메인 그룹 변경 알림 설정 (M1031 - Network Intrusion Prevention)</strong></p>
+
+<ul>
+<li>도메인 그룹이나 권한 구조에 대한 변경이 발생할 때 알림을 설정하여, 공격자가 그룹 구조를 악용하려는 시도를 신속하게 탐지하고 대응합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1069.001</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-DAM Domain Account Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

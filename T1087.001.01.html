@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1087.001.01_d3fend</title>
+    <title>T1087.001.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,23 +13,75 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>사용자 정보 수집에 대한 powershell.exe 명령어를 탐지합니다.</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1087.001.01.png" alt="" /></p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<ol>
+<li>Windows 이벤트 로그 모니터링:</li>
+</ol>
+
+<p>PowerShell 스크립트 실행 로그(Event ID 4104)를 활성화하여 계정 관련 명령어 실행을 모니터링합니다.</p>
+
+<ol start="2">
+<li>SIEM 및 로그 분석:</li>
+</ol>
+
+<p>Splunk, Microsoft Sentinel 등 SIEM 도구를 활용하여 계정 검색 명령을 탐지합니다.</p>
+
+<ol start="3">
+<li>이상 징후 탐지:</li>
+</ol>
+
+<p>비정상적인 시간대 또는 비관리자 계정에 의한 계정 검색 시도 탐지합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>권한 최소화</strong></p>
+
+<ul>
+<li>로컬 계정에 대한 정보 접근 권한을 최소화하여 계정 정보를 수집할 수 있는 사용자를 제한합니다.</li>
+</ul></li>
+<li><p><strong>로컬 계정 비활성화</strong></p>
+
+<ul>
+<li>사용하지 않는 로컬 계정을 비활성화하고, 필요 없는 계정을 제거합니다.</li>
+</ul></li>
+<li><p><strong>로컬 계정 암호 관리</strong></p>
+
+<ul>
+<li>모든 로컬 계정의 암호를 강력하게 설정하고 주기적으로 변경합니다, LAPS(Local Administrator Password Solution) 도구를 사용하여 로컬 관리자 계정 암호를 관리합니다.</li>
+</ul></li>
+<li><p><strong>감사 정책 설정</strong></p>
+
+<ul>
+<li>계정 관련 활동을 감시하기 위해 감사 정책을 설정합니다.</li>
+</ul></li>
+<li><p><strong>WinRM 및 WMI 접근 제어</strong></p>
+
+<ul>
+<li>WMI 및 WinRM(Windows Remote Management)을 통한 계정 정보 수집을 제한합니다.</li>
+</ul></li>
+<li><p><strong>PowerShell 스크립트 제한</strong></p>
+
+<ul>
+<li>악성 PowerShell 스크립트 실행을 방지하기 위해 실행 정책을 강화합니다.</li>
+</ul></li>
+<li><p><strong>AppLocker 또는 WDAC 정책 적용</strong></p>
+
+<ul>
+<li>net.exe, whoami.exe, 또는 PowerShell 명령어 실행을 제어합니다.</li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
-<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
 
 <table>
 <thead>
@@ -47,8 +99,24 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-LAM Local Account Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-UAP User Account Permissions</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-APA Access Policy Administration</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1068.000.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1068.000.02 Linux LPE2</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>모니터링을 통해 권한상승에 악용되는 바이너리 "enlightenment_sys"와 그 실행인자가 비정상적인지 확인합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1068.000.02.png" alt="" />
+https://172.18.10.125:8903/#/event/edr/66f4c6b0002dc79500001721</p>
+
+<h3>Response</h3>
+
+<p>공격자가 생성한 파일을 삭제합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>시스템 및 소프트웨어 최신 상태 유지 (M1030 - Patch Management)</strong></p>
+
+<ul>
+<li><strong>보안 패치와 업데이트</strong>를 주기적으로 적용하여 <strong>운영 체제 및 애플리케이션의 취약점</strong>을 해결  </li>
+<li><strong>자동 업데이트 기능</strong>을 활성화하여 시스템이 <strong>최신 보안 패치를 자동으로 설치</strong>하도록 설정  </li>
+<li><strong>취약점 관리 시스템</strong>을 사용하여 알려진 취약점에 대한 패치를 관리하고 <strong>핫픽스 및 보안 업데이트를 신속히 적용</strong></li>
+</ul></li>
+<li><p><strong>최소 권한 원칙 적용 (M1018 - User Account Management)</strong></p>
+
+<ul>
+<li><strong>최소 권한 원칙(Least Privilege Principle)</strong>을 적용하여 <strong>필요한 권한만 부여</strong>  </li>
+<li><strong>관리자 권한을 가진 계정의 수를 최소화</strong>하고, 관리자는 필요할 때만 관리자 권한을 사용할 수 있도록 설정  </li>
+<li>사용자 계정에 대해 <strong>관리자 권한을 지속적으로 유지</strong>하지 않도록 설정하고, 가능한 한 <strong>비관리자 권한을 사용</strong>  </li>
+</ul></li>
+<li><p><strong>권한 상승 탐지 및 차단 (M1040 - Behavior-Based Detection)</strong></p>
+
+<ul>
+<li><strong>EDR/XDR 솔루션</strong>을 사용하여 <strong>권한 상승 시도</strong>를 실시간으로 모니터링하고 탐지  </li>
+<li><strong>취약점 악용 활동</strong>을 탐지하기 위해 <strong>비정상적인 프로세스 생성, 권한 변경, 또는 비정상적인 시스템 호출</strong>을 탐지하는 규칙 설정  </li>
+<li><strong>권한 상승 시도</strong>나 <strong>관리자 계정 탈취 시도</strong>를 경고하고 차단하는 정책 활성화</li>
+</ul></li>
+<li><p><strong>UAC (사용자 계정 컨트롤) 활성화 (M1035 - Access Control)</strong></p>
+
+<ul>
+<li><strong>사용자 계정 컨트롤(UAC)</strong>을 활성화하여 <strong>권한 상승</strong>을 시도할 때 <strong>사용자의 승인을 요구</strong>  </li>
+<li>UAC의 설정을 <strong>높은 권한 요청에 대한 승인을 요구</strong>하도록 설정하여 공격자가 악용할 수 없도록 방지  </li>
+<li><strong>UAC의 보안 수준을 강화</strong>하여 관리자 계정의 권한 상승을 <strong>엄격하게 제어</strong></li>
+</ul></li>
+<li><p><strong>보안 설정 강화 (M1028 - Configuration Management)</strong></p>
+
+<ul>
+<li><strong>불필요한 서비스나 포트</strong>를 비활성화하여 취약점을 노출시키지 않도록 설정  </li>
+<li><strong>운영 체제 및 소프트웨어에 대한 보안 설정</strong>을 최적화하고, <strong>권한 상승을 위한 잠재적 취약점</strong>을 차단  </li>
+<li><strong>비표준 포트 및 서비스</strong>의 사용을 최소화하고, 외부에서 접근할 수 있는 시스템 리소스를 제한</li>
+</ul></li>
+<li><p><strong>네트워크 세분화 및 접근 제어 (M1045 - Network Segmentation and Restriction)</strong></p>
+
+<ul>
+<li><strong>네트워크 세분화(Network Segmentation)</strong>를 통해 <strong>중요한 시스템</strong>에 대한 접근을 제한하고, <strong>권한 상승 시도가 확산되지 않도록 차단</strong>  </li>
+<li><strong>네트워크 접근 제어</strong>를 강화하여 <strong>외부 공격자가 시스템 내부로 침투</strong>할 수 있는 경로를 차단  </li>
+<li><strong>방화벽 및 VPN</strong>을 사용하여 <strong>내부 시스템에 대한 외부 접근</strong>을 제한</li>
+</ul></li>
+<li><p><strong>보안 감사 및 로그 관리 (M1047 - System Logging &amp; Monitoring)</strong></p>
+
+<ul>
+<li><strong>시스템 로그 및 이벤트 로그</strong>를 정기적으로 검토하여 <strong>비정상적인 권한 상승 시도</strong>를 탐지  </li>
+<li><strong>로그 관리 시스템</strong>을 사용하여 <strong>권한 상승 이벤트를 실시간으로 추적하고 경고</strong>  </li>
+<li><strong>Sysmon(Event ID 10)</strong> 등을 사용하여 <strong>시스템 호출 및 권한 변경</strong>과 관련된 이벤트를 모니터링하고 기록</li>
+</ul></li>
+<li><p><strong>취약점 관리 시스템 사용 (M1030 - Patch Management)</strong></p>
+
+<ul>
+<li><strong>취약점 스캐닝 도구</strong>를 사용하여 시스템의 취약점과 노출된 취약점을 주기적으로 점검  </li>
+<li><strong>모든 시스템의 보안 취약점</strong>을 스캔하고 해결하여 권한 상승을 위한 <strong>공격 경로를 차단</strong>  </li>
+<li><strong>취약점 관리 솔루션</strong>을 사용하여 취약한 구성 요소를 우선적으로 해결하고, <strong>공격자가 악용할 수 있는 취약점</strong>을 제거</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1068.000</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SCP System Configuration Permissions</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PH Platform Hardening</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCF System Call Filtering</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

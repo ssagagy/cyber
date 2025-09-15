@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1070.009.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1070.009.01 Clear Persistence</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>계정 정보 관련 레지스트리 키를 모니터링하여 "SAM\SAM\Domains\Account\Users\Names" 하위의 레지스트리 키를 삭제하는 행위를 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1070.009.01.JPG" alt="T1070 009 01" /></p>
+
+<h3>Response</h3>
+
+<p>공격자에 의해 PC가 제어되었을 가능성이 있으므로 호스트 네트워크를 격리합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>시스템 및 보안 로그 무결성 모니터링 (M1047 - System Logging &amp; Monitoring)</strong></p>
+
+<ul>
+<li><strong>시스템 로그 및 보안 로그 무결성</strong>을 모니터링하고 <strong>로그 파일</strong>의 삭제 및 변경을 추적  </li>
+<li><strong>로그 파일 보호</strong>를 통해 공격자가 로그 파일을 삭제하거나 수정하지 못하도록 설정  </li>
+<li><strong>로그 무결성 검사 도구</strong>(예: <strong>Sysmon</strong>)를 사용하여 <strong>로그 변경</strong> 및 <strong>파일 수정</strong>을 추적하고 알림을 설정  </li>
+</ul></li>
+<li><p><strong>파일 무결성 모니터링 및 변경 탐지 (M1047 - System Logging &amp; Monitoring)</strong></p>
+
+<ul>
+<li><strong>파일 무결성 모니터링(FIM)</strong>을 설정하여 <strong>중요 시스템 파일</strong> 및 <strong>구성 파일</strong>의 변조 여부를 탐지  </li>
+<li><strong>파일 삭제, 이동, 수정</strong>과 같은 <strong>시스템 변화</strong>를 실시간으로 감지하여 <strong>비정상적인 활동</strong>을 알림  </li>
+<li><strong>시스템 변경 사항</strong>에 대한 경고를 설정하고, <strong>파일 시스템의 이상 징후</strong>를 빠르게 탐지</li>
+</ul></li>
+<li><p><strong>자동화된 보안 감사 및 경고 시스템 (M1040 - Behavior-Based Detection)</strong></p>
+
+<ul>
+<li><strong>보안 감사 시스템</strong>을 사용하여 <strong>시스템 정리</strong>와 관련된 <strong>행위 기반 탐지</strong>를 설정  </li>
+<li><strong>악성 코드 활동</strong>이나 <strong>비정상적인 명령어 실행</strong>을 탐지하여 경고를 발생시키고 대응  </li>
+<li><strong>자동화된 경고 시스템</strong>을 사용하여 시스템에서 <strong>정리 작업을 수행하는 과정</strong>을 실시간으로 추적</li>
+</ul></li>
+<li><p><strong>침해 탐지 및 대응 시스템 (M1047 - System Logging &amp; Monitoring)</strong></p>
+
+<ul>
+<li><strong>침해 탐지 시스템(IDS/IPS)</strong>을 설정하여 <strong>시스템 정리</strong> 작업에 의해 발생하는 <strong>비정상적인 활동</strong>을 감지  </li>
+<li><strong>네트워크 및 시스템의 비정상적인 행위</strong>를 실시간으로 모니터링하고, 공격자가 <strong>시스템을 정리하려는 시도</strong>를 즉시 경고  </li>
+<li><strong>네트워크 침입 탐지 시스템(NIDS)</strong>을 활성화하여 <strong>시스템 정리 및 데이터 삭제</strong>와 같은 의심스러운 행동을 추적</li>
+</ul></li>
+<li><p><strong>정기적인 백업 및 파일 복원 (M1029 - Data Backup)</strong></p>
+
+<ul>
+<li><strong>시스템 및 중요 파일의 주기적인 백업</strong>을 수행하여 <strong>시스템 정리</strong> 후 데이터를 복원할 수 있도록 설정  </li>
+<li><strong>백업 파일의 무결성 검사</strong>와 <strong>백업 복원 테스트</strong>를 주기적으로 수행하여 <strong>파일 손상</strong>이나 <strong>삭제 후 복구 가능성</strong>을 유지  </li>
+<li><strong>암호화된 백업 시스템</strong>을 사용하여 <strong>백업 데이터</strong>를 안전하게 보호하고, <strong>파일 손상 및 삭제 방지</strong></li>
+</ul></li>
+<li><p><strong>사용자 계정 및 권한 관리 강화 (M1035 - Access Control)</strong></p>
+
+<ul>
+<li><strong>불필요한 계정</strong>이나 <strong>불법적인 접근</strong>을 제한하여 공격자가 <strong>시스템 정리 작업</strong>을 수행하는 경로를 차단  </li>
+<li><strong>최소 권한 원칙</strong>을 적용하여 <strong>시스템 관리자 권한</strong>을 최소화하고, <strong>불필요한 권한 상승</strong>을 방지  </li>
+<li><strong>정기적인 사용자 계정 및 권한 점검</strong>을 통해 권한 부여를 적절히 관리하고, 불법적인 사용자를 차단</li>
+</ul></li>
+<li><p><strong>시스템 클린징 방지 도구 사용 (M1038 - Execution Prevention)</strong></p>
+
+<ul>
+<li><strong>시스템 청소 도구</strong>(예: 악성 코드 제거 도구)의 사용을 제한하고, 공격자가 <strong>시스템 정리 도구</strong>를 악용하지 못하도록 방지  </li>
+<li><strong>운영 체제 보호 모드</strong>를 활성화하여 <strong>비정상적인 시스템 정리 작업</strong>을 방지  </li>
+<li><strong>신뢰할 수 있는 실행만 허용</strong>하는 정책을 적용하여 <strong>불법적인 도구나 소프트웨어</strong>가 시스템에서 실행되지 않도록 차단</li>
+</ul></li>
+<li><p><strong>보안 정책 및 사용자 교육 강화 (M1019 - Awareness and Training)</strong></p>
+
+<ul>
+<li><strong>시스템 정리</strong>와 관련된 <strong>보안 정책</strong>을 강력히 설정하여 <strong>정리 작업이 반드시 필요한 경우</strong>에만 수행되도록 제한  </li>
+<li><strong>직원 및 관리자의 보안 교육</strong>을 통해 <strong>시스템 정리 및 악성 활동</strong>을 인지하고 이를 적절하게 대응할 수 있도록 지원  </li>
+<li><strong>시스템 로그 분석 및 보안 점검</strong>의 중요성을 강조하여 보안팀이 <strong>정기적으로 시스템을 점검하고 모니터링</strong>하도록 유도</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1531.000</td>
+</tr>
+<tr>
+  <td style="text-align:center;">T1640.000</td>
+</tr>
+<tr>
+  <td style="text-align:center;">T1059.001</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
