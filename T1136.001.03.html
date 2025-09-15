@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1136.001.03_d3fend</title>
+    <title>T1136.001.03</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,19 +13,52 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>net.exe 프로세스를 이용한 명령어에 user /add 가 포함되는 경우 탐지한다.</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1136.001.03.png" alt="T1136 001 03" /></p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>의심스러운 계정 생성이 발견될 경우, 즉시 해당 계정을 비활성화하고, 관련 시스템에서 발생한 다른 이상 징후를 조사합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>로컬 계정 생성 제한 (M1026 - Privileged Account Management &amp; M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li><strong>Windows 그룹 정책(GPO) 설정</strong>: 비인가 사용자가 <code data-language="powershell">net user /add</code> 또는 PowerShell을 통해 계정을 생성하지 못하도록 제한  </li>
+<li><strong>Linux/macOS sudo 제한</strong>: <code data-language="powershell">/etc/sudoers</code> 파일을 수정하여 <code data-language="powershell">useradd</code> 및 <code data-language="powershell">adduser</code> 명령어 실행을 제한  </li>
+</ul></li>
+<li><p><strong>로컬 계정 생성 이벤트 모니터링 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>Windows</strong>: Event ID <strong>4720 (사용자 계정 생성)</strong> 및 <strong>4722 (사용자 계정 활성화)</strong> 모니터링  </li>
+<li><strong>Linux/macOS</strong>: <code data-language="powershell">/var/log/auth.log</code> 및 <code data-language="powershell">/var/log/secure</code>에서 <code data-language="powershell">useradd</code> 및 <code data-language="powershell">passwd</code> 명령어 실행 기록 감시  </li>
+<li>SIEM(Security Information and Event Management) 시스템을 활용하여 <strong>비정상적인 계정 생성 탐지 및 경고</strong>  </li>
+</ul></li>
+<li><p><strong>비인가 계정 사용 제한 (M1032 - Multi-Factor Authentication &amp; M1018 - User Account Management)</strong>  </p>
+
+<ul>
+<li><strong>로컬 계정의 MFA(다중 인증) 적용</strong>  </li>
+<li><strong>비인가 계정이 시스템에 로그인할 수 없도록 계정 잠금 정책(Lockout Policy) 설정</strong>  </li>
+<li><strong>사용자 계정 목록을 주기적으로 점검</strong>하여 의심스러운 계정 제거  </li>
+</ul></li>
+<li><p><strong>특정 계정 생성 차단 (M1031 - Network Segmentation &amp; M1022 - Restriction of Use of Certain Functions)</strong>  </p>
+
+<ul>
+<li><strong>GPO 및 Endpoint Protection</strong>을 사용하여 <code data-language="powershell">net user</code> 및 <code data-language="powershell">New-LocalUser</code> 명령어 실행 차단  </li>
+<li><strong>Linux PAM(Pluggable Authentication Modules) 설정</strong>을 통해 비인가 계정 추가 차단  </li>
+</ul></li>
+<li><p><strong>보안 정책 및 사용자 교육 (M1019 - Awareness and Training)</strong>  </p>
+
+<ul>
+<li><strong>관리자 계정 남용 방지를 위한 보안 정책 강화</strong>  </li>
+<li><strong>사용자들에게 로컬 계정 생성을 통한 공격 기법 및 탐지 방법 교육</strong>  </li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
@@ -44,8 +77,21 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>

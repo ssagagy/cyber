@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1120.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1120.000.01 Peripheral Device Discovery</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>의심스러운 프로세스가 WMI를 이용하여 정보 획득 행위(Peripheral Device Discovery)를 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1120.000.01.PNG" alt="T1120 000 01" /></p>
+
+<h3>Response</h3>
+
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>USB 및 외장 저장 장치 제어 (M1031 - Network Segmentation &amp; M1037 - Network Intrusion Prevention)</strong>  </p>
+
+<ul>
+<li><strong>USB 저장 장치 사용 제한</strong>: 그룹 정책(GPO), DLP(Data Loss Prevention) 솔루션을 활용하여 <strong>비인가된 USB 장치 차단</strong>  </li>
+<li><strong>자동 실행(Autorun) 비활성화</strong>: Windows 및 Linux 시스템에서 USB 장치의 <strong>자동 실행 기능을 차단</strong>하여 악성 코드 감염 방지  </li>
+<li><strong>USB 및 이동식 미디어 로그 감시</strong>: SIEM(Security Information and Event Management) 시스템을 활용하여 <strong>USB 장치 연결 및 데이터 이동 모니터링</strong>  </li>
+</ul></li>
+<li><p><strong>네트워크 장치 검색 제한 (M1037 - Network Intrusion Prevention &amp; M1026 - Privileged Account Management)</strong>  </p>
+
+<ul>
+<li><strong>비인가 사용자의 네트워크 장치 검색 차단</strong>: 내부 방화벽 설정을 통해 <strong>ICMP, SNMP, NetBIOS 등의 탐색 프로토콜 제한</strong>  </li>
+<li><strong>L2 스위치 보안 강화</strong>: 포트 보안(Port Security) 및 MAC 주소 기반 필터링 적용하여 <strong>비인가 장치 연결 차단</strong>  </li>
+<li><strong>ARP 스푸핑 및 네트워크 스캐닝 탐지</strong>: IDS/IPS(Intrusion Detection/Prevention System) 솔루션을 활용하여 네트워크 장치 검색 시도를 감지 및 차단  </li>
+</ul></li>
+<li><p><strong>PowerShell 및 WMI 제한 (M1038 - Execution Prevention &amp; M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>PowerShell 실행 제한</strong>: AppLocker 또는 WDAC(Windows Defender Application Control)를 활용하여 <strong>비인가된 PowerShell 스크립트 실행 차단</strong>  </li>
+<li><strong>WMI 명령어 사용 제한</strong>: 그룹 정책을 활용하여 <strong>비관리자 계정이 WMI 명령어를 실행하지 못하도록 제한</strong>  </li>
+<li><strong>의심스러운 명령어 실행 모니터링</strong>: PowerShell 및 WMI 로그 감시 및 SIEM 시스템을 활용하여 <strong>주변 장치 검색 활동 탐지</strong>  </li>
+</ul></li>
+<li><p><strong>블루투스 및 무선 장치 보안 강화 (M1032 - Multi-Factor Authentication &amp; M1019 - Awareness and Training)</strong>  </p>
+
+<ul>
+<li><strong>블루투스 장치 사용 제한</strong>: 조직 정책으로 <strong>불필요한 블루투스 장치 연결 차단</strong> 및 <strong>블루투스 탐색 기능 비활성화</strong>  </li>
+<li><strong>무선 네트워크 접근 제한</strong>: WPA3 보안 프로토콜 적용 및 MAC 주소 필터링을 통해 <strong>비인가된 무선 장치 연결 방지</strong>  </li>
+<li><strong>보안 교육 실시</strong>: 직원들에게 <strong>의심스러운 주변 장치 연결 및 탐색 활동 감지 방법</strong>을 교육  </li>
+</ul></li>
+<li><p><strong>주변 장치 로그 및 활동 모니터링 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>Windows Event Log 및 Sysmon 활용</strong>: USB, 프린터, 네트워크 장치 연결 활동을 지속적으로 감시  </li>
+<li><strong>DLP(Data Loss Prevention) 솔루션 적용</strong>: <strong>외부 장치로 대량의 데이터가 이동하는 경우 자동으로 차단</strong>  </li>
+<li><strong>Endpoint Detection &amp; Response (EDR) 솔루션 활용</strong>: <strong>이상징후 탐지 및 경고 시스템 적용</strong>  를 줄입니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1059.001</td>
+</tr>
+<tr>
+  <td style="text-align:center;">T1047.000</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

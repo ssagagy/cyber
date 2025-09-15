@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1119.000.01_d3fend</title>
+    <title>T1119.000.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,19 +13,75 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>프로세스의 파일 생성 행위를 모니터링하여 문서 파일을 특정 경로에 수집하는 행위를 탐지합니다.</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1119.000.01.JPG" alt="T1119 000 01" /></p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>최소 권한 원칙 적용 (M1026 - Privileged Account Management)</strong>  </p>
+
+<ul>
+<li>자동화된 스크립트나 프로세스가 <strong>시스템의 중요 정보</strong>를 수집하지 못하도록 <strong>최소 권한 원칙 적용</strong>  </li>
+<li><strong>관리자 권한이 필요한 작업을 제한</strong>하고, <strong>일반 사용자 계정</strong>에서는 중요 정보 접근을 차단  </li>
+<li><strong>권한 분리(Segregation of Duties, SoD)</strong>를 적용하여, 한 사용자가 모든 정보에 접근할 수 없도록 설정  </li>
+</ul></li>
+<li><p><strong>데이터 접근 제어 강화 (M1035 - Access Control)</strong>  </p>
+
+<ul>
+<li><strong>민감한 파일 및 데이터</strong>에 대한 접근을 <strong>사용자 및 그룹별로 제한</strong>하여 불필요한 정보 수집 방지  </li>
+<li>네트워크 공유 폴더 및 클라우드 스토리지 접근 권한을 최소화  </li>
+<li>중요 시스템 로그 및 데이터 파일을 <strong>암호화</strong>하여 비인가된 접근 방지  </li>
+</ul></li>
+<li><p><strong>비정상적인 자동화 활동 모니터링 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>SIEM(Security Information and Event Management) 시스템</strong>을 활용하여 <strong>비정상적인 자동화된 데이터 수집 활동 감지</strong>  </li>
+<li><strong>로그 분석을 통해</strong> 대량의 파일 접근 및 데이터 수집이 발생하는지 지속적으로 모니터링  </li>
+<li>Windows Event Logs, Sysmon, Linux auditd 등을 활용하여 <strong>스크립트 실행 및 프로세스 활동</strong> 감시  </li>
+</ul></li>
+<li><p><strong>의심스러운 프로세스 및 스크립트 실행 차단 (M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li><strong>PowerShell, WMI, Bash 스크립트 실행을 제한</strong>하여 악성 코드가 자동화된 방식으로 데이터를 수집하지 못하도록 설정  </li>
+<li>AppLocker, Windows Defender Application Control(WDAC), SELinux 등을 사용하여 <strong>의심스러운 실행 파일 및 스크립트 실행 차단</strong>  </li>
+<li>조직에서 사용하지 않는 <strong>자동화 도구 및 스크립트 언어 비활성화</strong>  </li>
+</ul></li>
+<li><p><strong>DLP(Data Loss Prevention) 솔루션 적용 (M1029 - Data Backup &amp; Protection)</strong>  </p>
+
+<ul>
+<li><strong>DLP(Data Loss Prevention) 솔루션을 활용하여</strong> 중요 데이터가 <strong>비인가된 방식으로 수집 및 외부 전송되지 않도록 차단</strong>  </li>
+<li>네트워크 및 USB 저장 장치로의 <strong>대량 데이터 이동을 감지 및 차단</strong>  </li>
+<li>중요 파일이 <strong>네트워크 드라이브, 이메일, 클라우드 스토리지</strong>로 전송되는지 감시  </li>
+</ul></li>
+<li><p><strong>네트워크 트래픽 감시 및 필터링 (M1037 - Network Intrusion Prevention)</strong>  </p>
+
+<ul>
+<li>IDS/IPS(Intrusion Detection &amp; Prevention System)를 사용하여 <strong>비정상적인 데이터 수집 및 외부 전송 차단</strong>  </li>
+<li>자동화된 도구가 정보를 수집한 후 <strong>외부 서버로 전송하려는 네트워크 트래픽을 차단</strong>  </li>
+<li><strong>이상 트래픽 탐지를 위해</strong> Firewall 및 DNS 모니터링 강화  </li>
+</ul></li>
+<li><p><strong>파일 무결성 모니터링(FIM) 적용 (M1049 - File Integrity Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>중요 시스템 파일 및 데이터 변경 사항을 실시간으로 감지</strong>하여 비인가된 자동화된 정보 수집을 차단  </li>
+<li>중요한 파일이 <strong>대량으로 복사되거나 이동되는 경우</strong> 관리자에게 경고하도록 설정  </li>
+</ul></li>
+<li><p><strong>사용자 보안 교육 및 인식 제고 (M1019 - Awareness and Training)</strong>  </p>
+
+<ul>
+<li>직원들에게 <strong>자동화된 정보 수집 및 데이터 탈취 기술에 대한 보안 교육</strong> 실시  </li>
+<li>의심스러운 <strong>스크립트 실행, 자동화된 수집 행위</strong> 감지 시 즉시 보안팀에 보고하도록 훈련  </li>
+<li>사회공학적 기법을 이용한 <strong>자동화된 정보 수집(예: 악성 매크로, 자동 실행 스크립트 등)</strong>에 대한 경각심 고취  </li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
@@ -44,8 +100,24 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FA File Analysis</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>

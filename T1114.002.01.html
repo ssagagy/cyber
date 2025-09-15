@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1114.002.01_d3fend</title>
+    <title>T1114.002.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,19 +13,76 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>파워쉘 명령어를 모니터링하여 이메일 정보를 수집하는 행위를 탐지합니다.</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1114.002.01.JPG" alt="T1114 002 01" /></p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>이메일 데이터 암호화 (M1041 - Encrypt Sensitive Information)</strong></p>
+
+<ul>
+<li><strong>메일 애플리케이션 데이터(PST, OST 파일)</strong>를 <strong>암호화</strong>하여 공격자가 평문으로 이메일 내용을 추출하지 못하도록 방지  </li>
+<li>BitLocker 또는 Windows EFS(Encrypting File System)를 사용하여 <strong>메일 저장 폴더</strong>를 보호  </li>
+<li><strong>이메일 서버 및 클라이언트 간 통신</strong>을 <strong>SSL/TLS</strong>로 보호하여 <strong>데이터 도청 및 탈취 방지</strong>  </li>
+</ul></li>
+<li><p><strong>이메일 클라이언트 접근 제어 강화 (M1035 - Access Control)</strong></p>
+
+<ul>
+<li><strong>메일 애플리케이션 폴더</strong> 및 <strong>데이터 파일(PST, OST 등)</strong>에 대한 <strong>권한을 최소화</strong>하여 비인가 사용자가 접근하지 못하도록 설정  </li>
+<li>그룹 정책(GPO)을 사용하여 <strong>메일 클라이언트에 대한 접근을 제어</strong>하고, <strong>관리자 권한 없이 설정 변경 불가하도록 제한</strong>  </li>
+<li><strong>Windows 및 Linux 보안 정책을 적용</strong>하여 <strong>메일 애플리케이션 저장 경로</strong>에 대한 비인가 접근을 차단  </li>
+</ul></li>
+<li><p><strong>사용자 인증 및 다중 인증(MFA) 적용 (M1032 - Multi-factor Authentication)</strong></p>
+
+<ul>
+<li><strong>이메일 계정 보호를 위해 MFA 적용</strong>하여 공격자가 계정 정보를 탈취하더라도 접근을 어렵게 만듦  </li>
+<li><strong>OAuth 및 SAML</strong>과 같은 <strong>강력한 인증 방식</strong>을 활용하여 <strong>이메일 클라이언트 로그인 보안 강화</strong>  </li>
+<li>메일 애플리케이션에서 <strong>자동 로그인 기능을 비활성화</strong>하고, 주기적으로 <strong>비밀번호 변경 정책 적용</strong>  </li>
+</ul></li>
+<li><p><strong>로컬 저장 이메일 데이터 제한 (M1021 - Restrict Web-Based Content)</strong></p>
+
+<ul>
+<li><strong>이메일 데이터를 로컬에 저장하지 않도록 정책을 설정</strong>하고, <strong>클라우드 기반 메일 서비스(예: Office 365, Gmail)</strong> 사용을 권장  </li>
+<li>메일 클라이언트에서 <strong>캐시 저장 기능을 최소화</strong>하고, <strong>메일을 서버에 저장하도록 정책 변경</strong>  </li>
+<li><strong>IMAP/POP3 사용을 제한</strong>하여 <strong>공격자가 로컬 이메일 데이터에 접근하지 못하도록 차단</strong>  </li>
+</ul></li>
+<li><p><strong>의심스러운 프로세스 및 파일 접근 모니터링 (M1047 - System Logging &amp; Monitoring)</strong></p>
+
+<ul>
+<li><strong>메일 데이터 폴더(예: C:\Users\%USERNAME%\AppData\Local\Microsoft\Outlook)</strong>에 대한 비정상적인 <strong>파일 접근 모니터링</strong>  </li>
+<li><strong>SIEM(Security Information and Event Management) 시스템</strong>을 활용하여 <strong>비인가된 애플리케이션이 이메일 데이터에 접근하는지 실시간 감지</strong>  </li>
+<li>PowerShell 스크립트 및 WMI 쿼리를 활용하여 <strong>PST/OST 파일을 검색하는 프로세스를 탐지 및 차단</strong>  </li>
+</ul></li>
+<li><p><strong>메일 클라이언트 보안 정책 적용 (M1038 - Execution Prevention)</strong></p>
+
+<ul>
+<li><strong>Outlook 보안 설정 강화</strong> (예: 매크로 실행 제한, 자동 미리보기 비활성화)  </li>
+<li><strong>의심스러운 이메일 첨부 파일 자동 다운로드 방지</strong>  </li>
+<li><strong>메일 클라이언트에서 외부 플러그인 및 확장 프로그램 제한</strong>  </li>
+</ul></li>
+<li><p><strong>데이터 손실 방지(DLP) 솔루션 적용 (M1029 - Data Backup &amp; Protection)</strong></p>
+
+<ul>
+<li><strong>DLP(Data Loss Prevention) 솔루션</strong>을 사용하여 <strong>중요한 이메일 데이터가 무단으로 외부로 유출되지 않도록 차단</strong>  </li>
+<li><strong>중요한 이메일 데이터가 클라우드, USB, 이메일 첨부 파일 등을 통해 유출되는지 모니터링</strong>  </li>
+<li><strong>백업 솔루션 적용</strong>하여 <strong>이메일 데이터 무결성을 보호</strong>하고 <strong>랜섬웨어 및 데이터 삭제 공격 대응</strong>  </li>
+</ul></li>
+<li><p><strong>사용자 교육 및 보안 인식 강화 (M1019 - Awareness and Training)</strong></p>
+
+<ul>
+<li><strong>이메일 피싱 공격 방지 교육</strong>을 통해 직원들이 의심스러운 첨부 파일 및 링크를 열지 않도록 유도  </li>
+<li><strong>비인가 소프트웨어</strong>가 <strong>이메일 데이터에 접근할 수 없도록</strong> 사용자들에게 보안 정책을 교육  </li>
+<li><strong>이메일 클라이언트 설정 변경</strong> 및 <strong>데이터 백업 정책 준수</strong>를 위한 정기적인 보안 교육 실시  </li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 

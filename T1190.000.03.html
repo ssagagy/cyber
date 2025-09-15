@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1190.000.01</title>
+    <title>T1190.000.03</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
-<h1>T1190.000.01 Exploit Public-Facing Application</h1>
+<h1>T1190.000.03 Exploit Public-Facing Application - CVE-2021-41773</h1>
 
 <h2>D3FEND</h2>
 
@@ -13,9 +13,12 @@
 
 <h3>Detection</h3>
 
-<p>최신 취약점을 확인하여 취약점과 관련된 행위를 탐지하거나, 웹 어플리케이션의 경우 취약점이 발생하는 입력 데이터 값을 검증하여 탐지합니다.</p>
+<p>모니터링을 통해 경로 순회를 목적으로 하는 문자열인 "/.%%32%65"가 반복되는 네트워크 패킷이 있는지 확인합니다.</p>
 
 <h3>Detection(EDR)</h3>
+
+<p><img src="T1190.000.03.png" alt="" />
+https://172.18.10.125:8903/#/analysis/alert/66f60c4b002dc79600000001</p>
 
 <h3>Response</h3>
 
@@ -87,10 +90,7 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:center;">T1190</td>
-</tr>
-<tr>
-  <td style="text-align:center;">T1059.006</td>
+  <td style="text-align:center;">T1190.000</td>
 </tr>
 </tbody>
 </table>
@@ -103,13 +103,13 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:center;">D3-SCH Source Code Hardening</td>
+  <td style="text-align:center;">D3-SU Software Update</td>
 </tr>
 <tr>
-  <td style="text-align:center;">D3-ACH Application Configuration Hardening</td>
+  <td style="text-align:center;">D3-SCP System Configuration Permissions</td>
 </tr>
 <tr>
-  <td style="text-align:center;">D3-SUP Software Update</td>
+  <td style="text-align:center;">D3-PH Platform Hardening</td>
 </tr>
 </tbody>
 </table>

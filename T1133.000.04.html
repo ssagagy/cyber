@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1133.000.04</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1133.000.04 상용 도구 다운로드</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<ul>
+<li>process_name : powershell.exe AND</li>
+<li>Action : Process-Create AND</li>
+<li>file_name : ngrok.exe AND</li>
+<li>cmd_line contains : "config"</li>
+<li>cmd_line contains : "add-authtoken"</li>
+</ul>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1133.000.04.png" alt="T1133 000 04" /></p>
+
+<h3>Response</h3>
+
+<ol>
+<li>이벤트 분석</li>
+</ol>
+
+<ul>
+<li>상용 도구 다운로드 요청 발생 시, 해당 파일의 서명 및 출처를 검증.</li>
+<li>다운로드된 도구가 비인가된 도구 목록에 해당하는지 확인.</li>
+<li>로그를 통해 누가, 언제, 어떤 URL에서 다운로드를 시도했는지 추적.</li>
+</ul>
+
+<ol start="2">
+<li>격리 및 조사</li>
+</ol>
+
+<ul>
+<li>다운로드된 파일을 샌드박스 환경에서 실행하여 의심 활동 분석.</li>
+<li>도구가 정상적으로 사용되는지, 아니면 악용 가능성이 있는지 기능 점검.</li>
+</ul>
+
+<ol start="3">
+<li>정보 차단</li>
+</ol>
+
+<ul>
+<li>다운로드된 상용 도구가 불필요하거나 위험할 경우, 즉시 제거.</li>
+<li>해당 도구를 제공한 사이트에 대한 접속 차단.</li>
+</ul>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li>시스템 하드닝</li>
+</ol>
+
+<ul>
+<li>승인되지 않은 출처로부터의 다운로드를 방지하기 위해 애플리케이션 화이트리스트를 설정.</li>
+<li>관리 계정만 상용 도구 설치 및 사용 권한을 갖도록 구성.</li>
+</ul>
+
+<ol start="2">
+<li>접근 통제</li>
+</ol>
+
+<ul>
+<li>네트워크 레벨에서 소프트웨어 다운로드 URL을 필터링하고, 신뢰할 수 있는 리포지토리만 허용.</li>
+<li>사용자 별로 소프트웨어 다운로드 권한을 제한하며, 다운로드 시 관리자 승인을 요구.</li>
+</ul>
+
+<ol start="3">
+<li>모니터링 및 탐지</li>
+</ol>
+
+<ul>
+<li>SIEM 솔루션에서 특정 소프트웨어 다운로드 URL이나 파일 해시를 기반으로 경고 규칙을 설정.</li>
+<li>과도한 소프트웨어 다운로드 시도를 탐지하여 관리자에게 알림.</li>
+</ul>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1133.000.04</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FA File Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

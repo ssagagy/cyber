@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1218.002.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1218.002.01 시스템 바이너리 프록시 실행: 제어판</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>control.exe의 자식 프로세스로 rundll32.exe가 생성되고 rundll32.exe의 커맨드에서 시스템 경로가 아닌 곳에서의 cpl 실행 커맨드를 탐지한다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1218.002.01.png" alt="T1218 002 01" /></p>
+
+<h3>Response</h3>
+
+<p>의심스러운 ".cpl" 파일의 실행을 차단한다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>CPL 파일 실행 제한 (M1042 - Disable or Remove Feature or Program)</strong>  </p>
+
+<ul>
+<li><strong>AppLocker 또는 WDAC(Windows Defender Application Control) 정책을 활용하여 CPL 파일 실행 차단</strong>  </li>
+<li>특정한 경로에서 실행되는 <code data-language="powershell">rundll32.exe shell32.dll,Control_RunDLL</code> 명령어 제한  </li>
+</ul></li>
+<li><p><strong>rundll32.exe 실행 모니터링 및 차단 (M1047 - System Logging &amp; Monitoring &amp; M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li><strong>rundll32.exe를 사용하여 CPL 파일을 실행하는 프로세스를 감시</strong>  </li>
+<li><strong>EDR/XDR 솔루션 활용</strong>하여 의심스러운 <code data-language="powershell">rundll32.exe</code> 실행 탐지 및 차단  </li>
+<li>Windows 이벤트 로그에서 <strong>Event ID 4688 (새로운 프로세스 생성) 감시</strong>  </li>
+</ul></li>
+<li><p><strong>의심스러운 CPL 파일 다운로드 및 실행 차단 (M1031 - Network Segmentation &amp; M1036 - Account Use Policies)</strong>  </p>
+
+<ul>
+<li><strong>이메일 및 웹 브라우저에서 CPL 파일 다운로드 차단</strong>  </li>
+<li><strong>사용자 다운로드 폴더 및 Temp 폴더에서 CPL 파일 실행 제한</strong>  </li>
+<li><strong>파일의 디지털 서명 검증</strong>을 통해 신뢰할 수 없는 CPL 파일 실행 방지  </li>
+</ul></li>
+<li><p><strong>사용자 계정 및 권한 관리 강화 (M1026 - Privileged Account Management)</strong>  </p>
+
+<ul>
+<li><strong>일반 사용자 계정에서 CPL 실행 제한</strong>  </li>
+<li><strong>관리자 권한이 필요한 CPL 파일 실행 요청 감지 및 차단</strong>  </li>
+<li><strong>최소 권한 원칙 적용</strong>하여 비인가된 실행 방지  </li>
+</ul></li>
+<li><p><strong>사용자 교육 및 인식 강화 (M1019 - Awareness and Training)</strong>  </p>
+
+<ul>
+<li><strong>피싱 공격에 대한 보안 교육 실시</strong> (첨부파일 내 CPL 악용 사례 포함)  </li>
+<li><strong>출처가 불분명한 CPL 파일 실행 금지</strong> 안내  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1218.002</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ITF Inbound Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTA Network Traffic Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

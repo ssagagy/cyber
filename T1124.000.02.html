@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1124.000.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1124.000.02 w32tm을 이용한 시스템 타임존 확인</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>w32tm을 이용한 시스템 타임존 확인을 탐지했습니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1124.000.02.PNG" alt="T1124 000 02" /></p>
+
+<p>https://172.18.10.125:8903/#/analysis/alert/67b3f443002dc6cc000007ef</p>
+
+<h3>Response</h3>
+
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>시간 동기화 및 변경 보호 (M1024 - Restrict File and Directory Permissions)</strong>  </p>
+
+<ul>
+<li>시스템 시간이 변경되지 않도록 <strong>Windows 그룹 정책(GPO)</strong> 또는 <strong>Linux 권한 관리</strong>를 통해 <strong>일반 사용자의 시간 설정 변경 제한</strong>  </li>
+<li><strong>NTP(Network Time Protocol) 보안 강화</strong>: 공인된 NTP 서버만 사용하도록 설정하고, 비인가된 NTP 요청 차단  </li>
+</ul></li>
+<li><p><strong>시스템 로그 모니터링 및 감사 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li>시스템 시간 변경 및 조회 관련 이벤트를 <strong>로그로 기록</strong>하고, 이상 활동 감지 시 관리자에게 알림  </li>
+<li><strong>Windows</strong>: Event ID <strong>4616</strong>(시스템 시간 변경) 모니터링  </li>
+<li><strong>Linux/macOS</strong>: <code data-language="powershell">/var/log/syslog</code>, <code data-language="powershell">/var/log/auth.log</code>에서 시간 변경 및 접근 이벤트 감시  </li>
+</ul></li>
+<li><p><strong>비인가된 시간 조회 및 변경 차단 (M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li><strong>PowerShell 및 명령어 실행 제한</strong>: AppLocker, WDAC(Windows Defender Application Control) 등을 활용하여 <strong>비인가 사용자의 <code data-language="powershell">w32tm</code>, <code data-language="powershell">timedatectl</code> 등의 실행 차단</strong>  </li>
+<li><strong>보안 솔루션 적용</strong>: EDR(Endpoint Detection &amp; Response) 및 SIEM(Security Information and Event Management) 시스템을 통해 <strong>비정상적인 시간 조회 활동 탐지</strong>  </li>
+</ul></li>
+<li><p><strong>네트워크 트래픽 감시 및 방화벽 정책 적용 (M1037 - Network Intrusion Prevention)</strong>  </p>
+
+<ul>
+<li>비인가된 외부 서버와의 <strong>NTP 통신 차단</strong>  </li>
+<li>네트워크에서 <strong>시스템 시간 조회 관련 패킷을 감시</strong>하여 이상 활동 탐지  </li>
+</ul></li>
+<li><p><strong>사용자 보안 교육 (M1019 - Awareness and Training)</strong>  </p>
+
+<ul>
+<li><strong>시스템 시간 정보가 공격에 활용될 수 있음을 교육</strong>하고, 사용자가 <strong>비정상적인 시스템 시간 변경을 감지하는 방법을 숙지하도록 훈련</strong>  </li>
+<li><strong>보안 담당자들에게 시간 조작 공격(Time Jittering Attack)에 대한 대응 방안 교육</strong><br />
+<h2>Affected Techniques</h2></li>
+</ul></li>
+</ol>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1124</td>
+</tr>
+</tbody>
+</table>
+
+<p>|D3FEND|
+|:-----------:|</p>
+
+</body>
+</html>

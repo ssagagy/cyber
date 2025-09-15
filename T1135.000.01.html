@@ -7,152 +7,6 @@
 <body>
 <h1>T1135.000.01 네트워크 공유 정보 수집</h1>
 
-<h2>Definition</h2>
-
-<p>파일 확장자 변조</p>
-
-<h2>Security Threat</h2>
-
-<p>XXXX</p>
-
-<h2>Support Platform</h2>
-
-<p>windows </p>
-
-<h2>Input Argument</h2>
-
-<table>
-<thead>
-<tr>
-  <th style="text-align:center;">name</th>
-  <th style="text-align:center;">type</th>
-  <th style="text-align:center;">description</th>
-  <th style="text-align:center;">default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:center;">binary_path</td>
-  <td style="text-align:center;">Path</td>
-  <td style="text-align:center;">원본 파일 경로</td>
-  <td style="text-align:center;">C:\Users\Public\</td>
-</tr>
-<tr>
-  <td style="text-align:center;">binary_name</td>
-  <td style="text-align:center;">Path</td>
-  <td style="text-align:center;">원본 파일</td>
-  <td style="text-align:center;">collect.txt</td>
-</tr>
-</tbody>
-</table>
-
-<h2>Dependencies</h2>
-
-<h3>prereq</h3>
-
-<p><code data-language="powershell">powershell
-<span class="keyword">echo</span> "T1135.000.01_prereq_command_start"
-<span class="keyword">echo</span> "T1135.000.01 prereq no items to check"
-<span class="keyword">echo</span> "T1135.000.01_prereq_command_End"
-<span class="operator">Exit </span>0</code></p>
-
-<h3>get prereq</h3>
-
-<p><code data-language="powershell">powershell
-<span class="keyword">echo</span> T1135.000.01_get_prereq_command_start
-<span class="keyword">echo</span> "T1135.000.01 no actions to take"
-<span class="keyword">echo</span> "T1135.000.01_getprereq_command_End"
-<span class="operator">Exit </span>0</code></p>
-
-<h2>Executor</h2>
-
-<h3>command(관리자 권한)</h3>
-
-<p><code data-language="powershell">powershell
-<span class="keyword">echo</span> "T1135.000.01_command_Start"
-$binary = <span class="parameter">"#<span class="comment">{</span>binary_path<span class="comment">}</span>"</span>+<span class="parameter">"#<span class="comment">{</span>binary_name<span class="comment">}</span>"</span>
-$drive = Get-PSDrive -Name * -ErrorAction SilentlyContinue
-$drive | <span class="keyword">Out-File</span> -FilePath $binary
-<span class="operator">if </span><span class="operator">(</span><span class="keyword">Test-Path</span><span class="operator"> -Path</span> $binary<span class="operator">)</span> <span class="comment">{</span>
-  <span class="keyword">echo</span> "T1135.000.01_command_Success"
-  <span class="keyword">echo</span> "T1135.000.01_command_End"
-  <span class="operator">Exit </span>0
-<span class="comment">}</span>
-<span class="keyword">echo</span> "T1135.000.01_command_Fail"
-<span class="keyword">echo</span> "T1135.000.01_command_End"
-<span class="operator">Exit </span>1
-</code></p>
-
-<h3>cleanup(관리자 권한)</h3>
-
-<p><code data-language="powershell">powershell
-<span class="keyword">echo</span> "T1135.000.01_cleanup_command_Start"
-$binary = <span class="parameter">"#<span class="comment">{</span>binary_path<span class="comment">}</span>"</span>+<span class="parameter">"#<span class="comment">{</span>binary_name<span class="comment">}</span>"</span>
-<span class="operator">Try</span> <span class="comment">{</span>
-  RD $binary <span class="keyword">-force</span>
-<span class="comment">}</span>
-<span class="operator">Catch</span> <span class="comment">{</span>
-  <span class="keyword">echo</span> "T1135.000.01_cleanup_command_Fail"
-  <span class="keyword">echo</span> "T1135.000.01_cleanup_command_End"
-  <span class="operator">Exit </span>1
-<span class="comment">}</span>
-<span class="operator">if </span><span class="operator">(</span>-not <span class="operator">(</span><span class="keyword">Test-Path</span><span class="operator"> -Path</span> $binary<span class="operator">)</span><span class="operator">)</span> <span class="comment">{</span>
-  <span class="keyword">echo</span> "T1135.000.01_cleanup_command_Success"
-  <span class="keyword">echo</span> "T1135.000.01_cleanup_command_End" 
-  <span class="operator">Exit </span>0
-<span class="comment">}</span></code></p>
-
-<h2>Information</h2>
-
-<p>Action 실행 전 필요한 정보 목록과 실행 후 얻게되는 정보 목록</p>
-
-<h3>Requried Information</h3>
-
-<table>
-<thead>
-<tr>
-  <th style="text-align:center;">Information</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:center;">reserved</td>
-</tr>
-</tbody>
-</table>
-
-<h3>Result Information</h3>
-
-<table>
-<thead>
-<tr>
-  <th style="text-align:center;">Information</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:center;">reserved</td>
-</tr>
-</tbody>
-</table>
-
-<h3>Version</h3>
-
-<table>
-<thead>
-<tr>
-  <th style="text-align:center;">Version</th>
-  <th style="text-align:center;">GUID</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:center;">1.0.1</td>
-  <td style="text-align:center;">610F88EC-6495-42FE-8BB6-C8235B86DB53</td>
-</tr>
-</tbody>
-</table>
-
 <h2>D3FEND</h2>
 
 <p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
@@ -168,7 +22,9 @@ $binary = <span class="parameter">"#<span class="comment">{</span>binary_path<sp
 
 <h3>Detection(EDR)</h3>
 
-<p><img width="800" alt="T1135 000 01" src="T1135.000.01.png" /></p>
+<p><img src="T1135.000.01.png" alt="" /></p>
+
+<p>https://172.18.10.125:8903/#/analysis/incident/67a99f3d002dc6ce00000381</p>
 
 <h3>Response</h3>
 

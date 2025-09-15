@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1102.000.01_d3fend</title>
+    <title>T1102.000.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -11,21 +11,41 @@
 
 <p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
 
-<h3>Detection</h3>
+<p>### Detection
+ 난독화된 스크립트의 파일 다운로드 명령어(DownloadFile)를 탐지 했습니다.</p>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>### Detection(EDR)
+ <img src="https://github.com/user-attachments/assets/27fca5b6-19fa-495d-b630-74cba80d9d92" alt="T1102 000 01" />
+ <img src="T1102.000.01.PNG" alt="T1102 000 01" /></p>
 
-<h3>Detection(EDR)</h3>
+<p>### Response
+ 공격자 C&amp;C 서버로 추정되는 주소를 차단합니다.</p>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p>### Mitigations
+ 1. <strong>네트워크 트래픽 분석 (M1049 - Audit)</strong>
+    - HTTP 및 HTTPS 트래픽을 모니터링하고, 비정상적인 웹 서비스 통신을 탐지할 수 있도록 네트워크 로그를 분석합니다.</p>
 
-<h3>Response</h3>
+<ol start="2">
+<li><p><strong>필터링 및 방화벽 설정 강화 (M1030 - Network Segmentation)</strong></p>
 
-<p>XXXX</p>
+<ul>
+<li>웹 서비스에 대한 트래픽을 필터링하고, 방화벽 규칙을 설정하여 신뢰할 수 있는 도메인 및 서비스로의 접근만 허용합니다.</li>
+</ul></li>
+<li><p><strong>도메인 허용 목록 관리 (M1037 - Filter Network Traffic)</strong></p>
 
-<h3>Mitigations</h3>
+<ul>
+<li>신뢰할 수 있는 웹 서비스의 도메인만 허용하도록 네트워크 트래픽을 제어하고, 악성 웹 서비스와의 통신을 차단합니다.</li>
+</ul></li>
+<li><p><strong>명령 및 제어 트래픽 탐지 (M1017 - Network Intrusion Prevention)</strong></p>
 
-<p>XXXX</p>
+<ul>
+<li>웹 서비스 기반 C2 통신을 탐지하기 위해 네트워크 침입 방지 시스템(IPS) 및 침입 탐지 시스템(IDS)을 설정하여, 의심스러운 HTTP/HTTPS 트래픽을 탐지하고 차단합니다.</li>
+</ul></li>
+<li><p><strong>웹 서비스 사용 정책 제한 (M1021 - Restrict Web-Based Content)</strong></p>
+
+<ul>
+<li>조직 내에서 사용할 수 있는 웹 서비스와 도구를 제한하여, 공격자가 웹 서비스 기반의 명령 및 제어 통신을 설정하는 것을 방지합니다.</li>
+</ul>
 
 <h2>Affected Techniques</h2>
 
@@ -59,9 +79,31 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-NT Network Traffic Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTC Network Traffic Community Deviation</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTA Network Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-DNS Domain Name Reputation Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-DNS DNS Traffic Analysis</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
 
 </body>
 </html>
-

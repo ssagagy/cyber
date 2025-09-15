@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1203.000.03_d3fend</title>
+    <title>T1203.000.03</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
@@ -13,23 +13,111 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>winword.exe로 부터 실행된 msdt.exe가 임의 명령을 실행하는 행위를 탐지</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1203.000.03.png" alt="" />
+https://172.18.10.125:8903/#/analysis/incident/66f658fb002dc79600000111</p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<ol>
+<li>즉각적인 침해 탐지:</li>
+</ol>
+
+<p>IDS/IPS를 설정하여 비정상적인 다운로드 활동이나 악성 파일 실행 시도를 실시간으로 감지합니다.</p>
+
+<ol start="2">
+<li>로그 분석:</li>
+</ol>
+
+<p>시스템 및 네트워크 로그를 정기적으로 검토하여 의심스러운 다운로드 및 실행 패턴을 식별합니다.</p>
+
+<ol start="3">
+<li>사고 대응 계획 실행:</li>
+</ol>
+
+<p>악성 소프트웨어가 발견된 경우 즉시 사고 대응 절차를 실행하여 피해를 최소화하고 상황을 관리합니다.</p>
+
+<ol start="4">
+<li>시스템 격리:</li>
+</ol>
+
+<p>악성 소프트웨어가 실행된 시스템을 즉시 격리하여 네트워크 전파를 방지합니다.</p>
+
+<ol start="5">
+<li>정기적인 보안 감사:</li>
+</ol>
+
+<p>시스템 및 소프트웨어를 정기적으로 점검하여 취약점을 발견하고 패치합니다.</p>
+
+<ol start="6">
+<li>악성 소프트웨어 제거:</li>
+</ol>
+
+<p>감염된 시스템에서 악성 소프트웨어를 제거하고, 시스템 복구를 수행합니다.</p>
+
+<ol start="7">
+<li>사용자 교육 및 인식 제고:</li>
+</ol>
+
+<p>직원들에게 악성 소프트웨어의 위험성과 안전한 다운로드 관행에 대한 교육을 실시하여 인식을 높입니다.</p>
+
+<ol start="8">
+<li>파일 실행 차단:</li>
+</ol>
+
+<p>특정 확장자나 파일 유형의 실행을 제한하여 사용자가 의도치 않게 악성 파일을 실행하지 않도록 합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>소프트웨어 제한 정책</strong></p>
+
+<ul>
+<li>조직 내에서 허용된 소프트웨어 목록을 작성하고, 이 목록에 없는 프로그램의 실행을 차단합니다.</li>
+</ul></li>
+<li><p><strong>안티바이러스 및 악성 코드 방지 솔루션</strong></p>
+
+<ul>
+<li>최신 안티바이러스 소프트웨어를 설치하고 정기적으로 업데이트하여 악성 소프트웨어를 탐지하고 차단합니다.</li>
+</ul></li>
+<li><p><strong>웹 필터링</strong></p>
+
+<ul>
+<li>사용자들이 악성 사이트에 접근하지 못하도록 웹 필터링 솔루션을 구현하여 의심스러운 다운로드를 차단합니다.</li>
+</ul></li>
+<li><p><strong>사용자 교육</strong></p>
+
+<ul>
+<li>직원들에게 이메일 첨부파일, 링크 클릭, 소프트웨어 다운로드 시 주의해야 할 사항에 대해 교육합니다.</li>
+</ul></li>
+<li><p><strong>정기적인 패치 관리</strong></p>
+
+<ul>
+<li>운영 체제 및 응용 프로그램을 정기적으로 업데이트하여 보안 취약점을 최소화합니다.</li>
+</ul></li>
+<li><p><strong>파일 다운로드 정책</strong></p>
+
+<ul>
+<li>특정 파일 형식의 다운로드를 제한하고, 신뢰할 수 있는 출처에서만 파일을 다운로드하도록 권장합니다.</li>
+</ul></li>
+<li><p><strong>의심스러운 파일 실행 차단</strong></p>
+
+<ul>
+<li>특정 파일 확장자에 대한 실행을 차단하거나 사용자에게 경고 메시지를 표시하여 의도치 않은 실행을 방지합니다.</li>
+</ul></li>
+<li><p><strong>모니터링 및 경고 시스템</strong></p>
+
+<ul>
+<li>다운로드 및 실행 활동을 모니터링하고 비정상적인 패턴이 감지되면 경고를 발생시킵니다.</li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
-<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
 
 <table>
 <thead>
@@ -44,9 +132,24 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SU Software Update</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCP System Configuration Permissions</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PH Platform Hardening</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>
-

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1217.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1217.000.01 브라우저 정보 검색</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>Current Process Name = powershell.exe AND
+Action = System-AmsiScan AND
+AmsiScanData =(contain) "Get-Content" AND "Google\Chrome\User Data\Default\Bookmarks" OR "AppData\Local\Microsoft\Edge\User Data\Default\Bookmarks"</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1217_000_01.png" alt="T1217_000_01" /></p>
+
+<h3>Response</h3>
+
+<p>해당 행위를 수행한 프로세스를 종료합니다.
+공격자에 의해 PC가 제어되었을 가능성이 있으므로 호스트 네트워크를 격리합니다.
+공격자 C&amp;C 서버로 추정되는 주소를 차단합니다.
+노출된 계정의 비밀번호를 변경합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>브라우저에 자격 증명 저장 제한</strong></p>
+
+<ul>
+<li>사용자가 브라우저에 민감한 자격 증명(예: 비밀번호, 인증 토큰)을 저장하지 않도록 교육합니다.</li>
+<li>대신 보안이 더 좋은 전용 비밀번호 관리자를 사용하도록 권장합니다.</li>
+</ul></li>
+<li><p><strong>다중 인증 활성화(Multi-Factor Authentication)</strong></p>
+
+<ul>
+<li>다중 인증을 활성화하여 비밀번호가 유출되더라도 추가적인 인증 수단으로 계정 보호를 강화합니다.</li>
+</ul></li>
+<li><p><strong>브라우저 보안 설정 강화</strong></p>
+
+<ul>
+<li>브라우저 설정을 통해 비밀번호 저장 기능을 비활성화하거나 자격 증명 접근을 차단하는 보안 플러그인을 사용하여 추가적인 보호를 제공합니다.</li>
+</ul></li>
+<li><p><strong>보안 패치 및 업데이트</strong></p>
+
+<ul>
+<li>브라우저와 관련 플러그인을 최신 상태로 유지하여 알려진 취약점을 악용하는 공격을 방지합니다.</li>
+</ul></li>
+<li><p><strong>자격 증명 접근 모니터링 및 알림</strong></p>
+
+<ul>
+<li>비정상적인 자격 증명 접근이나 추출 시도를 모니터링하고 알림을 통해 즉각적인 대응이 가능하도록 합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1217.000</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SPP Strong Password Policy</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
