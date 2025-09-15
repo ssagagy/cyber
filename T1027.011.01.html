@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1027.011.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1027.011.01 Fileless Storage</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<ul>
+<li>TargetProcess = "reg.exe" AND</li>
+<li>Action = "CreateProcess" AND</li>
+<li>TargetCmdLine = "reg" AND "add" AND "\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+<h3>Detection(EDR)</h3></li>
+</ul>
+
+<p><img src="T1027.011.01.PNG" alt="T1027 011 01" /></p>
+
+<h3>Response</h3>
+
+<p>공격자가 생성한 레지스트리 키를 삭제합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>행동 기반 탐지 도구 사용 (M1040 - Behavior-based Detection)</strong></p>
+
+<ul>
+<li>파일리스 공격은 흔적이 적기 때문에, 행동 기반 탐지 시스템(EDR)을 도입하여 의심스러운 메모리 활동, 프로세스 동작, 또는 비정상적인 시스템 호출을 탐지하고 차단합니다.</li>
+</ul></li>
+<li><p><strong>권한 관리 강화 (M1026 - Privileged Account Management)</strong></p>
+
+<ul>
+<li>최소 권한 원칙을 적용하여 불필요한 관리자 권한을 제한하고, 공격자가 시스템 기능을 악용하거나 메모리 내에서 악성 코드를 실행할 수 있는 권한을 차단합니다.</li>
+</ul></li>
+<li><p><strong>메모리 보호 도구 사용 (M1038 - Execution Prevention)</strong></p>
+
+<ul>
+<li>메모리 내에서 실행되는 악성 코드를 탐지하고 차단하는 메모리 보호 도구나 안티 익스플로잇(Anti-exploit) 기술을 도입합니다. 메모리 실행 및 권한 상승 시도를 모니터링합니다.</li>
+</ul></li>
+<li><p><strong>PowerShell 및 스크립트 사용 제한 (M1050 - Exploit Mitigation)</strong></p>
+
+<ul>
+<li>PowerShell, WMI, MSHTA와 같은 파일리스 공격에 자주 사용되는 스크립트 언어나 시스템 기능의 사용을 제한하거나, 제한된 모드(Constrained Language Mode)를 적용하여 권한 없이 실행되는 스크립트를 차단합니다.</li>
+</ul></li>
+<li><p><strong>로그 및 모니터링 강화 (M1049 - Audit)</strong></p>
+
+<ul>
+<li>시스템 활동과 프로세스, 메모리 상의 활동을 기록하고, 비정상적인 동작을 실시간으로 모니터링하여 파일리스 공격을 신속하게 탐지하고 대응할 수 있도록 합니다.</li>
+</ul></li>
+<li><p><strong>최신 보안 패치 적용 (M1051 - Update Software)</strong></p>
+
+<ul>
+<li>소프트웨어와 운영 체제의 보안 취약점을 악용한 파일리스 공격을 예방하기 위해 최신 보안 패치를 즉시 적용합니다.</li>
+</ul></li>
+<li><p><strong>네트워크 필터링 및 트래픽 모니터링 (M1037 - Filter Network Traffic)</strong></p>
+
+<ul>
+<li>네트워크 트래픽을 필터링하고, 의심스러운 네트워크 요청이나 외부 명령 제어(C2) 통신을 탐지하여 파일리스 공격을 차단합니다.</li>
+</ul></li>
+<li><p><strong>애플리케이션 허용 목록 관리 (M1038 - Execution Prevention)</strong></p>
+
+<ul>
+<li>신뢰할 수 있는 애플리케이션만 실행되도록 애플리케이션 허용 목록(Allowlist)을 설정하고, 승인되지 않은 소프트웨어가 실행되지 않도록 차단합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1027.011</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

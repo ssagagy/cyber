@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1036.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1036.000.01 Masquerading</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<ul>
+<li>Action = "CreateProcess" AND</li>
+<li>TargetProcess = "cmd.exe" OR "powershell.exe" OR "wscript.exe" OR "cscript.exe" OR "mshta.exe" OR "mofcomp.exe" AND</li>
+<li>TargetProcess_Path != "windows" OR "system32" OR "syswow64" OR "ProgramFiles" OR "Program Files (x86)"  AND</li>
+<li>TargetProcess_FileDescription = "Microsoft Corporation"
+<h3>Detection(EDR)</h3></li>
+</ul>
+
+<p><img src="T1036.000.01.png" alt="T1036 000 01" /></p>
+
+<h3>Response</h3>
+
+<p>파일 및 프로세스 모니터링을 통해 의심스러운 변경 사항을 실시간 탐지하고 대응한다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>애플리케이션 화이트리스트 적용 (M1038 - Execution Prevention)</strong>  </p>
+
+<ul>
+<li><strong>AppLocker 또는 Windows Defender Application Control(WDAC)</strong>을 사용하여 <strong>신뢰할 수 있는 애플리케이션만 실행 가능하도록 제한</strong>  </li>
+<li><strong>파일의 디지털 서명 검증</strong>을 활성화하여 서명되지 않은 실행 파일 차단  </li>
+<li><strong>파일 실행 경로 기반 정책 적용</strong>하여 특정 디렉터리(예: <code data-language="powershell">%TEMP%</code>, <code data-language="powershell">%APPDATA%</code> 등)에서 실행되는 프로그램 제한  </li>
+</ul></li>
+<li><p><strong>파일 및 프로세스 무결성 검사 (M1042 - Disable or Remove Feature or Program)</strong>  </p>
+
+<ul>
+<li><strong>Windows System File Checker(SFC) 및 Integrity Verification 도구</strong>를 사용하여 시스템 파일 변조 여부 확인  </li>
+<li><strong>PowerShell 스크립트 및 실행 파일의 무결성 검증</strong>을 수행하여 위장된 파일 탐지  </li>
+<li><strong>Hash 값 비교를 통해 신뢰할 수 있는 파일과 악성코드 구별</strong>  </li>
+</ul></li>
+<li><p><strong>프로세스 모니터링 및 행동 기반 탐지 (M1040 - Behavior-Based Detection)</strong>  </p>
+
+<ul>
+<li><strong>EDR(Endpoint Detection and Response) 솔루션</strong>을 사용하여 <strong>의심스러운 프로세스 실행 탐지</strong>  </li>
+<li><strong>정상적인 시스템 프로세스를 위장한 악성 프로세스 탐지</strong> (예: <code data-language="powershell">explorer.exe</code>가 비정상적인 네트워크 연결 수행)  </li>
+<li><strong>파일 실행 경로, 부모-자식 프로세스 관계 모니터링</strong>을 통해 위장된 프로세스 탐지  </li>
+</ul></li>
+<li><p><strong>확장자 및 숨김 속성을 이용한 위장 방지 (M1020 - Restrict File and Directory Permissions)</strong>  </p>
+
+<ul>
+<li>Windows 설정에서 <strong>"확장명 숨기기" 옵션을 비활성화</strong>하여 <code data-language="powershell">.exe</code>, <code data-language="powershell">.scr</code> 등의 확장자가 보이도록 설정  </li>
+<li><strong>"숨김 파일 및 시스템 파일 보기" 옵션 활성화</strong>하여 숨겨진 악성 파일 탐지 가능하도록 설정  </li>
+<li><strong>비정상적인 파일명 또는 유사한 시스템 파일명을 가진 실행 파일 차단</strong> (예: <code data-language="powershell">svchost.exe</code> 대신 <code data-language="powershell">svch0st.exe</code>)  </li>
+</ul></li>
+<li><p><strong>로그 및 감사 활성화 (M1047 - System Logging &amp; Monitoring)</strong>  </p>
+
+<ul>
+<li><strong>Windows Event Logging을 활성화</strong>하여 실행 파일 및 스크립트 실행 기록 추적  </li>
+<li><strong>PowerShell ScriptBlock Logging 및 명령 실행 기록 활성화</strong>  </li>
+<li><strong>파일 생성 및 실행 이벤트 로깅</strong>을 통해 위장된 실행 파일 탐지  </li>
+</ul></li>
+<li><p><strong>사용자 보안 인식 교육 (M1017 - User Training &amp; Awareness)</strong>  </p>
+
+<ul>
+<li><strong>파일명 위장 공격 및 피싱 이메일에 대한 사용자 교육 진행</strong>  </li>
+<li>이메일 및 다운로드한 파일 실행 시 <strong>파일 확장자 및 실행 위치 확인 습관화</strong>  </li>
+<li><strong>비정상적인 프로그램이 실행될 경우 즉시 보안 담당자에게 신고하도록 교육</strong>  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1036.000</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FCA File Content Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FA File Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

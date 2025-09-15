@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1003.003.03</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1003.003.03 Active Directory 데이터베이스 백업 생성</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>TargetProcess = "ntdsutil.exe" AND
+Cmdline = "ac i ntds" AND
+Cmdline = "create"</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1003.003.03.PNG" alt="T1003 003 03" /></p>
+
+<h3>Response</h3>
+
+<p>노출된 계정의 비밀번호를 변경합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>자격 증명 보호</strong>  </p>
+
+<ul>
+<li>NTDS.dit 파일이 저장된 <strong><code data-language="powershell">C:\Windows\NTDS\</code></strong> 경로의 접근을 제한합니다.  </li>
+<li>도메인 컨트롤러에서 NTLM 인증을 비활성화하고 <strong>Kerberos 전용 인증</strong>을 강제합니다.  </li>
+</ul></li>
+<li><p><strong>보안 솔루션 강화</strong>  </p>
+
+<ul>
+<li>EDR/XDR 솔루션을 사용하여 <code data-language="powershell">ntdsutil</code>, <code data-language="powershell">vssadmin</code>, <code data-language="powershell">esentutl</code> 등의 NTDS 덤핑 관련 명령어 실행을 탐지합니다.  </li>
+<li>도메인 컨트롤러에서 <strong>Memory Dump Protection</strong>을 활성화하여 공격자가 LSASS 및 NTDS 메모리를 덤핑하는 것을 차단합니다.  </li>
+</ul></li>
+<li><p><strong>이벤트 로깅 및 감사 정책 강화</strong>  </p>
+
+<ul>
+<li>Windows Event Log에서 <strong>NTDS.dit 접근, 볼륨 섀도 복사본(VSS) 생성 및 삭제, DCSync 공격 시도</strong> 등의 이벤트(<code data-language="powershell">4662</code>, <code data-language="powershell">4672</code>, <code data-language="powershell">4724</code>, <code data-language="powershell">5136</code>)를 모니터링합니다.  </li>
+<li>SIEM을 통해 <code data-language="powershell">vssadmin</code>, <code data-language="powershell">ntdsutil</code>, <code data-language="powershell">dsamain</code> 등의 명령 실행을 분석하고 경고를 생성합니다.  </li>
+</ul></li>
+<li><p><strong>권한 제어</strong>  </p>
+
+<ul>
+<li>도메인 컨트롤러에 대한 <strong>관리자 계정 최소화</strong> 및 <strong>Tiered Administration 모델</strong>을 적용하여 일반 사용자 및 관리 계정이 불필요하게 DC에 접근하지 않도록 제한합니다.  </li>
+<li>DCSync 공격을 방지하기 위해 <code data-language="powershell">AdminSDHolder</code> 보호를 강화하고, 도메인 컨트롤러의 <strong>Replicating Directory Changes</strong> 권한을 최소화합니다.  </li>
+</ul></li>
+<li><p><strong>레지스트리 및 시스템 설정 보호</strong>  </p>
+
+<ul>
+<li>NTDS.dit 복사본 생성을 방지하기 위해 <code data-language="powershell">vssadmin delete shadows</code> 명령을 비활성화하거나 사용 권한을 제한합니다.  </li>
+<li>그룹 정책(GPO)을 통해 도메인 컨트롤러에서 <code data-language="powershell">SeBackupPrivilege</code>, <code data-language="powershell">SeRestorePrivilege</code>를 비관리자 계정에 할당하지 않도록 설정합니다.  </li>
+</ul></li>
+<li><p><strong>네트워크 트래픽 모니터링</strong>  </p>
+
+<ul>
+<li><strong>DCSync 공격 방어</strong>: 공격자가 도메인 컨트롤러의 디렉터리 복제 기능을 악용하는 것을 탐지하기 위해, 도메인 컨트롤러에서 <strong>DSGetNCChanges</strong> 요청을 감시합니다.  </li>
+<li>네트워크 보안 장비에서 <code data-language="powershell">MS-DRSR</code> 프로토콜 관련 비정상적인 트래픽을 탐지하여 차단합니다. </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1003.003</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FAPA File Access Pattern Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-RIC Reissue Credential</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCP System Configuration Permissions</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1021.006.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1021.006.01 원격 서비스 활성화</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>Action = "AMSI<em>SCAN" AND
+CurrentProcess = "powershell.exe" AND
+AMSI</em>SCAN_DATA = "Enable-PSRemoting -Force"</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1021.006.01.png" alt="" />
+https://172.18.10.125:8903/#/analysis/alert/66f1f7c6002dc7940000000b</p>
+
+<h3>Response</h3>
+
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>WinRM 비활성화</strong></p>
+
+<ul>
+<li><strong>WinRM 비활성화</strong>: WinRM이 필요하지 않은 경우 <strong>Windows 시스템에서 WinRM을 비활성화</strong>하여 원격 액세스를 방지합니다.
+<ul>
+<li><code data-language="powershell">Set-ItemProperty<span class="operator"> -Path</span> 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System' -Name 'DisableWinRM' <span class="operator">-Value </span>1</code> 명령어로 WinRM을 비활성화할 수 있습니다.</li>
+</ul></li>
+<li><strong>WinRM 서비스 비활성화</strong>: <code data-language="powershell">services.msc</code>에서 <strong>Windows Remote Management (WinRM) 서비스</strong>를 비활성화하거나, <strong>PowerShell</strong>을 사용하여 시스템 시작 시 자동으로 시작되지 않도록 설정합니다.
+<ul>
+<li><code data-language="powershell">Set-Service -Name WinRM -StartupType Disabled</code> 명령을 사용하여 WinRM 서비스를 비활성화합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Windows 방화벽 설정</strong></p>
+
+<ul>
+<li><strong>WinRM 포트 차단</strong>: <strong>WinRM</strong> 서비스는 기본적으로 <strong>TCP 5985</strong>(HTTP)와 <strong>TCP 5986</strong>(HTTPS) 포트를 사용합니다. <strong>방화벽</strong>에서 해당 포트를 차단하여 외부 네트워크에서의 접근을 방지합니다.
+<ul>
+<li><code data-language="powershell">New-NetFirewallRule -DisplayName "Block WinRM" -Direction Inbound -Protocol TCP -LocalPort 5985,5986 -Action Block</code> 명령으로 WinRM 포트를 차단할 수 있습니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>강력한 인증 및 암호화</strong></p>
+
+<ul>
+<li><strong>TLS 암호화 활성화</strong>: WinRM 통신을 <strong>TLS (Transport Layer Security)</strong>로 암호화하여, 전송 중의 데이터가 탈취되지 않도록 보호합니다. 기본적으로 <strong>HTTPS</strong> 포트를 사용하여 암호화된 통신을 보장할 수 있습니다.</li>
+<li><strong>강력한 인증 방법 사용</strong>: WinRM의 인증 방법을 <strong>Kerberos</strong> 또는 <strong>NTLMv2</strong>로 설정하여 <strong>약한 인증 방식</strong>(예: 기본 인증)을 사용하는 것을 방지합니다.
+<ul>
+<li><code data-language="powershell">winrm set winrm/config/client/auth @<span class="comment">{</span>Basic="false"<span class="comment">}</span></code> 명령을 사용하여 <strong>기본 인증</strong>을 비활성화하고, <strong>Kerberos</strong>와 <strong>NTLMv2</strong>만 허용합니다.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>다단계 인증 (MFA) 사용</strong></p>
+
+<ul>
+<li><strong>MFA 적용</strong>: WinRM을 사용할 경우, <strong>다단계 인증(MFA)</strong>을 적용하여 인증이 더 강력하고 안전하도록 보장합니다. MFA를 통해, 비밀번호 유출 시에도 공격자가 시스템에 접근하는 것을 차단할 수 있습니다.</li>
+</ul></li>
+<li><p><strong>세분화된 접근 제어</strong></p>
+
+<ul>
+<li><strong>IP 화이트리스트</strong>: WinRM에 접근할 수 있는 IP 주소를 제한하여, 특정 네트워크 내에서만 접근할 수 있도록 설정합니다.</li>
+<li><strong>ACL 설정</strong>: <strong>Access Control List(ACL)</strong>을 설정하여, 특정 사용자나 그룹만 WinRM을 통해 원격으로 관리할 수 있도록 합니다. 불필요한 관리자 계정이나 외부 사용자에게 접근 권한을 부여하지 않도록 합니다.</li>
+</ul></li>
+<li><p><strong>로그 및 이벤트 모니터링</strong></p>
+
+<ul>
+<li><strong>로그 모니터링</strong>: WinRM 관련 이벤트(예: <strong>Windows Event Logs</strong>)를 모니터링하여 비정상적인 로그인 시도나 원격 명령 실행을 탐지합니다. <strong>PowerShell Remoting</strong>도 함께 모니터링하여 이상 징후를 조기에 감지할 수 있습니다.</li>
+<li><strong>SIEM 시스템 사용</strong>: <strong>SIEM</strong> 시스템을 설정하여 WinRM과 관련된 모든 이벤트를 실시간으로 수집하고 분석하며, 의심스러운 활동을 탐지하고 경고할 수 있습니다.</li>
+</ul></li>
+<li><p><strong>권한 최소화</strong></p>
+
+<ul>
+<li><strong>관리자 권한 최소화</strong>: WinRM을 통해 원격 명령을 실행할 수 있는 사용자의 권한을 최소화합니다. 관리자는 필요한 작업에만 WinRM을 사용할 수 있도록 하고, 원격 명령 실행 권한이 불필요한 사용자에게는 이를 제한합니다.</li>
+<li><strong>최소 권한 원칙</strong>: WinRM을 사용할 때 <strong>최소 권한 원칙</strong>을 적용하여, 사용자에게 주어진 권한이 반드시 필요한 작업만을 수행하도록 제한합니다.</li>
+</ul></li>
+<li><p><strong>PowerShell 스크립트 및 명령 제한</strong></p>
+
+<ul>
+<li><strong>PowerShell 실행 정책 설정</strong>: PowerShell을 통해 원격 명령 실행을 제한하기 위해 <strong>PowerShell 실행 정책</strong>을 설정하여, 승인된 스크립트만 실행될 수 있도록 합니다.</li>
+<li><strong>스크립트 무결성 확인</strong>: <strong>Windows Defender</strong> 및 <strong>EDR 솔루션</strong>을 사용하여 PowerShell 스크립트의 무결성을 실시간으로 검사하고, 악성 스크립트의 실행을 방지합니다.</li>
+</ul></li>
+<li><p><strong>정기적인 보안 패치</strong></p>
+
+<ul>
+<li><strong>정기적인 보안 업데이트</strong>: WinRM 및 관련 시스템에 대한 <strong>보안 패치</strong>를 정기적으로 적용하여, 알려진 취약점이 악용되지 않도록 합니다.</li>
+<li><strong>취약점 스캐닝</strong>: WinRM 및 시스템의 취약점을 <strong>자동화된 취약점 스캔</strong> 도구로 점검하여, 취약점이 발견되면 즉시 패치를 적용합니다.</li>
+</ul></li>
+<li><p><strong>침입 탐지 시스템(IDS) 활용</strong></p>
+
+<ul>
+<li><strong>IDS 설정</strong>: WinRM을 통한 공격을 탐지하기 위해 <strong>침입 탐지 시스템(IDS)</strong>를 설치하여 비정상적인 원격 명령 실행 또는 파일 전송을 탐지하고 차단합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1021.006</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTA Network Traffic Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

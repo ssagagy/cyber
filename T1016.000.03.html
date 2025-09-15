@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1016.000.01</title>
+    <title>T1016.000.03</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
-<h1>T1016.000.01 System Network Configuration Discovery</h1>
+<h1>T1016.000.03 네트워크 구성 정보 식별</h1>
 
 <h2>D3FEND</h2>
 
@@ -14,14 +14,11 @@
 <h3>Detection</h3>
 
 <p>Action = "ProcessCreate" AND
-CurrentProcess = "powershell.exe" AND
-Cmdline = "ipconfig" AND
-Cmdline = "all"</p>
+TargetProcess = "arp" OR "ipconfig" OR "ip" OR "netstat"</p>
 
 <h3>Detection(EDR)</h3>
 
-<p><img src="T1016.000.01.png" alt="" />
-https://172.18.10.125:8903/#/analysis/alert/66f10f89002dc79400000003</p>
+<p><img src="T1016.000.03.png" alt="T1016_000_03" /></p>
 
 <h3>Response</h3>
 
@@ -89,7 +86,13 @@ https://172.18.10.125:8903/#/analysis/alert/66f10f89002dc79400000003</p>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:center;">T1016.000</td>
+  <td style="text-align:center;">T1016</td>
+</tr>
+<tr>
+  <td style="text-align:center;">T1018</td>
+</tr>
+<tr>
+  <td style="text-align:center;">T1049</td>
 </tr>
 </tbody>
 </table>
@@ -102,13 +105,13 @@ https://172.18.10.125:8903/#/analysis/alert/66f10f89002dc79400000003</p>
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:center;">D3-NTA Network Traffic Analysis</td>
+  <td style="text-align:center;">D3-NTPM Network Traffic Policy Mapping</td>
 </tr>
 <tr>
-  <td style="text-align:center;">D3-NTF Network Traffic Filtering</td>
+  <td style="text-align:center;">D3-PLM Physical Link Mapping</td>
 </tr>
 <tr>
-  <td style="text-align:center;">D3-ITF Inbound Traffic Filtering</td>
+  <td style="text-align:center;">D3-APLM Active Physical Link Mapping</td>
 </tr>
 </tbody>
 </table>

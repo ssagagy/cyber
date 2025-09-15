@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1029.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1029.000.01 Scheduled Transfer</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<ul>
+<li>CurrentProcess = "powershell.exe" AND</li>
+<li>Action = "AMSI_SCAN" AND</li>
+<li>AMSI<em>SCAN</em>DATA = "New-ScheduledTaskTrigger " AND "-At" AND "-RepetitionInterval" AND "Register-ScheduledTask"
+<h3>Detection(EDR)</h3></li>
+</ul>
+
+<p><img src="T1029.000.01.png" alt="T1029 000 01" /></p>
+
+<h3>Response</h3>
+
+<p>공격자가 생성한 서비스를 삭제합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>정기적인 예약 작업 감사</strong> </p>
+
+<ul>
+<li>시스템의 예약된 작업을 주기적으로 감사하여 의심스러운 작업을 식별하고 제거합니다.</li>
+</ul></li>
+<li><p><strong>예약 작업 권한 제한</strong> </p>
+
+<ul>
+<li>예약 작업을 생성하거나 수정할 수 있는 사용자 권한을 최소화하여 불필요한 권한 상승을 방지합니다.</li>
+</ul></li>
+<li><p><strong>비정상적인 작업 알림 설정</strong> </p>
+
+<ul>
+<li>예약 작업의 생성 및 수정 시 알림을 설정하여 비정상적인 작업이 발생할 경우 즉시 인지할 수 있도록 합니다.</li>
+</ul></li>
+<li><p><strong>파일 무결성 모니터링</strong> </p>
+
+<ul>
+<li>예약 작업이 참조하는 파일의 무결성을 정기적으로 검사하여 비정상적인 변경을 탐지합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1059.001</td>
+</tr>
+<tr>
+  <td style="text-align:center;">T1053.005</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SJA Scheduled Job Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ETW Event Tracing for Windows</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

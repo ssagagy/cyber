@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1018.000.01_d3fend</title>
+    <title>T1018.000.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
-<h1>T1018.000.01 내부 네트워크 탐색(net)</h1>
+<h1>T1018.000.01 원격 시스템 검색</h1>
 
 <h2>D3FEND</h2>
 
@@ -13,23 +13,119 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>Action = "ProcessCreate" AND
+TargetProcess = "net.exe" AND
+Cmdline = "view" AND
+Cmdline = "/domain"</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1018.000.01.png" alt="" />
+https://172.18.10.125:8903/#/analysis/incident/66f658fb002dc79600000111</p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<ol>
+<li>즉각적인 침해 탐지:</li>
+</ol>
+
+<p>IDS/IPS를 사용하여 의심스러운 네트워크 스캔을 실시간으로 탐지하고 경고를 설정합니다.</p>
+
+<ol start="2">
+<li>로그 분석:</li>
+</ol>
+
+<p>네트워크 장비 및 서버의 로그를 정기적으로 분석하여 비정상적인 접근 시도나 스캔 활동을 식별합니다.</p>
+
+<ol start="3">
+<li>시스템 격리:</li>
+</ol>
+
+<p>스캔 활동이 감지된 시스템이나 네트워크를 즉시 격리하여 추가 피해를 방지합니다.</p>
+
+<ol start="4">
+<li>사고 대응 계획 실행:</li>
+</ol>
+
+<p>의심스러운 활동에 대한 사고 대응 프로세스를 실행하여 상황을 관리합니다.</p>
+
+<ol start="5">
+<li>트래픽 차단:</li>
+</ol>
+
+<p>의심스러운 IP 주소 또는 비정상적인 트래픽 패턴을 차단하여 공격을 방어합니다.</p>
+
+<ol start="6">
+<li>보안 패치 적용:</li>
+</ol>
+
+<p>취약점이 발견된 경우 신속하게 보안 패치를 적용하여 시스템을 보호합니다.</p>
+
+<ol start="7">
+<li>보고 및 기록:</li>
+</ol>
+
+<p>공격 세부 사항을 문서화하여 향후 분석 및 대응 개선에 활용합니다.</p>
+
+<ol start="8">
+<li>시스템 및 네트워크 재검토:</li>
+</ol>
+
+<p>스캔이 발생한 후 시스템과 네트워크 구성을 재검토하고 필요한 보안 강화를 실시합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><strong>방화벽 설정</strong>:</li>
+</ol>
+
+<p>불필요한 포트를 차단하고, 특정 IP 주소나 서브넷에 대한 접근을 제한합니다.</p>
+
+<ol start="2">
+<li><strong>네트워크 세분화</strong>:</li>
+</ol>
+
+<p>네트워크를 여러 구역으로 나누어 공격자가 한 영역에서 다른 영역으로 쉽게 이동할 수 없도록 합니다.</p>
+
+<ol start="3">
+<li><strong>서비스 최소화</strong>:</li>
+</ol>
+
+<p>필요한 서비스만 운영하고 불필요한 서비스는 비활성화하여 공격 표면을 줄입니다.</p>
+
+<ol start="4">
+<li><strong>정기적인 보안 감사</strong>:</li>
+</ol>
+
+<p>네트워크 및 시스템을 정기적으로 점검하여 취약점을 사전에 식별하고 해결합니다.</p>
+
+<ol start="5">
+<li><strong>침입 탐지 시스템(IDS) 사용</strong>:</li>
+</ol>
+
+<p>네트워크 트래픽을 모니터링하여 비정상적인 스캔 활동을 탐지하고 경고합니다.</p>
+
+<ol start="6">
+<li><strong>트래픽 모니터링 및 분석</strong>:</li>
+</ol>
+
+<p>네트워크 트래픽을 정기적으로 분석하여 비정상적인 패턴이나 급증하는 요청을 식별합니다.</p>
+
+<ol start="7">
+<li><strong>보안 교육</strong>:</li>
+</ol>
+
+<p>직원들에게 네트워크 보안 및 서비스 스캐닝에 대한 교육을 실시하여 인식을 높입니다.</p>
+
+<ol start="8">
+<li><strong>정책 수립</strong>:</li>
+</ol>
+
+<p>명확한 보안 정책을 수립하고 이를 직원들에게 전달하여 모든 사용자가 보안 절차를 준수하도록 합니다.</p>
 
 <h2>Affected Techniques</h2>
 
-<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
 
 <table>
 <thead>
@@ -44,9 +140,24 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-NTA Network Traffic Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTF Network Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ITF Inbound Traffic Filtering</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>
-

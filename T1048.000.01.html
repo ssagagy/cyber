@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1048.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1048.000.01 Exfiltration Over Alternative Protocol</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>FTP 포트에 연결하는 행위를 탐지합니다.
+- Action = "ConnectNetwork" AND
+- RemotePort = "21"</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1048.000.01.png" alt="T1047 000 98" /></p>
+
+<h3>Response</h3>
+
+<ol>
+<li>비정상적 트래픽 감지: </li>
+</ol>
+
+<p>네트워크 트래픽을 분석하여 암호화되지 않은 데이터 전송 또는 평소에 사용되지 않는 프로토콜을 통한 비정상적인 트래픽을 식별합니다.</p>
+
+<ol start="2">
+<li>SIEM 경고 분석: </li>
+</ol>
+
+<p>보안 정보 및 이벤트 관리(SIEM) 시스템을 통해 네트워크 트래픽의 비정상적인 활동에 대한 경고를 분석합니다. SIEM은 특정 규칙을 설정해 평소와 다른 트래픽 패턴을 감지할 수 있습니다.</p>
+
+<ol start="3">
+<li>IDS/IPS 시스템 탐지: </li>
+</ol>
+
+<p>침입 탐지 시스템(IDS) 또는 침입 방지 시스템(IPS)을 사용하여 비정상적인 트래픽, 특히 암호화되지 않은 데이터 전송을 탐지합니다.</p>
+
+<ol start="4">
+<li>네트워크 포렌식: </li>
+</ol>
+
+<p>데이터 유출이 의심되는 경우, 네트워크 포렌식을 통해 이전에 발생한 네트워크 활동을 분석합니다. 의심스러운 데이터 유출 경로와 방법을 확인하기 위해 과거 네트워크 트래픽을 복구하고 분석합니다.</p>
+
+<ol start="5">
+<li>네트워크 차단 및 격리: </li>
+</ol>
+
+<p>의심스러운 트래픽이 확인되면 해당 트래픽을 생성한 시스템을 네트워크에서 격리하여 추가적인 데이터 유출을 방지합니다.</p>
+
+<ol start="6">
+<li>유출된 데이터 출처 확인: </li>
+</ol>
+
+<p>유출된 데이터가 어느 시스템에서 발생했는지, 그리고 해당 시스템에서 어떤 데이터가 외부로 나갔는지 확인합니다.</p>
+
+<ol start="7">
+<li>공격 경로 역추적: </li>
+</ol>
+
+<p>공격자가 데이터를 유출하기 위해 거친 네트워크 경로와 사용한 도구를 역추적하여 공격 경로를 파악합니다.</p>
+
+<ol start="8">
+<li>비정상적인 시스템 활동 분석: </li>
+</ol>
+
+<p>데이터를 유출한 것으로 의심되는 시스템의 프로세스와 네트워크 연결 상태를 분석하여 공격자가 시스템 내에서 어떠한 활동을 수행했는지 파악합니다.</p>
+
+<ol start="9">
+<li>시스템 격리 및 복구: </li>
+</ol>
+
+<p>데이터 유출이 확인된 시스템은 네트워크에서 즉시 격리하고, 손상된 시스템을 복구하거나 새로 설치된 악성 서비스를 제거합니다.</p>
+
+<ol start="10">
+<li>DLP(Data Loss Prevention) 솔루션: </li>
+</ol>
+
+<p>데이터 유출 방지(DLP) 솔루션을 사용하여 민감한 데이터의 비정상적인 전송을 차단하고, 내부에서 외부로 전송되는 데이터를 실시간으로 모니터링합니다.</p>
+
+<ol start="11">
+<li>사용자 계정 모니터링: </li>
+</ol>
+
+<p>비정상적인 데이터 전송에 사용된 사용자 계정을 확인하고, 해당 계정의 비밀번호를 변경하거나 일시적으로 비활성화합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>네트워크 모니터링 및 이상 탐지</strong></p>
+
+<ul>
+<li>비정상적인 프로토콜 사용을 모니터링하고 탐지할 수 있는 네트워크 트래픽 분석 도구를 활용합니다.</li>
+<li>네트워크에서 사용되지 않거나 예상치 못한 프로토콜 트래픽이 발생하면 경고를 생성하는 규칙을 설정합니다.</li>
+</ul></li>
+<li><p><strong>프로토콜 필터링 및 제한</strong></p>
+
+<ul>
+<li>방화벽, IDS/IPS(침입 탐지 및 방지 시스템) 등을 통해 네트워크에서 특정 프로토콜의 사용을 제한하거나 차단합니다.</li>
+<li>DNS, ICMP 등과 같은 비표준 프로토콜의 비정상적인 사용을 탐지하기 위해 ACL(액세스 제어 목록)을 설정하고 모니터링합니다.</li>
+</ul></li>
+<li><p><strong>데이터 손실 방지(DLP) 솔루션 사용</strong></p>
+
+<ul>
+<li>네트워크와 엔드포인트에서 민감한 데이터의 비정상적인 전송을 탐지하고 차단하는 DLP 솔루션을 사용합니다.</li>
+<li>DLP 정책을 통해 특정 데이터 유형의 전송을 제한하고, 이를 위반하는 활동을 모니터링합니다.</li>
+</ul></li>
+<li><p><strong>SSL/TLS 검사</strong></p>
+
+<ul>
+<li>SSL/TLS 트래픽을 검사하여 암호화된 세션 내에서 비정상적인 데이터 전송을 감지합니다.</li>
+<li>HTTPS를 통해 데이터를 유출하는 경우에 대비하여 SSL/TLS 디코딩 및 분석 기능을 적용합니다.</li>
+</ul></li>
+<li><p><strong>로그 모니터링 및 분석</strong></p>
+
+<ul>
+<li>서버 및 네트워크 장비의 로그를 주기적으로 모니터링하고 분석하여 비정상적인 데이터 전송 활동을 탐지합니다.</li>
+<li>유출 시도를 나타낼 수 있는 의심스러운 활동(예: 외부로 향하는 대량의 데이터 전송)을 추적하고 경고를 설정합니다.</li>
+</ul></li>
+<li><p><strong>네트워크 분할(Network Segmentation)</strong></p>
+
+<ul>
+<li>네트워크를 여러 개의 세그먼트로 분할하여 민감한 데이터를 다루는 시스템과 일반적인 사용자 트래픽을 분리합니다.</li>
+<li>데이터 유출을 시도하는 악성 활동이 다른 네트워크 세그먼트로 확산되는 것을 방지합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1071.001</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-NTA Network Traffic Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTF Network Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ITF Inbound Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-OTF Outbound Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PHDURA Per Host Download-Upload Ratio Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

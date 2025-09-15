@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1027.000.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1027.000.02 난독화된 파일 또는 정보</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>Action = "ProcessCreate" AND
+TargetProcess = "powershell.exe" AND
+Cmdline = "-encodedcommand" OR 
+"-encodedcomman" OR 
+"-encodedcomma" OR 
+"-encodedcomm" OR 
+"-encodedcom" OR 
+"-encodedco" OR 
+"-encodedc" OR 
+"-encoded" OR 
+"-encode" OR 
+"-encod" OR 
+"-enco" OR 
+"-en" OR 
+"-e"</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1027.000.02.png" alt="T1027 000 02" /></p>
+
+<h3>Response</h3>
+
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>악성 코드 탐지 강화</strong></p>
+
+<ul>
+<li><strong>정적 및 동적 분석 도구 사용</strong>: 악성 파일이 난독화된 상태에서도 이를 분석할 수 있는 <strong>정적 분석 도구</strong>(예: <strong>Static Analysis Tools</strong>) 및 <strong>동적 분석 도구</strong>(예: <strong>Sandboxing</strong>)를 사용하여 <strong>파일</strong>이나 <strong>스크립트</strong>의 동작을 검사합니다.</li>
+<li><strong>파일 시스템 및 메모리 검사</strong>: 악성코드가 암호화되거나 난독화된 상태에서도 <strong>메모리 검사</strong>를 통해 비정상적인 동작을 탐지할 수 있습니다. <strong>EDR (Endpoint Detection and Response)</strong> 또는 <strong>AV (Antivirus)</strong> 솔루션을 사용하여 <strong>실시간 모니터링</strong> 및 <strong>행위 기반 탐지</strong>를 강화합니다.</li>
+</ul></li>
+<li><p><strong>스크립트 및 명령어 필터링</strong></p>
+
+<ul>
+<li><strong>스크립트 실행 제어</strong>: <strong>PowerShell</strong> 스크립트나 <strong>Windows Script Host (WSH)</strong> 스크립트의 실행을 제어하여 악성 스크립트의 실행을 차단합니다. <strong>PowerShell 실행 정책</strong>을 설정하여 <strong>스크립트 실행</strong>을 제한하거나, 신뢰할 수 있는 서명된 스크립트만 실행되도록 합니다.
+<ul>
+<li><code data-language="powershell">Set-ExecutionPolicy Restricted</code> 명령을 사용하여 PowerShell 스크립트 실행을 제한할 수 있습니다.</li>
+</ul></li>
+<li><strong>명령어 필터링</strong>: 네트워크 및 시스템에서 특정 명령어나 패턴을 필터링하여 <strong>악성 명령</strong>의 실행을 방지합니다. 예를 들어, <strong>네트워크 트래픽</strong>에서 <strong>base64 인코딩된 데이터</strong>나 <strong>암호화된 페이로드</strong>를 탐지하여 필터링합니다.</li>
+</ul></li>
+<li><p><strong>이상 징후 모니터링</strong></p>
+
+<ul>
+<li><strong>행위 기반 탐지</strong>: 난독화된 악성 코드나 스크립트는 변형된 상태로 실행되지만, 그 실행 행위에는 공통된 특징이 있습니다. 예를 들어, <strong>비정상적인 시스템 호출</strong>이나 <strong>네트워크 연결</strong>을 모니터링하여 의심스러운 행위를 탐지합니다.</li>
+<li><strong>SIEM 시스템 사용</strong>: <strong>SIEM (Security Information and Event Management)</strong> 시스템을 사용하여 <strong>로그</strong> 및 <strong>네트워크 트래픽</strong>을 모니터링하고, <strong>이상 징후</strong>를 실시간으로 분석하여 경고합니다.</li>
+</ul></li>
+<li><p><strong>파일 무결성 검사 및 분석</strong></p>
+
+<ul>
+<li><strong>파일 무결성 검사</strong>: <strong>HIDS</strong>(Host-based Intrusion Detection System) 및 <strong>파일 무결성 모니터링</strong> 도구를 사용하여 시스템 내 파일의 변경 사항을 감지하고, 파일이 암호화되거나 변형되었을 때 이를 보고받습니다.</li>
+<li><strong>암호화된 파일 해독</strong>: 특정 <strong>파일 확장자</strong>나 <strong>암호화된 파일</strong>을 <strong>자동으로 해독</strong>하여 분석하는 기능을 제공하는 보안 솔루션을 도입합니다. <strong>파일 분석 툴</strong>을 사용하여 파일의 내부 구조를 파악하고 악성 행위를 탐지합니다.</li>
+</ul></li>
+<li><p><strong>네트워크 보안 강화</strong></p>
+
+<ul>
+<li><strong>암호화된 트래픽 탐지</strong>: <strong>네트워크 보안 솔루션</strong>을 사용하여 <strong>암호화된 트래픽</strong>을 탐지하고, 이를 해독하여 악성코드가 <strong>HTTPs</strong>, <strong>SSL/TLS</strong> 등을 통해 전달되는 경우 이를 필터링하거나 분석할 수 있도록 합니다.</li>
+<li><strong>네트워크 트래픽 분석</strong>: <strong>SSL 검사</strong> 또는 <strong>Deep Packet Inspection (DPI)</strong>을 사용하여 암호화된 트래픽을 복호화하고 악성 트래픽을 탐지합니다.</li>
+</ul></li>
+<li><p><strong>권한 관리 및 접근 제어</strong></p>
+
+<ul>
+<li><strong>최소 권한 원칙</strong>: 공격자가 파일이나 명령어를 난독화하여 악성 행위를 시도하는 경우, <strong>최소 권한 원칙</strong>을 적용하여 시스템의 관리 권한을 최소화하고, 불필요한 사용자 계정에 대한 권한을 제한합니다.</li>
+<li><strong>정책 기반 접근 제어</strong>: <strong>파일 시스템</strong> 및 <strong>네트워크</strong>에 대한 접근 제어를 강화하여, 정상적인 사용자만 중요한 시스템 리소스에 접근할 수 있도록 합니다.</li>
+</ul></li>
+<li><p><strong>보안 패치 및 취약점 관리</strong></p>
+
+<ul>
+<li><strong>정기적인 보안 패치</strong>: 난독화된 악성 코드가 취약한 <strong>소프트웨어</strong> 또는 <strong>운영 체제</strong>의 취약점을 악용할 수 있습니다. 따라서 <strong>정기적인 보안 패치</strong>와 <strong>업데이트</strong>를 통해 알려진 취약점을 방지합니다.</li>
+<li><strong>취약점 관리</strong>: <strong>취약점 스캐너</strong>를 사용하여 시스템의 취약점을 점검하고, 이를 패치하여 난독화된 악성 코드가 취약점을 악용하는 것을 차단합니다.</li>
+</ul></li>
+<li><p><strong>운영 체제 및 응용 프로그램의 보안 설정 강화</strong></p>
+
+<ul>
+<li><strong>기본 보안 설정 강화</strong>: <strong>Windows Defender</strong>, <strong>AppLocker</strong>, <strong>Device Guard</strong>와 같은 보안 기능을 사용하여 악성 소프트웨어가 시스템에 침투하는 것을 방지합니다.</li>
+<li><strong>비정상적인 파일 실행 탐지</strong>: 실행되지 않도록 설정된 파일이 의도적으로 실행되는 경우를 탐지하고 차단하는 보안 정책을 구현합니다.</li>
+</ul></li>
+<li><p><strong>다단계 인증 및 인증 강화</strong></p>
+
+<ul>
+<li><strong>다단계 인증(MFA)</strong>: 공격자가 파일이나 명령어를 난독화하여 접근하려는 시도를 차단하기 위해 <strong>다단계 인증(MFA)</strong>을 적용하여 시스템 접근 시 추가 인증을 요구합니다.</li>
+<li><strong>강력한 인증 방식 사용</strong>: <strong>OAuth</strong>, <strong>Kerberos</strong>와 같은 강력한 인증 메커니즘을 사용하여 시스템 접근을 보호합니다.</li>
+</ul></li>
+<li><p><strong>사용자 교육 및 인식 제고</strong></p>
+
+<ul>
+<li><strong>사용자 교육</strong>: 사용자가 <strong>악성 이메일 첨부 파일</strong> 또는 <strong>링크</strong>를 클릭하여 난독화된 악성 코드를 실행하지 않도록 교육합니다.</li>
+<li><strong>사회 공학적 공격 방지</strong>: <strong>사회 공학적 공격</strong>(예: 피싱 공격)에 대한 교육을 통해 사용자가 의심스러운 파일이나 링크를 열지 않도록 합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1027.000</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FA File Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FCA File Content Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FH File Hashing</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

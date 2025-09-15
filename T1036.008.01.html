@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1036.008.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1036.008.01 Masquerade File Type</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<ul>
+<li>Action = "File-Rename" AND</li>
+<li>Target<em>File</em>Format = "EXE" OR "DLL" AND</li>
+<li>Target<em>File</em>Exetention<em>Before != Target</em>File<em>Exetention</em>After AND</li>
+<li>Target<em>File</em>Exetention_Before = "pdf" OR "hwp" OR "hwpx" OR "doc" OR "docx" OR "dotm" OR "dotx" OR "docm" OR "ppt" OR "pptx" OR "ppam" OR "xls" OR "xlsx" OR "xlsb" OR "xlsm" OR "xlam" OR "csv" OR "rtf" OR "ost" OR "jpg" OR "jpeg" OR "jpe" OR "gif" OR "png" OR "bmp" OR "txt" OR "xml" OR "zip" AND</li>
+<li>Target<em>File</em>Exetention_After = "exe" OR "dll"
+<h3>Detection(EDR)</h3></li>
+</ul>
+
+<p>EDR에 관련된 대응 방안을 작성
+Suspicious/MDP.Behavior.M11997</p>
+
+<h3>Response</h3>
+
+<p>XXXX</p>
+
+<h3>Mitigations</h3>
+
+<p>XXXX</p>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1036.008</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FCA File Content Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FA File Analysis</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

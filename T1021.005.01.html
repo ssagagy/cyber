@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1021.005.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1021.005.01 Remote Services - VNC</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>Action = "ProcessCreate" AND
+TergetProcess<em>PeFile</em>Version_FileDesctipcion = "VNCViewer" AND
+Cmdline = "/password"</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1021.005.01.png" alt="" />
+https://172.18.10.125:8903/#/event/edr/66f6652c002dc79600000806</p>
+
+<h3>Response</h3>
+
+<ol>
+<li>즉각적인 침해 탐지:</li>
+</ol>
+
+<p>IDS/IPS를 사용하여 비정상적인 VNC 트래픽을 실시간으로 탐지하고 알림을 설정합니다.</p>
+
+<ol start="2">
+<li>로그 분석:</li>
+</ol>
+
+<p>VNC 관련 로그를 정기적으로 분석하여 의심스러운 접근 시도나 파일 전송을 모니터링합니다.</p>
+
+<ol start="3">
+<li>시스템 격리:</li>
+</ol>
+
+<p>의심스러운 활동이 감지된 시스템을 즉시 격리하여 추가 피해를 방지합니다.</p>
+
+<ol start="4">
+<li>사고 대응 계획 실행:</li>
+</ol>
+
+<p>VNC를 통한 비정상적인 접근이 발견될 경우 사고 대응 절차를 즉시 실행합니다.</p>
+
+<ol start="5">
+<li>트래픽 차단:</li>
+</ol>
+
+<p>의심스러운 IP 주소에서의 VNC 트래픽을 차단하여 공격을 방어합니다.</p>
+
+<ol start="6">
+<li>취약점 패치 적용:</li>
+</ol>
+
+<p>VNC 관련 취약점에 대한 보안 패치를 신속하게 적용하여 시스템을 보호합니다.</p>
+
+<ol start="7">
+<li>파일 및 폴더 접근 제한:</li>
+</ol>
+
+<p>중요한 파일과 폴더에 대한 접근 권한을 최소화하고 정기적으로 검토합니다.</p>
+
+<ol start="8">
+<li>보안 교육:</li>
+</ol>
+
+<p>직원들에게 VNC 및 네트워크 보안 관련 교육을 실시하여 인식을 높입니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>네트워크 접근 제어</strong>:</p>
+
+<ul>
+<li>네트워크에 접근할 수 있는 IP 주소와 장치를 제한하여 불필요한 접근을 차단합니다.</li>
+</ul></li>
+<li><p><strong>방화벽 설정</strong>:</p>
+
+<ul>
+<li>VNC 포트(주로 5900번 포트)를 방화벽에서 차단하거나 필요한 장치에 대해서만 허용합니다.</li>
+</ul></li>
+<li><p><strong>강력한 인증 및 권한 관리</strong>:</p>
+
+<ul>
+<li>VNC 접근 권한을 최소화하고, 강력한 비밀번호 정책을 시행합니다.</li>
+</ul></li>
+<li><p><strong>파일 및 폴더 권한 제한</strong>:</p>
+
+<ul>
+<li>중요한 파일과 폴더에 대한 접근 권한을 최소한으로 설정하고, 정기적으로 검토합니다.</li>
+</ul></li>
+<li><p><strong>정기적인 보안 감사</strong>:</p>
+
+<ul>
+<li>공유 및 네트워크 설정을 정기적으로 감사하여 취약점을 식별하고 수정합니다.</li>
+</ul></li>
+<li><p><strong>모니터링 및 경고 시스템 설정</strong>:</p>
+
+<ul>
+<li>VNC 관련 활동을 모니터링하고 비정상적인 접근 시도에 대해 경고를 설정합니다.</li>
+</ul></li>
+<li><p><strong>데이터 암호화</strong>:</p>
+
+<ul>
+<li>VNC 전송 중 데이터의 기밀성을 보장하기 위해 암호화된 전송을 사용합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1021.005</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-NTA Network Traffic Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTF Network Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ITF Inbound Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-OTF Outbound Traffic Filtering</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

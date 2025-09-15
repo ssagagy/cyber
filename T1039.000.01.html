@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1039.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1039.000.01 Data Collection from Network Shared Drive</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>powershell.exe가 net.exe를 실행하는 행위를 탐지합니다.</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1039.000.01.png" alt="" /></p>
+
+<h3>Response</h3>
+
+<ol>
+<li>로그 모니터링:</li>
+</ol>
+
+<p>공유 드라이브에 대한 접근 시도를 기록하도록 설정합니다</p>
+
+<ol start="2">
+<li>비정상적인 파일 접근 패턴 탐지:</li>
+</ol>
+
+<p>대량 파일 복사 및 비정상적인 시간대의 접근에 대한 모니터링을 설정합니다.</p>
+
+<ol start="3">
+<li>SIEM 활용:</li>
+</ol>
+
+<p>Splunk, Microsoft Sentinel 등 SIEM 도구를 통해 SMB 관련 이벤트를 실시간으로 모니터링합니다.</p>
+
+<ol start="4">
+<li>네트워크 트래픽 분석:</li>
+</ol>
+
+<p>네트워크 패킷 분석 도구(Wireshark, Zeek 등)를 사용해 SMB 트래픽에서 의심스러운 파일 다운로드 활동을 탐지합니다.</p>
+
+<ol start="5">
+<li>의심스러운 사용자 활동 탐지:</li>
+</ol>
+
+<p>동일한 사용자 계정으로 여러 시스템에서 동시 접근 시도를 확인합니다(공격자가 크리덴셜을 탈취했을 가능성).</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>네트워크 공유 권한 제한</strong></p>
+
+<ul>
+<li>네트워크 공유 드라이브에 대한 액세스 권한을 필요한 사용자와 그룹으로 제한합니다, 민감한 데이터는 "읽기 전용"으로 설정하여 무단 수정이나 삭제를 방지합니다.
+공유 이름 뒤에 $를 추가하여 탐색기를 통해 드라이브가 표시되지 않도록 설정합니다.</li>
+</ul></li>
+<li><p><strong>SMB 보안 강화</strong></p>
+
+<ul>
+<li>SMB 서명을 활성화하여 데이터 위변조를 방지합니다, SMBv1을 비활성화하고 최신 SMB 프로토콜(SMBv3)을 사용합니다.</li>
+</ul></li>
+<li><p><strong>네트워크 접근 제어</strong></p>
+
+<ul>
+<li>네트워크 공유에 대해 접근을 허용할 IP 주소를 제한합니다, 민감한 데이터가 저장된 공유 드라이브는 별도의 VLAN 또는 네트워크 세그먼트로 격리합니다.</li>
+</ul></li>
+<li><p><strong>암호화 사용</strong></p>
+
+<ul>
+<li>파일 전송 중 데이터를 보호하기 위해 SMB 암호화를 활성화합니다.</li>
+</ul></li>
+<li><p><strong>DLP(Data Loss Prevention) 도구 활용</strong></p>
+
+<ul>
+<li>네트워크 공유 드라이브에서 민감한 데이터를 식별하고 무단 복사를 차단하는 DLP 도구를 배포합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1039</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FCA File Creation Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTF Network Traffic Filtering</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

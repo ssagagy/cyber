@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1046.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1046.000.01 Network Service Discovery</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>1번부터 10000번 포트까지 탐색하는 대규모 포트 스캔은 짧은 시간에 다수의 포트로 비정상적인 트래픽을 발생시킨다. 이 패턴을 이용해 탐지할 수 있다.</p>
+
+<ol>
+<li>대량 포트 스캔 트래픽 탐 : Nmap과 같은 도구로 대규모 포트 스캔을 실행하면 특정 IP에서 짧은 시간 내에 여러 포트에 트래픽이 발생한다. 네트워크 트래픽을 모니터링하여 다수의 포트로 빠르게 전송된 트래픽을 탐지할 수 있다.</li>
+<li>다수의 실패한 연결 시도 탐지 : 포트 스캔은 열려 있지 않은 포트에 대해 많은 실패한 연결 시도를 기록하게 된다. 다수의 TCP RST(Reset) 패킷이나 실패한 연결 시도가 발생하는지 모니터링할 수 있다.</li>
+<li>비정상적인 패킷 전송 빈도 탐지 : 포트 스캔 시 특정 IP에서 짧은 시간 동안 대량의 트래픽이 발생하게 되며, 이러한 비정상적인 트래픽 발생 패턴을 탐지할 수 있다. 특히, 특정 IP에서 연속적으로 빠르게 발생하는 트래픽을 탐지하는 것이 중요하다.</li>
+</ol>
+
+<h3>Detection(EDR)</h3>
+
+<ul>
+<li>Splunk 탐지 예시</li>
+<li>index=network<em>traffic sourcetype="tcp</em>logs"
+| stats count by src<em>ip, dest</em>ip, dest<em>port
+| where count &gt; 1000 AND dest</em>port &gt;= 1 AND dest_port &lt;= 10000</li>
+</ul>
+
+<h3>Response</h3>
+
+<ol>
+<li>공격자 IP 차단 : 포트 스캔을 시도한 소스 IP를 빠르게 식별하여 방화벽에서 해당 IP를 차단한다. 이는 공격자의 추가적인 네트워크 스캔 및 공격을 방지하는 즉각적인 조치이다.</li>
+<li>네트워크 경로 및 시스템 활동 분석 : 포트 스캔을 시도한 소스 IP의 네트워크 경로를 분석하고, 스캔이 발생한 타겟 시스템에서 비정상적인 활동이 있었는지 조사한다. 공격자가 스캔 후 즉각적인 공격을 시도할 가능성이 있으므로 이를 차단하는 조치가 필요하다.</li>
+<li>시스템 및 네트워크 격리 : 포트 스캔이 이루어진 시스템을 네트워크에서 격리하고 추가 조사를 진행한다. 특히, 외부 네트워크에서 들어오는 스캔인 경우 더욱 신속하게 대응해야 한다. 이 경우 네트워크 침입 여부를 조사하고, 내부 네트워크로의 확산을 방지한다.</li>
+<li>포렌식 조사 : 스캔이 성공적으로 이루어진 후 취약점이 악용되었는지 조사한다. 포렌식 분석을 통해 공격자가 남긴 흔적을 조사하고, 만약 시스템에 손상이나 침해가 발생했을 경우, 이를 빠르게 복구하고 재발을 방지한다.</li>
+</ol>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>방화벽을 통한 포트 접근 제한</strong></p>
+
+<ul>
+<li>불필요하게 노출된 포트는 공격자에게 스캔 대상이 되기 쉽다. 포트 접근을 필요 최소한으로 제한하고, 특정 서비스에 대한 접근 권한을 허용된 IP 주소로만 제한해야 한다.</li>
+</ul></li>
+<li><p><strong>네트워크 세그멘테이션</strong> </p>
+
+<ul>
+<li>네트워크를 구역별로 나누어 내부 네트워크와 외부 네트워크 간의 트래픽을 엄격히 제한한다. 외부에서 내부 네트워크의 중요 시스템으로 직접적인 접근을 차단하고, 네트워크 간 트래픽을 필터링할 수 있도록 설정한다.</li>
+</ul></li>
+<li><p><strong>침입 방지 시스템(IPS) 도입</strong> </p>
+
+<ul>
+<li>IPS(Intrusion Prevention System)을 활용하여 Nmap 스캔과 같은 도구에서 발생하는 포트 스캔 시도를 실시간으로 차단할 수 있다. IPS는 스캔 트래픽을 탐지하고 자동으로 해당 트래픽을 차단하는 기능을 제공한다.</li>
+</ul></li>
+<li><p><strong>서비스 최소화 및 취약점 관리</strong> </p>
+
+<ul>
+<li>네트워크 상에서 스캔할 수 있는 포트와 서비스를 최소화한다. 불필요한 포트는 비활성화하고, 외부에서 접근할 수 있는 포트는 엄격하게 관리한다. 특히, 중요 서비스나 포트는 최신 보안 패치로 업데이트하여 취약점이 악용되지 않도록 한다.</li>
+</ul></li>
+<li><p><strong>네트워크 트래픽 암호화</strong></p>
+
+<ul>
+<li>중요한 서비스나 네트워크 트래픽은 암호화하여 외부에서 쉽게 탐색되지 않도록 한다. SSL/TLS와 같은 암호화된 통신 프로토콜을 사용하여 공격자가 포트 스캔을 통해 내부 정보를 수집하지 못하도록 방지한다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1059.004</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-NTPM Network Traffic Policy Mapping</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PLM Physical Link Mapping</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-APLM Active Physical Link Mapping</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

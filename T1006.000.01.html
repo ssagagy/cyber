@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1006.000.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1006.000.01 볼륨 직접 접근</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>None</p>
+
+<h3>Detection(EDR)</h3>
+
+<p>None</p>
+
+<h3>Response</h3>
+
+<p>디스크에 비정상적으로 접근한 프로세스나 계정이 발견되면 즉시 격리하여 추가적인 공격을 방지합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>패스워드 정책 강화</strong>  </p>
+
+<ul>
+<li><strong>강력한 패스워드 정책</strong>을 적용하여 패스워드 길이, 복잡성, 유효 기간을 설정합니다. 예를 들어, 최소 12자리 이상의 복잡한 패스워드를 요구하고 대소문자, 숫자, 특수문자를 포함하도록 설정합니다.  </li>
+<li><strong>그룹 정책(GPO)</strong>를 통해 패스워드 정책을 설정하고 <strong>Password Policy</strong>에서 복잡성 요구 사항을 활성화합니다.  </li>
+</ul></li>
+<li><p><strong>보안 솔루션 강화</strong>  </p>
+
+<ul>
+<li><strong>EDR/XDR 솔루션</strong>을 활용하여 패스워드 필터에 의심스러운 변경이나 악성 코드 설치를 탐지하고 차단합니다.  </li>
+<li><strong>Windows Defender</strong> 및 타 보안 소프트웨어에서 패스워드 필터 변경을 감지하는 기능을 활성화합니다.  </li>
+</ul></li>
+<li><p><strong>이벤트 로깅 및 감사 정책 강화</strong>  </p>
+
+<ul>
+<li><strong>Windows Event Log</strong>에서 패스워드 변경 및 로그인 시도에 대한 로그(<code data-language="powershell">4723</code>, <code data-language="powershell">4724</code>, <code data-language="powershell">4725</code>, <code data-language="powershell">4726</code>)를 모니터링합니다.  </li>
+<li>패스워드 필터 설정이 변경되었을 때 즉시 경고를 발생시킬 수 있도록 <strong>SIEM</strong> 시스템을 설정합니다.  </li>
+</ul></li>
+<li><p><strong>권한 제어</strong>  </p>
+
+<ul>
+<li>패스워드 필터를 변경할 수 있는 <strong>관리자 권한</strong>을 최소화합니다. 패스워드 필터를 수정하려면 반드시 인증된 관리자만 수행할 수 있도록 권한을 제한합니다.  </li>
+<li><strong>Windows 권한 강화</strong> 및 <strong>최소 권한 원칙</strong>을 적용하여 시스템에 대한 액세스를 제한합니다.  </li>
+</ul></li>
+<li><p><strong>레지스트리 및 시스템 설정 보호</strong>  </p>
+
+<ul>
+<li>패스워드 필터가 변경되지 않도록 <strong>레지스트리 보호</strong>를 활성화합니다.  </li>
+<li>그룹 정책을 통해 패스워드 필터의 등록을 제한하거나 변경할 수 없도록 설정합니다.  </li>
+</ul></li>
+<li><p><strong>정기적인 보안 점검 및 패치 적용</strong>  </p>
+
+<ul>
+<li>정기적으로 시스템을 점검하고 패스워드 필터 및 보안 설정이 의도한 대로 유지되고 있는지 확인합니다.  </li>
+<li>최신 보안 패치를 적용하여 패스워드 필터 우회를 위한 알려진 취약점을 차단합니다.  </li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1006</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FAPA File Access Pattern Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

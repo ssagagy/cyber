@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1018.000.02</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1018.000.02 내부 네트워크 탐색(powershell)</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>Action = "AMSI<em>SCAN" AND
+CurrentProcess = "powershell.exe" AND
+AMSI</em>SCAN<em>DATA = "Get-SmbShare" AND
+AMSI</em>SCAN_DATA = "Get-ADComputer"</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1018.000.02.png" alt="T1018_000_02" /></p>
+
+<h3>Response</h3>
+
+<ol>
+<li>Windows 이벤트 로그 모니터링:</li>
+</ol>
+
+<p>Windows 이벤트 로그를 모니터링하여 원격 시스템 탐색 시도를 탐지합니다</p>
+
+<ol start="2">
+<li>PowerShell 명령 탐지:</li>
+</ol>
+
+<p>공격자가 PowerShell 명령을 사용해 네트워크를 탐색할 가능성이 높으므로, 아래와 같은 명령을 감시합니다.</p>
+
+<ul>
+<li><p>Get-ADComputer</p></li>
+<li><p>Get-NetNeighbor</p></li>
+<li><p>Get-WmiObject</p></li>
+</ul>
+
+<ol start="3">
+<li>SIEM 기반 탐지</li>
+</ol>
+
+<p>Splunk, Microsoft Sentinel, ELK Stack과 같은 SIEM 도구를 사용하여 원격 탐색 시도를 감지합니다.</p>
+
+<ol start="4">
+<li>네트워크 트래픽 분석:</li>
+</ol>
+
+<p>네트워크 패킷 분석 도구(예: Wireshark, Zeek)를 사용하여 네트워크 스캔이나 비정상적인 SMB 트래픽을 탐지합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><strong>네트워크 접근 제어</strong>:</li>
+</ol>
+
+<p>Windows 방화벽에서 원치 않는 원격 요청을 차단합니다, 네트워크를 논리적으로 분리하여 공격자가 탐색할 수 있는 범위를 최소화합니다.</p>
+
+<ol start="2">
+<li><strong>원격 관리 도구 제한</strong>:</li>
+</ol>
+
+<p>공격자가 자주 사용하는 도구를 차단하거나 권한을 제한합니다.</p>
+
+<ol start="3">
+<li><strong>관리자 계정 보호</strong>:</li>
+</ol>
+
+<p>관리자 계정을 사용한 네트워크 스캔 및 원격 접근을 방지하기 위해 다음을 시행합니다.</p>
+
+<ol start="4">
+<li><strong>SMB Signing 활성화</strong>:</li>
+</ol>
+
+<p>SMB 서명을 활성화하여 무단 액세스 또는 전송 중 데이터 변조를 방지합니다.</p>
+
+<ol start="5">
+<li><strong>네트워크 공유 제한</strong>:</li>
+</ol>
+
+<p>네트워크 공유의 접근 권한을 최소화합니다. 기본적으로 "Everyone" 또는 "Authenticated Users"에 대해 권한을 부여하지 않도록 설정합니다.</p>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1018</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-NTF Network Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ITF Inbound Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-OTF Outbound Traffic Filtering</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

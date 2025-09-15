@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1021.001.01_d3fend</title>
+    <title>T1021.001.01</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
-<h1>T1021.001.01 원격 데스크톱 접속</h1>
+<h1>T1021.001.01 Remote Services Remote Desktop Protocol</h1>
 
 <h2>D3FEND</h2>
 
@@ -13,23 +13,92 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>Rule1 + Rule2</p>
+
+<ul>
+<li><p>Rule1
+Action = "ProcessCreate" AND
+TergetProcess = "cmdkey.exe"</p></li>
+<li><p>Rule2
+Action = "ProcessCreate" AND
+TergetProcess = "mstsc.exe" AND
+Cmdline = "/v:"</p></li>
+</ul>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1021.001.01.png" alt="" />
+https://172.18.10.125:8903/#/event/edr/66f36f20002dc79400000213</p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>RDP 접근 제한</strong>  </p>
+
+<ul>
+<li><strong>RDP 접근 차단</strong>: 불필요한 시스템에서 RDP를 비활성화합니다. <strong>Windows Settings</strong>나 <strong>그룹 정책</strong>을 통해 RDP 포트를 차단하거나 <strong>서비스를 비활성화</strong>하여 외부에서 RDP로 접근할 수 없도록 합니다.  </li>
+<li><strong>RDP 포트 변경</strong>: 기본적으로 <strong>TCP 포트 3389</strong>가 RDP의 기본 포트로 사용됩니다. 이를 다른 포트로 변경하여 자동화된 공격 도구들이 해당 포트를 찾기 어렵게 만듭니다. 그러나 포트 변경만으로는 충분한 보안이 되지 않기 때문에 추가적인 보안 조치가 필요합니다.  </li>
+</ul></li>
+<li><p><strong>다단계 인증(MFA)</strong>  </p>
+
+<ul>
+<li><strong>MFA 적용</strong>: RDP 접속 시 <strong>다단계 인증(MFA)</strong>을 적용하여 비밀번호만으로 로그인할 수 없도록 합니다. MFA를 사용하면 비밀번호 유출이나 추측 공격을 방어할 수 있습니다.  </li>
+<li><strong>RDP 세션에 대한 강력한 인증 요구</strong>: 사용자의 자격 증명 정보가 유출된 경우에도 MFA가 활성화되어 있다면 RDP 세션을 차단할 수 있습니다.  </li>
+</ul></li>
+<li><p><strong>RDP 세션 암호화 강화</strong>  </p>
+
+<ul>
+<li><strong>RDP 보안 설정 강화</strong>: <strong>TLS</strong>(Transport Layer Security)와 같은 강력한 암호화를 사용하여 RDP 세션을 암호화하고, 세션 중간에서 정보가 탈취되지 않도록 합니다.  </li>
+<li><strong>Network Level Authentication (NLA)</strong> 활성화: NLA를 사용하여 원격 세션을 설정하기 전에 인증을 요구합니다. 이로 인해 인증되지 않은 사용자나 악성 프로그램이 세션을 열 수 없게 됩니다.  </li>
+</ul></li>
+<li><p><strong>IP 화이트리스트 및 접근 제어</strong>  </p>
+
+<ul>
+<li><strong>IP 화이트리스트 설정</strong>: 특정 신뢰된 IP 주소만 RDP로 접근할 수 있도록 설정하여, 외부에서의 무차별 공격을 차단합니다.  </li>
+<li><strong>VPN 사용</strong>: RDP 세션을 외부에서 직접 접근하지 못하도록 <strong>VPN</strong>을 통해 접근을 제한합니다. VPN을 통해 안전한 연결을 유지하고, 민감한 시스템에 대한 접근을 더 강력하게 제한할 수 있습니다.  </li>
+</ul></li>
+<li><p><strong>RDP 로그인 시도 제한</strong>  </p>
+
+<ul>
+<li><strong>로그인 시도 제한</strong>: 비밀번호 추측 공격을 방지하기 위해 <strong>계정 잠금 정책</strong>을 설정하여 실패한 로그인 시도 후 일정 횟수 이상 시도하면 계정을 잠그도록 합니다.  </li>
+<li><strong>연속 로그인 시도 차단</strong>: <strong>Windows Group Policy</strong>에서 로그인 시도를 제한하거나 <strong>로그인 실패 횟수 제한</strong>을 설정하여 공격자가 무차별 대입 공격을 진행하는 것을 방지합니다.  </li>
+</ul></li>
+<li><p><strong>RDP 세션 모니터링</strong>  </p>
+
+<ul>
+<li><strong>로그 파일 모니터링</strong>: <strong>Windows Event Log</strong> 및 <strong>Sysmon</strong>과 같은 도구를 사용하여 RDP 세션 관련 로그(예: 4624 로그인 이벤트)를 실시간으로 모니터링하고, 의심스러운 로그인 시도나 비정상적인 RDP 접속을 탐지합니다.  </li>
+<li><strong>침입 탐지 시스템(IDS)</strong> 사용: <strong>IDS</strong>를 설정하여 RDP 트래픽을 모니터링하고, 이상 징후를 탐지하여 경고를 발생시킵니다.  </li>
+</ul></li>
+<li><p><strong>강력한 비밀번호 정책</strong>  </p>
+
+<ul>
+<li><strong>강력한 비밀번호 정책 적용</strong>: RDP에 접근하는 사용자 계정에 대해 강력한 비밀번호를 요구하고, <strong>비밀번호 복잡도 정책</strong>을 활성화하여 비밀번호가 쉽게 추측되지 않도록 합니다.  </li>
+<li><strong>비밀번호 주기적 변경</strong>: 주기적으로 비밀번호를 변경하도록 요구하여 유출된 비밀번호로의 접근을 방지합니다.  </li>
+</ul></li>
+<li><p><strong>RDP 접속의 제한된 시간 설정</strong>  </p>
+
+<ul>
+<li><strong>접속 시간 제한</strong>: 원격 데스크탑 접속을 특정 시간 동안만 허용하여, 불필요한 시간 동안 원격 접속을 차단하고 보안을 강화합니다.  </li>
+</ul></li>
+<li><p><strong>RDP 소프트웨어 업데이트</strong>  </p>
+
+<ul>
+<li><strong>정기적인 보안 패치 적용</strong>: RDP 서비스에 관련된 취약점이 악용될 수 있기 때문에, 관련 소프트웨어 및 운영 체제에 대한 보안 패치를 즉시 적용하여 알려진 취약점이 악용되지 않도록 합니다.  </li>
+</ul></li>
+<li><p><strong>시스템 내부에서 RDP 제한</strong>  </p>
+
+<ul>
+<li><strong>그룹 정책 설정</strong>: 시스템 내에서 RDP 접속을 원치 않는 시스템에서 이를 제한하거나 비활성화할 수 있도록 그룹 정책을 설정합니다.</li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
-<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
 
 <table>
 <thead>
@@ -44,9 +113,24 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-NTA Network Traffic Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PLA Process Lineage Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-PM Platform Monitoring</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>
-

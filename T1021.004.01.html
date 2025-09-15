@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T1021.004.01</title>
+    <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
+</head>
+<body>
+<h1>T1021.004.01 Remote Services: SSH</h1>
+
+<h2>D3FEND</h2>
+
+<p>MITRE ATT&amp;CK 액션을 기준으로 대응 방안을 작성</p>
+
+<h3>Detection</h3>
+
+<p>Action = "Network-SendPacket" AND
+Protocol = "SSH"</p>
+
+<h3>Detection(EDR)</h3>
+
+<p><img src="T1021.004.01.PNG" alt="T1021 004 01" /></p>
+
+<h3>Response</h3>
+
+<p>공격자에 의해 PC가 제어되었을 가능성이 있으므로 호스트 네트워크를 격리합니다.</p>
+
+<h3>Mitigations</h3>
+
+<ol>
+<li><p><strong>강력한 인증 사용 (M1032 - Multi-factor Authentication)</strong>: </p>
+
+<ul>
+<li>원격 접속을 보호하기 위해 다단계 인증(MFA)을 적용하여 계정 도용 위험을 줄입니다. 사용자 이름과 비밀번호 외에도 추가 인증 방법을 요구합니다.</li>
+</ul></li>
+<li><p><strong>원격 데스크톱 접근 제한 (M1026 - Privileged Account Management)</strong>: </p>
+
+<ul>
+<li>원격 접근을 반드시 필요한 계정으로만 제한하고, 관리자 권한을 가진 계정의 사용을 최소화합니다.</li>
+</ul></li>
+<li><p><strong>네트워크 레벨 인증(NLA) 활성화 (M1042 - Disable or Remove Feature or Program)</strong>:</p>
+
+<ul>
+<li>원격 접근에 대해 <strong>네트워크 레벨 인증(NLA)</strong>을 활성화하여, 인증이 완료되기 전에 원격 세션을 설정할 수 없도록 합니다.</li>
+</ul></li>
+<li><p><strong>포트 사용 제한 (M1030 - Network Segmentation)</strong>: </p>
+
+<ul>
+<li>외부에서 접근할 수 없도록 방화벽 규칙을 설정하거나, 필요 시에는 VPN을 통해서만 접근하도록 제한합니다.</li>
+</ul></li>
+<li><p><strong>정책 기반 차단 (M1054 - Software Configuration)</strong>: </p>
+
+<ul>
+<li>원격 접근 사용을 조직 내에서 관리하고, 필요 없는 시스템에서는 비활성화하여 악용 가능성을 차단합니다.</li>
+</ul></li>
+<li><p><strong>로그 및 모니터링 (M1049 - Audit)</strong>: </p>
+
+<ul>
+<li>원격 접근을 실시간으로 모니터링하고, 비정상적인 활동이 발생할 경우 경고 시스템을 통해 즉각 대응할 수 있도록 로그를 분석합니다.</li>
+</ul></li>
+<li><p><strong>최신 보안 패치 적용 (M1051 - Update Software)</strong>: </p>
+
+<ul>
+<li>관련된 취약점을 방지하기 위해 운영 체제와 관련 소프트웨어를 최신 버전으로 유지하여, 알려진 취약점으로 인한 공격을 방지합니다.</li>
+</ul></li>
+</ol>
+
+<h2>Affected Techniques</h2>
+
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">ATT&amp;CK</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">T1021.004</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-NTF Network Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-ITF Inbound Traffic Filtering</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-OTF Outbound Traffic Filtering</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>

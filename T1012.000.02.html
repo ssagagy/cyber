@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>T1012.000.02_d3fend</title>
+    <title>T1012.000.02</title>
     <link rel="stylesheet" type="text/css" href="KISA_HTML_CSS.css">
 </head>
 <body>
-<h1>T1012.000.02 시스템 명령어를 이용한 레지스트리 쿼리</h1>
+<h1>T1012.000.02 Query Registry</h1>
 
 <h2>D3FEND</h2>
 
@@ -13,23 +13,65 @@
 
 <h3>Detection</h3>
 
-<p>탐지 방법 작성, EFR과 무관하게 해당 Action에 대한 탐지 방법 명시</p>
+<p>Action = "AMSI<em>SCAN" AND
+CurrentProcess = "powershell.exe" AND
+AMSI</em>SCAN<em>DATA = "Get-ChildItem" OR "Get-Item" AND
+AMSI</em>SCAN_DATA = "HKCU" OR "HKLM" OR "HKU" OR "HKCR" OR "Registry::"</p>
 
 <h3>Detection(EDR)</h3>
 
-<p>EDR에 관련된 대응 방안을 작성</p>
+<p><img src="T1012.000.02.png" alt="" />
+https://172.18.10.125:8903/#/event/edr/66f0eab9002dc7960000007b</p>
 
 <h3>Response</h3>
 
-<p>XXXX</p>
+<p>해당 행위를 수행한 프로세스를 종료합니다.</p>
 
 <h3>Mitigations</h3>
 
-<p>XXXX</p>
+<ol>
+<li><p><strong>레지스트리 접근 제한</strong>  </p>
+
+<ul>
+<li><strong>권한 최소화</strong>: 레지스트리 접근 권한을 최소화하여 일반 사용자 및 비관리자 계정이 중요한 레지스트리 키를 조회하지 못하도록 설정합니다.  </li>
+<li><strong>레지스트리 경로 보호</strong>: <strong>HKEY<em>LOCAL</em>MACHINE\Software\Microsoft\Windows\CurrentVersion\Run</strong> 및 <strong>HKEY<em>CURRENT</em>USER\Software\Microsoft\Windows\CurrentVersion\Run</strong> 같은 중요한 레지스트리 키에 대한 접근을 제한합니다.  </li>
+<li><strong>레지스트리 감사</strong>: 시스템에서 중요한 레지스트리 키에 대한 접근을 추적하고, 비정상적인 접근을 감지하기 위해 감사 로그를 설정합니다.  </li>
+</ul></li>
+<li><p><strong>보안 솔루션 강화</strong>  </p>
+
+<ul>
+<li><strong>EDR/XDR 솔루션</strong>을 사용하여 레지스트리 쿼리 명령(<code data-language="powershell">reg query</code>, <code data-language="powershell">powershell Get-ItemProperty</code>, <code data-language="powershell">regedit</code>)을 탐지하고 경고를 생성합니다.  </li>
+<li><strong>Windows Defender</strong>에서 레지스트리 접근을 실시간으로 모니터링하고 악성 활동을 차단합니다.  </li>
+</ul></li>
+<li><p><strong>이벤트 로깅 및 감사 정책 강화</strong>  </p>
+
+<ul>
+<li><strong>Windows Event Log</strong>에서 레지스트리 변경 및 접근 이벤트(<code data-language="powershell">4662</code>, <code data-language="powershell">4688</code>, <code data-language="powershell">4689</code>)를 모니터링하여 레지스트리 조회 및 수정이 비정상적으로 발생했을 때 경고를 발생시킵니다.  </li>
+<li><strong>Audit Policy</strong>를 활성화하여 중요한 레지스트리 키의 조회와 수정에 대한 기록을 남기고, <strong>SIEM 시스템</strong>을 통해 이를 분석하여 의심스러운 활동을 빠르게 탐지합니다.  </li>
+</ul></li>
+<li><p><strong>레지스트리 키 보호</strong>  </p>
+
+<ul>
+<li><strong>Windows 권한 강화</strong> 및 <strong>Registry Guard</strong> 기능을 통해 중요한 레지스트리 항목을 보호하여 공격자가 이를 수정하거나 조회할 수 없도록 합니다.  </li>
+<li><code data-language="powershell">SeBackupPrivilege</code> 및 <code data-language="powershell">SeRestorePrivilege</code>와 같은 고급 권한을 제한하여 레지스트리 백업 및 복구 권한을 일반 사용자에게 제공하지 않도록 합니다.  </li>
+</ul></li>
+<li><p><strong>정기적인 보안 점검 및 패치 적용</strong>  </p>
+
+<ul>
+<li>시스템의 레지스트리 구성을 정기적으로 점검하여 비정상적인 레지스트리 변경 사항을 확인합니다.  </li>
+<li>최신 보안 패치를 적용하여 레지스트리 관련 취약점을 악용한 공격을 방지합니다.  </li>
+</ul></li>
+<li><p><strong>레지스트리 쿼리 제한</strong>  </p>
+
+<ul>
+<li>PowerShell 및 명령 프롬프트를 통해 레지스트리 접근을 제한하는 그룹 정책을 적용합니다. 예를 들어, 특정 사용자에게 PowerShell 명령을 제한하여 레지스트리 조회가 불가능하도록 설정합니다.  </li>
+<li><strong>Applocker</strong> 또는 <strong>Device Guard</strong>를 사용하여 악성 프로그램이나 스크립트가 레지스트리에 접근하지 못하도록 방지합니다.  </li>
+</ul></li>
+</ol>
 
 <h2>Affected Techniques</h2>
 
-<p>Action 실행시 함께 영향을 받는 다른 Techniqes </p>
+<p>Action 실행시 함꼐 영향을 받는 다른 Techniqes </p>
 
 <table>
 <thead>
@@ -47,8 +89,24 @@
 </tbody>
 </table>
 
-<p>|D3FEND|
-|:-----------:|</p>
+<table>
+<thead>
+<tr>
+  <th style="text-align:center;">D3FEND</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center;">D3-FIM File Integrity Monitoring</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-SCA System Call Analysis</td>
+</tr>
+<tr>
+  <td style="text-align:center;">D3-FA File Analysis</td>
+</tr>
+</tbody>
+</table>
 
 </body>
 </html>
