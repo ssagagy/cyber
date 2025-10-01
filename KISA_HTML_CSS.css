@@ -206,7 +206,7 @@ li {
 }
 
 h1 {
-    font-size: 2.0em;
+    font-size: 2em;
     font-weight: bold;
     color: #e2e2e2; /* 눈에 띄는 파란색 */
     margin-bottom: 16px;
@@ -241,6 +241,7 @@ img {
     object-fit: contain; /* 부모 영역 안에 맞게 축소 */
 
 }/* --- 이미지 스타일 끝 --- */
+
 
 
 
